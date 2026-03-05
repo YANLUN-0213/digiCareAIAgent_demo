@@ -1,0 +1,50 @@
+import { createBrowserRouter, Navigate } from 'react-router-dom'
+import MainLayout from '@/layout/MainLayout'
+import Dashboard from '@/pages/Dashboard'
+import UserManagement from '@/pages/UserManagement'
+import RoleManagement from '@/pages/RoleManagement'
+import SystemSettings from '@/pages/SystemSettings'
+import Logs from '@/pages/Logs'
+import AIAssistant from '@/pages/AIAssistant'
+import KnowledgeBase from '@/pages/KnowledgeBase'
+import PromptModel from '@/pages/PromptModel'
+import QualityMonitor from '@/pages/QualityMonitor'
+import DriftMonitor from '@/pages/DriftMonitor'
+import PlaceholderPage from '@/pages/PlaceholderPage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      // 後台管理
+      { path: 'system/settings', element: <SystemSettings /> },
+      { path: 'system/users', element: <UserManagement /> },
+      { path: 'system/sso-accounts', element: <PlaceholderPage funcName="院內SSO帳號維護" /> },
+      { path: 'system/roles', element: <RoleManagement /> },
+      { path: 'system/functions', element: <PlaceholderPage funcName="功能維護" /> },
+      { path: 'logs', element: <Logs /> },
+      // AI 治理管理
+      { path: 'ai/assistant', element: <AIAssistant /> },
+      { path: 'ai/knowledge-base', element: <KnowledgeBase /> },
+      { path: 'ai/prompt-model', element: <PromptModel /> },
+      { path: 'ai/quality-monitor', element: <QualityMonitor /> },
+      { path: 'ai/drift-monitor', element: <DriftMonitor /> },
+      // FHIR專區
+      { path: 'fhir/twpas', element: <PlaceholderPage funcName="癌藥事審TWPAS IG" /> },
+      { path: 'fhir/twci', element: <PlaceholderPage funcName="重大傷病TWCI" /> },
+      { path: 'fhir/twngs', element: <PlaceholderPage funcName="次世代基因定序檢測TWNGS" /> },
+      { path: 'fhir/twiam', element: <PlaceholderPage funcName="流感抗病毒藥劑使用報告TWIAM" /> },
+      // TWEMPD FHIR
+      { path: 'twempd/ep', element: <PlaceholderPage funcName="電子處方箋TWEMPD-EP" /> },
+      { path: 'twempd/ds', element: <PlaceholderPage funcName="調劑單張TWEMPD-DS" /> },
+      // EMR IG
+      { path: 'emr/ep', element: <PlaceholderPage funcName="電子處方簽EMR-EP" /> },
+      { path: 'emr/ds', element: <PlaceholderPage funcName="調劑單張EMR-DS" /> },
+      { path: '*', element: <Navigate to="/" replace /> },
+    ],
+  },
+])
+
+export default router
