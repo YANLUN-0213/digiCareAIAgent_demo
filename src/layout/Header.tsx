@@ -19,7 +19,7 @@ const Header = ({ isCollapsed, onToggle }: HeaderProps) => {
           <div className="container">
             <div className="left-side">
               <div className="logo">
-                <img src="/images/logo.png" alt="昕力醫院" style={{ height: 30 }} />
+                <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="昕力醫院" style={{ height: 30 }} />
               </div>
             </div>
             <div className="right-side">
