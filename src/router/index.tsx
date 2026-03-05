@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createHashRouter, Navigate } from 'react-router-dom'
 import MainLayout from '@/layout/MainLayout'
 import Dashboard from '@/pages/Dashboard'
 import UserManagement from '@/pages/UserManagement'
@@ -12,7 +12,7 @@ import QualityMonitor from '@/pages/QualityMonitor'
 import DriftMonitor from '@/pages/DriftMonitor'
 import PlaceholderPage from '@/pages/PlaceholderPage'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <MainLayout />,
