@@ -292,6 +292,34 @@ export const AGENT_PROVIDER_OPTIONS = [
   { name: '地端推論', code: 'local' },
 ]
 
+export const LOG_LEVEL_OPTIONS = [
+  { name: 'DEBUG', code: 'debug' },
+  { name: 'INFO', code: 'info' },
+  { name: 'WARN', code: 'warn' },
+  { name: 'ERROR', code: 'error' },
+]
+
+export const SCHEDULE_INTERVAL_OPTIONS = [
+  { name: '每 15 分鐘', code: '15m' },
+  { name: '每 30 分鐘', code: '30m' },
+  { name: '每小時', code: '1h' },
+  { name: '每 6 小時', code: '6h' },
+  { name: '每日', code: '1d' },
+]
+
+export const TIMEZONE_OPTIONS = [
+  { name: 'Asia/Taipei (UTC+8)', code: 'Asia/Taipei' },
+  { name: 'Asia/Tokyo (UTC+9)', code: 'Asia/Tokyo' },
+  { name: 'America/New_York (UTC-5)', code: 'America/New_York' },
+  { name: 'Europe/London (UTC+0)', code: 'Europe/London' },
+]
+
+export const WEBHOOK_EVENT_OPTIONS = [
+  { name: '執行成功', code: 'success' },
+  { name: '執行失敗', code: 'failed' },
+  { name: '執行逾時', code: 'timeout' },
+]
+
 // ===== TWPAS 暫存清單假資料 =====
 
 import type { TwpasForm } from '@/components/Twpas/type/twpasform'

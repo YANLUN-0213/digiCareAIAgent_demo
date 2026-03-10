@@ -188,33 +188,76 @@ DataTable 顯示以下欄位：
 
 **路徑：** `/agent/settings`
 
-設定 Agent 的基本資料與 AI 模型參數。
+Agent 完整設定頁，包含啟停控制、執行參數、日誌、功能開關、Webhook、排程等設定，以 Accordion 手風琴分區呈現。
 
 ![Agent 設定](images/agent-settings.png)
 
-### 4.1 Agent Profile
+### 4.1 Agent Profile（左欄）
 
-左側卡片顯示 Agent 基本資訊：
+左側卡片顯示 Agent 基本資訊與啟停總開關：
 
 | 項目 | 說明 |
 |------|------|
 | 頭像 | 紫色圓形 Avatar |
 | 顯示名稱 | Agent 名稱（如 Admin Agent） |
 | Email | 聯絡信箱 |
-| 狀態 | 啟用中（綠色標籤） |
+| 狀態 Badge | 啟用中（綠色）/ 已停用（紅色） |
+| 啟用/停用開關 | InputSwitch，停用後右欄所有設定項 disabled |
 | 加入日期 | 帳號建立日期 |
 
-### 4.2 設定表單
-
-右側卡片提供以下設定項：
+### 4.2 基本設定（Panel 1）
 
 | 設定項 | 類型 | 選項 |
 |--------|------|------|
 | 顯示名稱 | 文字輸入 | 自由填寫 |
-| AI Provider | 下拉選單 | OpenAI / Azure OpenAI / 地端推論 |
+| AI 供應商 | 下拉選單 | OpenAI / Azure OpenAI / 地端推論 |
 | 模型 | 下拉選單 | GPT-OSS 20B / GPT-OSS 120B / LLaMA-Vision 90B / Claude 4 Sonnet / GPT-4o |
 
-點擊「儲存設定」按鈕後，按鈕顯示 loading 動畫，儲存完成後顯示成功提示。
+**技能啟停狀態 DataTable**：列出所有 Agent 技能，每列可獨立啟用/停用，顯示技能名稱、可見性 Badge（公開/私有/共享）及狀態開關。
+
+### 4.3 執行參數（Panel 2）
+
+| 設定項 | 元件 | 預設值 | 範圍 |
+|--------|------|--------|------|
+| Temperature | Slider + InputNumber | 0.7 | 0–2，step 0.1 |
+| Max Tokens | InputNumber | 4096 | 256–32768 |
+| Timeout（秒） | InputNumber | 120 | 10–600 |
+| Top P | Slider + InputNumber | 0.9 | 0–1，step 0.05 |
+
+### 4.4 日誌與監控（Panel 3）
+
+| 設定項 | 元件 | 預設值 |
+|--------|------|--------|
+| 日誌等級 | Dropdown | INFO（可選 DEBUG / INFO / WARN / ERROR） |
+| 日誌保留天數 | InputNumber | 30 |
+| 執行紀錄保留筆數 | InputNumber | 1000 |
+
+### 4.5 功能開關（Panel 4）
+
+| 設定項 | 元件 | 預設值 | 說明 |
+|--------|------|--------|------|
+| 自動重試 | InputSwitch | ON | 關閉時「最大重試次數」disabled |
+| 最大重試次數 | InputNumber | 3 | |
+| Webhook 通知 | InputSwitch | OFF | 關閉時 URL / 觸發事件 disabled |
+| Webhook URL | InputText | （空） | |
+| 觸發事件 | MultiSelect | 全部 | 成功 / 失敗 / 逾時 |
+| 排程執行 | InputSwitch | OFF | 啟用後 Panel 5 可操作 |
+
+### 4.6 排程設定（Panel 5）
+
+| 設定項 | 元件 | 預設值 |
+|--------|------|--------|
+| 排程模式 | SelectButton | 間隔（可切換為 Cron） |
+| 執行間隔 | Dropdown | 每小時（間隔模式時顯示） |
+| Cron 表達式 | InputText | `0 0 * * *`（Cron 模式時顯示） |
+| 時區 | Dropdown | Asia/Taipei (UTC+8) |
+
+排程執行功能開關關閉時，整個 Panel 內容 disabled。
+
+### 4.7 操作按鈕
+
+- **儲存全部設定**：儲存完成後顯示 Toast 成功提示
+- **重設為預設值**：點擊後彈出確認 Dialog，確認後恢復所有設定為預設值
 
 ---
 
