@@ -11,6 +11,11 @@ import PromptModel from '@/pages/PromptModel'
 import QualityMonitor from '@/pages/QualityMonitor'
 import DriftMonitor from '@/pages/DriftMonitor'
 import PlaceholderPage from '@/pages/PlaceholderPage'
+import FhirTwpas from '@/pages/FhirTwpas'
+import AgentDashboard from '@/pages/AgentDashboard'
+import AgentExecution from '@/pages/AgentExecution'
+import AgentSkills from '@/pages/AgentSkills'
+import AgentSettings from '@/pages/AgentSettings'
 
 const router = createHashRouter([
   {
@@ -31,8 +36,13 @@ const router = createHashRouter([
       { path: 'ai/prompt-model', element: <PromptModel /> },
       { path: 'ai/quality-monitor', element: <QualityMonitor /> },
       { path: 'ai/drift-monitor', element: <DriftMonitor /> },
+      // AI Agent
+      { path: 'agent/dashboard', element: <AgentDashboard /> },
+      { path: 'agent/skills', element: <AgentSkills /> },
+      { path: 'agent/execution', element: <AgentExecution /> },
+      { path: 'agent/settings', element: <AgentSettings /> },
       // FHIR專區
-      { path: 'fhir/twpas', element: <PlaceholderPage funcName="癌藥事審TWPAS IG" /> },
+      { path: 'fhir/twpas', element: <FhirTwpas /> },
       { path: 'fhir/twci', element: <PlaceholderPage funcName="重大傷病TWCI" /> },
       { path: 'fhir/twngs', element: <PlaceholderPage funcName="次世代基因定序檢測TWNGS" /> },
       { path: 'fhir/twiam', element: <PlaceholderPage funcName="流感抗病毒藥劑使用報告TWIAM" /> },

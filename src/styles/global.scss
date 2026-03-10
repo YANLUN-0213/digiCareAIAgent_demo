@@ -886,3 +886,76 @@ body {
     }
   }
 }
+
+// ===== Markdown Preview in AI Sidebar =====
+.markdown-preview {
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  h2 { font-size: 1.3em; }
+  h3 { font-size: 1.1em; }
+
+  p {
+    margin: 0.4em 0;
+  }
+
+  ul, ol {
+    margin: 0.4em 0;
+    padding-left: 1.5em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.6em 0;
+    font-size: 0.9em;
+
+    th, td {
+      border: 1px solid #dee2e6;
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f2f5;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+  }
+
+  blockquote {
+    border-left: 3px solid var(--primary_color);
+    margin: 0.6em 0;
+    padding: 0.4em 1em;
+    background: #f8f9fa;
+    color: #555;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  code {
+    background: #f0f2f5;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+}
+
+// ===== Typing cursor animation =====
+.typing-cursor {
+  animation: blink 0.8s infinite;
+  color: var(--primary_color);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
