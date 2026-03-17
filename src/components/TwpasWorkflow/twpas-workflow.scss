@@ -1,0 +1,119 @@
+/* ===== Workflow Steps Indicator ===== */
+.wf-indicator {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.wf-node {
+  display: flex;
+  align-items: flex-start;
+}
+
+.wf-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90px;
+}
+
+.wf-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+
+  &.wf-success {
+    background: #22c55e;
+    color: #fff;
+  }
+  &.wf-failed {
+    background: #ef4444;
+    color: #fff;
+  }
+  &.wf-in_progress {
+    background: #3b82f6;
+    color: #fff;
+    animation: wf-pulse 1.5s infinite;
+  }
+  &.wf-pending {
+    background: #fff;
+    border: 2px solid #d1d5db;
+    color: #d1d5db;
+  }
+
+  &.wf-clickable {
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+.wf-label {
+  font-size: 0.75rem;
+  color: #374151;
+  margin-top: 6px;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.wf-time {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.wf-line {
+  width: 40px;
+  height: 2px;
+  flex-shrink: 0;
+  margin-top: 18px;
+
+  &.line-done {
+    background: #22c55e;
+  }
+  &.line-fail {
+    background: #ef4444;
+  }
+  &.line-pending {
+    background: repeating-linear-gradient(
+      90deg,
+      #d1d5db 0px, #d1d5db 4px,
+      transparent 4px, transparent 8px
+    );
+  }
+}
+
+@keyframes wf-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+}
+
+/* ===== Workflow run card ===== */
+.wf-run-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+
+  .wf-run-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+}

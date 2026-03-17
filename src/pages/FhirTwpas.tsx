@@ -28,8 +28,11 @@ import {
   MOCK_TWPAS_SAVED_RECORDS,
   TWPAS_AI_FIELD_PROMPTS,
   generateTwpasAiResponse,
+  generateMockWorkflowRun,
 } from '@/data/mockData'
 import type { TwpasSavedRecord } from '@/data/mockData'
+import TwpasWorkflowDialog from '@/components/TwpasWorkflow/TwpasWorkflowDialog'
+import type { WorkflowRun } from '@/components/TwpasWorkflow/twpas-workflow.types'
 
 /* ------------------------------------------------------------------ */
 /*  Tab labels & required tabs                                        */
@@ -84,6 +87,11 @@ const FhirTwpas = () => {
 
   // 下載檔案 Dialog
   const [downloadDialogVisible, setDownloadDialogVisible] = useState(false)
+
+  // 案件流程追蹤
+  const [workflowDialogVisible, setWorkflowDialogVisible] = useState(false)
+  const [workflowRuns, setWorkflowRuns] = useState<WorkflowRun[]>([])
+
 
   /* ---------- streaming helpers ---------- */
   const stopStreaming = useCallback(() => {
@@ -170,7 +178,16 @@ const FhirTwpas = () => {
   }
 
   const onValid = () => {
+    const run = generateMockWorkflowRun()
+    setWorkflowRuns(prev => [run, ...prev])
     setFhirDialogVisible(true)
+    const allPass = run.steps.every(s => s.status === 'success')
+    const failedStep = run.steps.find(s => s.status === 'failed')
+    if (allPass) {
+      showSuccess('驗證完成', '所有流程驗證皆通過')
+    } else if (failedStep) {
+      showError('驗證失敗', `${failedStep.label}：${failedStep.errorCount} 個錯誤`)
+    }
   }
 
   const onInvalid = () => {
@@ -258,12 +275,12 @@ const FhirTwpas = () => {
 
             {/* Toolbar 按鈕 (TabView 下方) */}
             <div className="justify-content-center flex flex-wrap gap-1 mt-3">
+              <Button type="button" label="案件流程追蹤" icon="pi pi-sitemap" onClick={() => setWorkflowDialogVisible(true)} />
               <Button type="button" label="查詢舊案清單" icon="pi pi-search" onClick={() => setOldCaseDialogVisible(true)} />
               <Button type="button" label="帶入院方資料" icon="pi pi-search" onClick={() => showInfo('提示', '帶入院方資料需連線院方系統')} />
               <Button type="button" label="新建一筆" icon="pi pi-plus" onClick={handleReset} />
               <Button type="button" label="暫存" icon="pi pi-save" severity="success" onClick={handleSave} />
               <Button type="submit" label="產生FHIR格式且驗證" icon="pi pi-upload" onClick={handleFhir} />
-              <Button type="button" label="查詢驗證結果" icon="pi pi-verified" onClick={() => showInfo('提示', '查詢驗證結果需連線 FHIR Server')} />
               <Button type="button" label="下載檔案" icon="pi pi-download" onClick={() => setDownloadDialogVisible(true)} />
               <Button type="button" label="上傳 Excel" icon="pi pi-file-arrow-up" onClick={() => showInfo('提示', '上傳 Excel 需連線後端')} />
               <Button type="button" label="上傳 FHIRJson" icon="pi pi-file-arrow-up" onClick={() => showInfo('提示', '上傳 FHIRJson 需連線後端')} />
@@ -426,6 +443,13 @@ const FhirTwpas = () => {
           {JSON.stringify(MOCK_FHIR_BUNDLE_SNIPPET, null, 2)}
         </pre>
       </Dialog>
+
+      {/* 案件流程追蹤 / 查詢驗證結果 Dialog */}
+      <TwpasWorkflowDialog
+        visible={workflowDialogVisible}
+        onHide={() => setWorkflowDialogVisible(false)}
+        runs={workflowRuns}
+      />
     </div>
   )
 }

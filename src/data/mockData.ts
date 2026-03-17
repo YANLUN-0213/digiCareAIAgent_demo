@@ -711,3 +711,73 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
 ]
+
+// ===== TWPAS 案件流程追蹤：產生 Mock 流程 =====
+
+import type { WorkflowRun, WorkflowStep, VerificationResultItem, StepStatus } from '@/components/TwpasWorkflow/twpas-workflow.types'
+import { STEP_LABELS } from '@/components/TwpasWorkflow/twpas-workflow.types'
+
+const MOCK_ERRORS: Record<string, VerificationResultItem[]> = {
+  '地端FHIR驗證': [
+    { resourceType: 'Patient', resourceId: 'patient-001', severity: 'error', code: 'FHIR-E001', message: 'Patient.identifier 為必填欄位，但值為空', location: 'Patient.identifier' },
+    { resourceType: 'Condition', resourceId: 'condition-001', severity: 'error', code: 'FHIR-E003', message: 'Condition.code.coding.system 必須為有效的 ICD-10-CM URI', location: 'Condition.code.coding[0].system' },
+    { resourceType: 'MedicationRequest', resourceId: 'medrq-001', severity: 'error', code: 'FHIR-E005', message: 'MedicationRequest.dosageInstruction 格式不符 IG 規範', location: 'MedicationRequest.dosageInstruction[0]' },
+  ],
+  '地端CQL驗證': [
+    { resourceType: 'MedicationRequest', resourceId: 'medrq-001', severity: 'error', code: 'CQL-R001', message: '用藥劑量超出建議範圍（Osimertinib 160mg > max 80mg）', location: 'MedicationRequest.dosageInstruction[0].doseAndRate' },
+    { resourceType: 'Condition', resourceId: 'condition-001', severity: 'error', code: 'CQL-R003', message: '診斷碼與申請藥物適應症不符', location: 'Condition.code' },
+  ],
+  '雲端FHIR預檢': [
+    { resourceType: 'MedicationRequest', resourceId: 'medrq-001', severity: 'error', code: 'NHI-FHIR-E005', message: 'MedicationRequest.dosageInstruction 格式不符健保署 IG 規範', location: 'MedicationRequest.dosageInstruction[0]' },
+    { resourceType: 'Organization', resourceId: 'org-001', severity: 'error', code: 'NHI-FHIR-E009', message: 'Organization.identifier 需包含醫事機構代碼', location: 'Organization.identifier' },
+  ],
+  '雲端CQL預檢': [
+    { resourceType: 'MedicationRequest', resourceId: 'medrq-001', severity: 'error', code: 'NHI-CQL-012', message: '申請藥物不在給付品項範圍內，請確認藥品代碼', location: 'MedicationRequest.medicationCodeableConcept.coding[0]' },
+    { resourceType: 'Condition', resourceId: 'condition-001', severity: 'error', code: 'NHI-CQL-W005', message: '診斷碼與申請藥物之適應症對應關係需人工確認', location: 'Condition.code' },
+  ],
+}
+
+const MOCK_WARNINGS: VerificationResultItem[] = [
+  { resourceType: 'Patient', resourceId: 'patient-001', severity: 'warning', code: 'FHIR-W001', message: 'Patient.telecom 建議填寫聯絡電話', location: 'Patient.telecom' },
+  { resourceType: 'Composition', resourceId: 'comp-001', severity: 'warning', code: 'FHIR-W002', message: 'Composition.author 建議填寫', location: 'Composition.author' },
+  { resourceType: 'Patient', resourceId: 'patient-001', severity: 'warning', code: 'FHIR-W003', message: 'Patient.address 建議填寫完整行政區代碼', location: 'Patient.address[0].district' },
+]
+
+function _formatNow(): string {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
+}
+
+function _pick<T>(arr: T[], n: number): T[] {
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, n)
+}
+
+function _makeStep(label: string, status: StepStatus, ts?: string): WorkflowStep {
+  if (status === 'pending') return { label, status }
+  const total = 10 + Math.floor(Math.random() * 6)
+  const pool = MOCK_ERRORS[label] ?? []
+  if (status === 'success') {
+    const ws = _pick(MOCK_WARNINGS, Math.random() < 0.4 ? 1 : 0)
+    return { label, status, timestamp: ts, totalResources: total, errorCount: 0, warningCount: ws.length, items: ws }
+  }
+  const errs = _pick(pool, 1 + Math.floor(Math.random() * Math.min(2, pool.length)))
+  const ws = _pick(MOCK_WARNINGS, Math.floor(Math.random() * 2))
+  return { label, status, timestamp: ts, totalResources: total, errorCount: errs.length, warningCount: ws.length, items: [...errs, ...ws] }
+}
+
+let _runCounter = 0
+
+export function generateMockWorkflowRun(): WorkflowRun {
+  _runCounter++
+  const ts = _formatNow()
+  const steps: WorkflowStep[] = []
+  let stopped = false
+  for (let i = 0; i < STEP_LABELS.length; i++) {
+    if (stopped) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
+    if (i === STEP_LABELS.length - 1) { steps.push(_makeStep(STEP_LABELS[i], 'success', ts)); continue }
+    const pass = Math.random() < 0.7
+    if (pass) { steps.push(_makeStep(STEP_LABELS[i], 'success', ts)) }
+    else { steps.push(_makeStep(STEP_LABELS[i], 'failed', ts)); stopped = true }
+  }
+  return { id: `run-${_runCounter}`, timestamp: ts, steps }
+}
