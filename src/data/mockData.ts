@@ -774,7 +774,8 @@ export function generateMockWorkflowRun(): WorkflowRun {
   let stopped = false
   for (let i = 0; i < STEP_LABELS.length; i++) {
     if (stopped) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
-    if (i === STEP_LABELS.length - 1) { steps.push(_makeStep(STEP_LABELS[i], 'success', ts)); continue }
+    // 最後一步（正式申請）不自動執行，保持 pending 等使用者手動上傳
+    if (i === STEP_LABELS.length - 1) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
     const pass = Math.random() < 0.7
     if (pass) { steps.push(_makeStep(STEP_LABELS[i], 'success', ts)) }
     else { steps.push(_makeStep(STEP_LABELS[i], 'failed', ts)); stopped = true }

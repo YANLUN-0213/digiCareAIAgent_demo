@@ -116,4 +116,25 @@
     font-size: 0.85rem;
     color: #6b7280;
   }
+
+  .wf-run-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+
+    .wf-ready-text {
+      font-size: 0.85rem;
+      color: #166534;
+      font-weight: 500;
+    }
+
+    .wf-uploaded-text {
+      font-size: 0.85rem;
+      color: #166534;
+      font-weight: 500;
+    }
+  }
 }

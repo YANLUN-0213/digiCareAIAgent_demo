@@ -449,6 +449,23 @@ const FhirTwpas = () => {
         visible={workflowDialogVisible}
         onHide={() => setWorkflowDialogVisible(false)}
         runs={workflowRuns}
+        onUpload={(runId) => {
+          const now = new Date()
+          const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`
+          setWorkflowRuns(prev => prev.map(run =>
+            run.id === runId
+              ? {
+                  ...run,
+                  steps: run.steps.map((s, i) =>
+                    i === run.steps.length - 1
+                      ? { ...s, status: 'success' as const, timestamp: ts }
+                      : s
+                  ),
+                }
+              : run
+          ))
+          showSuccess('上傳成功', '案件已正式上傳至健保署')
+        }}
       />
     </div>
   )

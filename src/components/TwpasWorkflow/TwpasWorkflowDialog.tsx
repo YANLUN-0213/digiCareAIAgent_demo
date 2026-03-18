@@ -4,6 +4,7 @@ import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import { Tag } from 'primereact/tag'
 import { Dialog } from 'primereact/dialog'
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import WorkflowStepsIndicator from './WorkflowStepsIndicator'
 import type { WorkflowRun, WorkflowStep, VerificationResultItem } from './twpas-workflow.types'
 
@@ -11,9 +12,10 @@ interface Props {
   visible: boolean
   onHide: () => void
   runs: WorkflowRun[]
+  onUpload: (runId: string) => void
 }
 
-const TwpasWorkflowDialog = ({ visible, onHide, runs }: Props) => {
+const TwpasWorkflowDialog = ({ visible, onHide, runs, onUpload }: Props) => {
   const [detailStep, setDetailStep] = useState<WorkflowStep | null>(null)
 
   const handleHide = () => {
@@ -21,23 +23,46 @@ const TwpasWorkflowDialog = ({ visible, onHide, runs }: Props) => {
     onHide()
   }
 
+  const canUpload = (run: WorkflowRun) => {
+    const verifySteps = run.steps.slice(0, -1)
+    const lastStep = run.steps[run.steps.length - 1]
+    return verifySteps.every(s => s.status === 'success') && lastStep.status === 'pending'
+  }
+
+  const isUploaded = (run: WorkflowRun) => {
+    return run.steps[run.steps.length - 1].status === 'success'
+  }
+
   const overallStatus = (run: WorkflowRun) => {
-    const last = [...run.steps].reverse().find(s => s.status !== 'pending')
-    if (!last) return 'pending'
-    if (run.steps.every(s => s.status === 'success')) return 'all-pass'
-    return last.status
+    if (isUploaded(run)) return 'uploaded'
+    if (canUpload(run)) return 'ready'
+    const failed = run.steps.find(s => s.status === 'failed')
+    if (failed) return 'failed'
+    return 'pending'
   }
 
   const statusTag = (run: WorkflowRun) => {
     const s = overallStatus(run)
-    if (s === 'all-pass') return <Tag value="全部通過" severity="success" />
+    if (s === 'uploaded') return <Tag value="已上傳" severity="success" />
+    if (s === 'ready') return <Tag value="待上傳" severity="warning" />
     if (s === 'failed') return <Tag value="驗證失敗" severity="danger" />
-    if (s === 'in_progress') return <Tag value="進行中" severity="info" />
-    return <Tag value="待執行" />
+    return <Tag value="進行中" severity="info" />
+  }
+
+  const handleUploadClick = (runId: string) => {
+    confirmDialog({
+      message: '確定要正式上傳此案件至健保署嗎？上傳後無法撤回。',
+      header: '正式上傳確認',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: '確定上傳',
+      rejectLabel: '取消',
+      accept: () => onUpload(runId),
+    })
   }
 
   return (
     <>
+      <ConfirmDialog />
       <Dialog
         header="案件流程追蹤"
         visible={visible}
@@ -65,9 +90,38 @@ const TwpasWorkflowDialog = ({ visible, onHide, runs }: Props) => {
               <div style={{ padding: '0.5rem 0' }}>
                 <WorkflowStepsIndicator
                   steps={run.steps}
-                  onStepClick={(idx) => setDetailStep(run.steps[idx])}
+                  onStepClick={(idx) => {
+                    const step = run.steps[idx]
+                    if (step.status === 'success' || step.status === 'failed') {
+                      setDetailStep(step)
+                    }
+                  }}
                 />
               </div>
+              {/* 前 4 步全過 → 顯示正式上傳按鈕 */}
+              {canUpload(run) && (
+                <div className="wf-run-footer">
+                  <span className="wf-ready-text">
+                    <i className="pi pi-check-circle mr-2" style={{ color: '#22c55e' }} />
+                    所有驗證已通過，可進行正式上傳
+                  </span>
+                  <Button
+                    label="正式上傳"
+                    icon="pi pi-upload"
+                    className="p-button-sm"
+                    onClick={() => handleUploadClick(run.id)}
+                  />
+                </div>
+              )}
+              {/* 已上傳 */}
+              {isUploaded(run) && (
+                <div className="wf-run-footer">
+                  <span className="wf-uploaded-text">
+                    <i className="pi pi-verified mr-2" style={{ color: '#22c55e' }} />
+                    已正式上傳至健保署 — {run.steps[run.steps.length - 1].timestamp}
+                  </span>
+                </div>
+              )}
             </div>
           ))
         )}
