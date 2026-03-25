@@ -16,6 +16,12 @@ import AgentDashboard from '@/pages/AgentDashboard'
 import AgentExecution from '@/pages/AgentExecution'
 import AgentSkills from '@/pages/AgentSkills'
 import AgentSettings from '@/pages/AgentSettings'
+import TeachingRecord from '@/pages/TeachingRecord'
+import MedicalWriting from '@/pages/MedicalWriting'
+import AiHelper from '@/pages/AiHelper'
+import AiTemplates from '@/pages/AiTemplates'
+import AiSharedMarket from '@/pages/AiSharedMarket'
+import AiStatistics from '@/pages/AiStatistics'
 
 const router = createHashRouter([
   {
@@ -41,6 +47,14 @@ const router = createHashRouter([
       { path: 'agent/skills', element: <AgentSkills /> },
       { path: 'agent/execution', element: <AgentExecution /> },
       { path: 'agent/settings', element: <AgentSettings /> },
+      // 生成式醫囑 AI
+      { path: 'medical-ai/teaching', element: <TeachingRecord /> },
+      { path: 'medical-ai/writing', element: <MedicalWriting /> },
+      // AI 小幫手
+      { path: 'ai-helper/generate', element: <AiHelper /> },
+      { path: 'ai-helper/templates', element: <AiTemplates /> },
+      { path: 'ai-helper/shared', element: <AiSharedMarket /> },
+      { path: 'ai-helper/statistics', element: <AiStatistics /> },
       // FHIR專區
       { path: 'fhir/twpas', element: <FhirTwpas /> },
       { path: 'fhir/twci', element: <PlaceholderPage funcName="重大傷病TWCI" /> },
