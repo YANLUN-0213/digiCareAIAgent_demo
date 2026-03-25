@@ -805,6 +805,8 @@ body {
 
   &.p-button-text {
     color: var(--primary_color);
+    background: transparent;
+    border-color: transparent;
 
     &:enabled:hover {
       background: var(--lightblue);

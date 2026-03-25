@@ -181,10 +181,11 @@ const FhirTwpas = () => {
     const run = generateMockWorkflowRun()
     setWorkflowRuns(prev => [run, ...prev])
     setFhirDialogVisible(true)
-    const allPass = run.steps.every(s => s.status === 'success')
+    const verifySteps = run.steps.slice(0, -1)
+    const allVerifyPass = verifySteps.every(s => s.status === 'success')
     const failedStep = run.steps.find(s => s.status === 'failed')
-    if (allPass) {
-      showSuccess('驗證完成', '所有流程驗證皆通過')
+    if (allVerifyPass) {
+      showInfo('驗證完成', '所有驗證皆通過，可至案件流程追蹤進行正式上傳')
     } else if (failedStep) {
       showError('驗證失敗', `${failedStep.label}：${failedStep.errorCount} 個錯誤`)
     }

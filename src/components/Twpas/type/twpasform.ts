@@ -536,9 +536,12 @@ export const exampleTwpasValues = {
     ],
     approve:[
       {
+        approveDate: "2024-01-01",
         approveNum: "5",
         approveComment: "1",
-        approveDate: "2024-01-01"
+        outcome: "complete",
+        adjudicationCode: "eligible",
+        requestors: ["A123456789"]
       }
     ],
   },

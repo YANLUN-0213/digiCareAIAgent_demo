@@ -771,14 +771,22 @@ export function generateMockWorkflowRun(): WorkflowRun {
   _runCounter++
   const ts = _formatNow()
   const steps: WorkflowStep[] = []
-  let stopped = false
-  for (let i = 0; i < STEP_LABELS.length; i++) {
-    if (stopped) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
-    // 最後一步（正式申請）不自動執行，保持 pending 等使用者手動上傳
-    if (i === STEP_LABELS.length - 1) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
-    const pass = Math.random() < 0.7
-    if (pass) { steps.push(_makeStep(STEP_LABELS[i], 'success', ts)) }
-    else { steps.push(_makeStep(STEP_LABELS[i], 'failed', ts)); stopped = true }
+  const isOdd = _runCounter % 2 === 1
+  if (isOdd) {
+    // 奇數次：隨機讓某一驗證步驟失敗，後續步驟 pending
+    const failIdx = Math.floor(Math.random() * (STEP_LABELS.length - 1))
+    for (let i = 0; i < STEP_LABELS.length; i++) {
+      if (i === STEP_LABELS.length - 1) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
+      if (i < failIdx) { steps.push(_makeStep(STEP_LABELS[i], 'success', ts)) }
+      else if (i === failIdx) { steps.push(_makeStep(STEP_LABELS[i], 'failed', ts)) }
+      else { steps.push(_makeStep(STEP_LABELS[i], 'pending')) }
+    }
+  } else {
+    // 偶數次：前 4 步全部成功，最後一步 pending（待上傳）
+    for (let i = 0; i < STEP_LABELS.length; i++) {
+      if (i === STEP_LABELS.length - 1) { steps.push(_makeStep(STEP_LABELS[i], 'pending')); continue }
+      steps.push(_makeStep(STEP_LABELS[i], 'success', ts))
+    }
   }
   return { id: `run-${_runCounter}`, timestamp: ts, steps }
 }

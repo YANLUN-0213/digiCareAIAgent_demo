@@ -4,7 +4,7 @@ import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import { Tag } from 'primereact/tag'
 import { Dialog } from 'primereact/dialog'
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
+import { confirmDialog } from 'primereact/confirmdialog'
 import WorkflowStepsIndicator from './WorkflowStepsIndicator'
 import type { WorkflowRun, WorkflowStep, VerificationResultItem } from './twpas-workflow.types'
 
@@ -62,7 +62,6 @@ const TwpasWorkflowDialog = ({ visible, onHide, runs, onUpload }: Props) => {
 
   return (
     <>
-      <ConfirmDialog />
       <Dialog
         header="案件流程追蹤"
         visible={visible}
