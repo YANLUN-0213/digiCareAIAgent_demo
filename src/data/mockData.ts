@@ -934,13 +934,14 @@ export const MOCK_TEACHING_CASES: TeachingRecordCase[] = [
 
 export interface MedicalWritingDraft {
   type: 'admission' | 'discharge' | 'weekly'
+  format: 'standard' | 'soap'
   patientId: string
   content: string
 }
 
 export const MOCK_MEDICAL_WRITING_DRAFTS: MedicalWritingDraft[] = [
   // Admission Notes
-  { type: 'admission', patientId: 'mp1', content: `Admission Note
+  { type: 'admission', format: 'standard', patientId: 'mp1', content: `Admission Note
 
 Patient: 王建民 (A2025001)    Date: 2026-03-18
 Attending: 李文哲 MD         Ward: 5A-12
@@ -983,7 +984,7 @@ Plan:
 6. NPO for potential procedure
 7. Echocardiography within 24 hours
 8. Cardiology consultation — Dr. 周` },
-  { type: 'admission', patientId: 'mp2', content: `Admission Note
+  { type: 'admission', format: 'standard', patientId: 'mp2', content: `Admission Note
 
 Patient: 林美珍 (A2025002)    Date: 2026-03-20
 Attending: 張惠雯 MD         Ward: 6B-03
@@ -1031,7 +1032,7 @@ Plan:
 5. Repeat ABG in 2 hours
 6. BiPAP standby if deterioration
 7. Chest physiotherapy BID` },
-  { type: 'admission', patientId: 'mp3', content: `Admission Note
+  { type: 'admission', format: 'standard', patientId: 'mp3', content: `Admission Note
 
 Patient: 張志豪 (A2025003)    Date: 2026-03-22
 Attending: 陳淑芬 MD         Ward: 3C-08
@@ -1079,7 +1080,7 @@ Plan:
 8. DM education prior to discharge` },
 
   // Discharge Summaries
-  { type: 'discharge', patientId: 'mp1', content: `Discharge Summary
+  { type: 'discharge', format: 'standard', patientId: 'mp1', content: `Discharge Summary
 
 Patient: 王建民 (A2025001)
 Admission: 2026-03-18 → Discharge: 2026-03-24
@@ -1106,7 +1107,7 @@ Follow-up Plan:
 3. Lipid panel, BMP recheck in 4 weeks
 4. Repeat echocardiography in 3 months
 5. Return to ER if recurrent chest pain, dyspnea, or syncope` },
-  { type: 'discharge', patientId: 'mp2', content: `Discharge Summary
+  { type: 'discharge', format: 'standard', patientId: 'mp2', content: `Discharge Summary
 
 Patient: 林美珍 (A2025002)
 Admission: 2026-03-20 → Discharge: 2026-03-27
@@ -1132,7 +1133,7 @@ Follow-up Plan:
 3. Annual influenza and pneumococcal vaccination
 4. Smoking cessation reinforcement
 5. Return if worsening dyspnea, fever, or change in sputum` },
-  { type: 'discharge', patientId: 'mp3', content: `Discharge Summary
+  { type: 'discharge', format: 'standard', patientId: 'mp3', content: `Discharge Summary
 
 Patient: 張志豪 (A2025003)
 Admission: 2026-03-22 → Discharge: 2026-03-26
@@ -1161,7 +1162,7 @@ Follow-up Plan:
 5. Return if recurrent N/V, abdominal pain, or glucose >400` },
 
   // Weekly Summaries
-  { type: 'weekly', patientId: 'mp1', content: `Weekly Summary (2026-03-18 ~ 2026-03-24)
+  { type: 'weekly', format: 'standard', patientId: 'mp1', content: `Weekly Summary (2026-03-18 ~ 2026-03-24)
 
 Patient: 王建民 (A2025001)   Ward: 5A-12
 Attending: 李文哲 MD
@@ -1189,7 +1190,7 @@ Aspirin 100mg QD, Ticagrelor 90mg BID, Atorvastatin 80mg HS, Metoprolol 25mg BID
 1. 預計 03/24 出院
 2. 安排心臟復健門診
 3. 2 週後心臟科回診` },
-  { type: 'weekly', patientId: 'mp2', content: `Weekly Summary (2026-03-20 ~ 2026-03-27)
+  { type: 'weekly', format: 'standard', patientId: 'mp2', content: `Weekly Summary (2026-03-20 ~ 2026-03-27)
 
 Patient: 林美珍 (A2025002)   Ward: 6B-03
 Attending: 張惠雯 MD
@@ -1215,7 +1216,7 @@ Attending: 張惠雯 MD
 1. 已於 03/27 出院
 2. 1 週後胸腔科回診
 3. 4 週後安排肺功能檢查` },
-  { type: 'weekly', patientId: 'mp3', content: `Weekly Summary (2026-03-22 ~ 2026-03-26)
+  { type: 'weekly', format: 'standard', patientId: 'mp3', content: `Weekly Summary (2026-03-22 ~ 2026-03-26)
 
 Patient: 張志豪 (A2025003)   Ward: 3C-08
 Attending: 陳淑芬 MD
@@ -1242,12 +1243,342 @@ Attending: 陳淑芬 MD
 1. 已於 03/26 出院
 2. 1 週後內分泌科回診
 3. 追蹤 BMP、3 個月後 HbA1c` },
+
+  // === SOAP 格式 ===
+  { type: 'admission', format: 'soap', patientId: 'mp1', content: `[Subjective] 主觀陳述
+
+Chief Complaint (CC):
+突發性胸痛持續 3 小時。
+
+History of Present Illness (HPI):
+68 歲男性，過往有高血壓病史。今日下午突發性胸骨後壓迫性疼痛，疼痛放射至左臂，伴隨冒冷汗及噁心。疼痛強度 NRS 7/10，休息時發作，無先前劇烈活動。否認類似發作史、近期創傷或感染。
+
+Past Medical History (PMH):
+• 高血壓 × 10 年，規律服用 Amlodipine 5mg QD
+• 無糖尿病、高血脂或既往心臟病史
+• 無手術史
+
+Allergy: NKDA（無已知藥物過敏）
+Family History: 父親有高血壓病史
+
+[Objective] 客觀檢查
+
+Vital Signs:
+T: 36.5°C, P: 98 bpm, R: 20/min, BP: 158/92 mmHg, SpO2: 96% (Room Air)
+
+Physical Examination (PE):
+• General: 急性病容，冒冷汗
+• HEENT: 無異常
+• Heart: 心律規則，無雜音，S1/S2 正常
+• Lungs: 雙側呼吸音清晰，無囉音或哮鳴音
+• Abdomen: 柔軟，無壓痛
+• Extremities: 無水腫，脈搏對稱，無 JVD
+
+Laboratory Data:
+• Troponin-I: 2.8 ng/mL ↑ (ref <0.04)
+• CK-MB: 45 U/L ↑ (ref <25)
+• CBC: WBC 11,200, Hb 14.8, Plt 238k — 正常範圍
+• BMP: BUN 18, Cr 1.0, Na 140, K 4.2 — 正常範圍
+• PT/INR: 12.5 sec / 1.05
+
+EKG:
+Sinus rhythm, rate 98. ST-segment elevation in leads II, III, aVF with reciprocal ST depression in I, aVL.
+→ 判讀：Acute inferior STEMI
+
+[Assessment] 臨床評估
+
+Primary Diagnosis:
+急性下壁 ST 段上升型心肌梗塞 (Acute inferior STEMI, ICD-10: I21.19)
+
+Differential Diagnosis:
+1. 主動脈剝離 (Aortic dissection) — 但無撕裂性背痛、雙側血壓差異，暫不考慮
+2. 肺栓塞 (Pulmonary embolism) — 但無低血氧、D-dimer 未升高，暫不考慮
+3. 急性心包膜炎 (Acute pericarditis) — EKG 變化侷限於下壁導程，不符合瀰漫性變化
+
+[Plan] 診療計畫
+
+Diagnostic:
+• Serial Troponin-I q6h
+• Serial EKG
+• Echocardiography within 24 hours
+• NPO for potential procedure
+
+Therapeutic:
+1. 緊急心導管檢查合併 primary PCI
+2. Aspirin 300mg + Clopidogrel 600mg loading dose（雙抗血小板治療）
+3. Heparin drip per ACS protocol
+4. Morphine 2mg IV PRN for pain
+5. Cardiology consultation — Dr. 周
+
+Educational:
+• 向病患及家屬說明心導管手術流程、風險及預後
+• 術後需長期服用雙抗血小板藥物（至少 12 個月）
+• 生活型態調整衛教（戒菸、低鹽低脂飲食、規律運動）` },
+
+  { type: 'admission', format: 'soap', patientId: 'mp2', content: `[Subjective] 主觀陳述
+
+Chief Complaint (CC):
+漸進性呼吸困難加劇 5 天，合併咳嗽有痰。
+
+History of Present Illness (HPI):
+55 歲女性，已知 COPD (GOLD stage III) 病史。5 天前開始出現活動性呼吸困難加劇，過去 24 小時明顯惡化。自述痰量增加，呈黃綠色膿痰，有主觀發燒感。否認咳血、胸痛或端坐呼吸。上次急性發作為 4 個月前住院 5 天。
+
+Past Medical History (PMH):
+• COPD 確診 8 年，每年 2-3 次急性發作
+• 曾吸菸 30 pack-years，3 年前戒菸
+• 無糖尿病、高血壓
+
+Current Medications:
+Tiotropium 18mcg QD, Budesonide/Formoterol 160/4.5mcg BID, Salbutamol MDI PRN
+
+Allergy: NKDA
+
+[Objective] 客觀檢查
+
+Vital Signs:
+T: 37.8°C, P: 105 bpm, R: 28/min, BP: 132/78 mmHg, SpO2: 88% (Room Air)
+
+Physical Examination (PE):
+• General: 呼吸急促，使用輔助呼吸肌
+• Lungs: 雙側瀰漫性呼氣期哮鳴音，呼氣期延長，基底呼吸音減弱
+• Heart: 心跳過速，規則，無雜音
+• Extremities: 無發紺，無水腫
+
+Laboratory Data:
+• CBC: WBC 13,500 ↑, Hb 13.2, Plt 245k
+• CRP: 8.2 mg/dL ↑ (ref <0.5)
+• Procalcitonin: 0.35 ng/mL
+
+ABG (Room Air):
+pH 7.32 ↓, pCO2 52 ↑, pO2 58 ↓, HCO3 26
+→ 判讀：Acute on chronic respiratory acidosis with hypoxemia
+
+Imaging:
+CXR: 雙側肺部過度充氣，橫膈扁平，無局部浸潤或肋膜積水
+
+[Assessment] 臨床評估
+
+Primary Diagnosis:
+COPD 急性發作 (Anthonisen Type I — 呼吸困難加劇 + 痰量增加 + 痰轉膿性)
+
+Secondary Diagnosis:
+急性慢性呼吸衰竭 (Acute on chronic respiratory failure)
+
+Differential Diagnosis:
+1. 肺炎 (Pneumonia) — CXR 無局部浸潤，但不排除早期，持續追蹤
+2. 心臟衰竭急性發作 — 無端坐呼吸、JVD、水腫，暫不考慮
+
+[Plan] 診療計畫
+
+Diagnostic:
+• 痰液培養及藥敏試驗（已送檢）
+• 2 小時後覆驗 ABG
+• 如惡化考慮 CT chest
+
+Therapeutic:
+1. O2 via nasal cannula, titrate SpO2 88-92%（COPD 病人避免過度給氧）
+2. Nebulized Salbutamol 2.5mg + Ipratropium 0.5mg q4h
+3. Methylprednisolone 40mg IV q12h × 5 days
+4. Levofloxacin 750mg IV QD × 7 days
+5. BiPAP standby（若 ABG 持續惡化即啟用）
+6. Chest physiotherapy BID
+
+Educational:
+• 向病患說明 COPD 急性發作原因與預防方式
+• 衛教正確吸入劑使用技巧
+• 強調戒菸維持與流感/肺炎鏈球菌疫苗接種` },
+
+  { type: 'admission', format: 'soap', patientId: 'mp3', content: `[Subjective] 主觀陳述
+
+Chief Complaint (CC):
+噁心、嘔吐及腹痛持續 2 天。
+
+History of Present Illness (HPI):
+42 歲男性，已知 Type 2 DM 5 年（控制不佳，上次 HbA1c 10.2%）。2 天前開始出現進行性噁心、嘔吐（>10 次）、瀰漫性腹痛及全身無力。自述因經濟困難，過去 2 週未施打胰島素。近 1 個月有多尿、多渴及體重減輕 3 公斤。
+
+Past Medical History (PMH):
+• T2DM × 5 年，使用 Metformin 1000mg BID + Glargine 20U HS（自述停用 2 週）
+• 高血壓，使用 Losartan 50mg QD
+• 無手術史
+
+Social History: 自營業者，無固定收入，自述因經濟困難停藥
+
+Allergy: NKDA
+
+[Objective] 客觀檢查
+
+Vital Signs:
+T: 36.8°C, P: 115 bpm ↑, R: 32/min ↑ (Kussmaul breathing), BP: 102/68 mmHg ↓, SpO2: 99% RA
+
+Physical Examination (PE):
+• General: 嗜睡（GCS E3V4M6=13），口腔黏膜乾燥，呼氣有水果味（fruity breath）
+• Abdomen: 瀰漫性壓痛，無反彈痛，腸音減弱
+• Skin: 皮膚彈性差（poor turgor），四肢溫暖
+
+Laboratory Data:
+• Glucose: 485 mg/dL ↑↑
+• Serum Ketones: Strongly positive ↑↑
+• VBG: pH 7.18 ↓↓, pCO2 18 ↓, HCO3 8 ↓↓
+• Anion Gap: 24 ↑ (ref 8-12)
+• BUN/Cr: 32/1.4 ↑ (prerenal AKI)
+• Na: 128 ↓ (corrected Na 134), K: 5.8 ↑
+• WBC: 15,800 ↑ (stress response)
+• HbA1c: 10.2% ↑↑
+• Urinalysis: Glucose 4+, Ketones 3+, SG 1.035 ↑
+
+[Assessment] 臨床評估
+
+Primary Diagnosis:
+糖尿病酮酸血症 (Diabetic Ketoacidosis, DKA) — 中度 (pH 7.18, AG 24)
+
+Secondary Diagnoses:
+1. 腎前性急性腎損傷 (Prerenal AKI) — Cr 1.4, BUN/Cr ratio >20
+2. 高血鉀症 (Hyperkalemia, K 5.8) — DKA 致酸中毒引起鉀外移
+3. Type 2 DM 控制不佳 — 停藥導致
+
+Differential Diagnosis:
+1. 糖尿病高滲透壓狀態 (HHS) — 但有明顯酮體及酸中毒，符合 DKA
+2. 敗血症 (Sepsis) — WBC 升高可能為壓力反應，需追蹤
+
+[Plan] 診療計畫
+
+Diagnostic:
+• Hourly glucose monitoring
+• BMP q4h (追蹤 K, AG, pH)
+• Repeat ABG in 4 hours — close anion gap
+• Continuous telemetry（高血鉀心律監測）
+
+Therapeutic:
+1. NS 1L bolus → 250 mL/hr，glucose <250 時轉 D5 0.45% NS
+2. Regular insulin 0.1 U/kg/hr IV drip
+3. 鉀離子補充 protocol: K >5.2 暫不補充，K <5.0 加 20mEq/L KCl
+4. 持續監測 I/O（尿量目標 >0.5 mL/kg/hr）
+
+Educational:
+• 向病患說明 DKA 成因及停藥風險
+• 社工介入：評估藥物補助方案
+• 出院前安排完整糖尿病衛教（胰島素注射、低血糖辨識、生病日管理）` },
+
+  // Discharge SOAP
+  { type: 'discharge', format: 'soap', patientId: 'mp1', content: `[Subjective] 主觀陳述
+
+出院時主訴：
+病患自述胸痛已完全緩解，活動時無不適，對出院後照護事項已充分理解。
+
+住院期間病程摘要（病患陳述）：
+「手術後胸口就不痛了，這幾天慢慢可以走動，沒有覺得喘或不舒服。」
+
+[Objective] 客觀檢查
+
+住院期間關鍵數據變化：
+• Troponin-I: 2.8 → 28.5 (peak D2) → 15.2 → 4.8 → 1.2 (持續下降)
+• EKG: Inferior STEMI → ST resolution after PCI → Stable sinus rhythm at discharge
+• Echo (D4): LVEF 50%, inferior wall hypokinesis
+• Vital Signs (出院日): BP 128/76, HR 72, SpO2 98% RA — 穩定
+
+處置紀錄：
+• 2026-03-18: Emergent PCI — DES to mid-RCA, TIMI 3 flow restored
+• Post-PCI: CCU monitoring → transfer to ward D2
+• Guideline-directed medical therapy initiated D3
+• Telemetry: No arrhythmic events throughout hospitalization
+• Ambulating independently by D5
+
+出院用藥：
+1. Aspirin 100mg QD（終身）
+2. Ticagrelor 90mg BID（× 12 個月）
+3. Atorvastatin 80mg HS
+4. Metoprolol 25mg BID
+5. Ramipril 2.5mg QD
+6. Amlodipine 5mg QD（原有用藥）
+7. NTG 0.6mg SL PRN chest pain
+
+[Assessment] 臨床評估
+
+出院診斷：
+Acute inferior STEMI, s/p primary PCI with DES to RCA — 恢復良好
+
+出院狀態：
+• 心臟功能穩定恢復中（LVEF 50%）
+• 活動耐受度良好，可自行行走及如廁
+• 無出血併發症
+• LDL 142 — 需持續高劑量 Statin 控制
+
+[Plan] 診療計畫
+
+Follow-up:
+1. 心臟科回診：2 週後（李文哲醫師門診）
+2. 心臟復健門診：已安排
+3. Lipid panel + BMP recheck：4 週後
+4. Repeat Echo：3 個月後
+
+Educational:
+• DAPT 絕對不可自行停藥（支架血栓風險）
+• 胸痛時 NTG 使用方式（含 1 顆等 5 分鐘，最多 3 顆，未緩解立即就醫）
+• 飲食：低鹽低油，地中海飲食
+• 活動：前 2 週避免搬 >5 kg 重物，漸進增加活動` },
+
+  // Weekly SOAP
+  { type: 'weekly', format: 'soap', patientId: 'mp1', content: `[Subjective] 主觀陳述
+
+本週病患自述：
+「手術後胸口就不痛了，這幾天慢慢可以走路，沒有覺得喘。護士教我怎麼吃藥，我都有記住。」
+病患對於出院後需長期服藥表示理解，情緒穩定，配合度佳。
+
+[Objective] 客觀檢查
+
+本週關鍵檢查與數據趨勢：
+
+Vital Signs 趨勢 (03/18-03/24):
+• BP: 158/92 → 142/85 → 135/80 → 128/76 (穩定下降)
+• HR: 98 → 82 → 75 → 72 (Beta-blocker 效果)
+• SpO2: 96% → 98% RA (穩定)
+
+Lab 趨勢:
+• Troponin-I: 2.8 → 28.5 (peak) → 15.2 → 4.8 → 1.2 (持續下降 ✓)
+• CK-MB: 45 → 185 (peak) → 92 → 28 (正常化 ✓)
+• LDL: 142 mg/dL（目標 <55，Atorvastatin 80mg 持續中）
+
+Key Events:
+• D1 (03/18): Emergent PCI — DES to RCA, TIMI 3 flow
+• D2 (03/19): Peak troponin, 血行穩定，轉出 CCU
+• D3 (03/20): 開始 GDMT (DAPT + Statin + BB + ACEi)
+• D4 (03/21): Echo LVEF 50%, inferior hypokinesis
+• D5 (03/22): 開始下床活動，耐受良好
+• D6-7 (03/23-24): 穩定進步，準備出院
+
+目前用藥：
+Aspirin 100mg QD, Ticagrelor 90mg BID, Atorvastatin 80mg HS, Metoprolol 25mg BID, Ramipril 2.5mg QD
+
+[Assessment] 臨床評估
+
+整體評估：
+Acute inferior STEMI s/p primary PCI — 恢復順利，無併發症
+• 心肌酵素持續下降，心律穩定
+• LVEF 50% 為中等程度影響，需長期追蹤
+• 活動耐受度逐日改善
+• 藥物耐受良好，無低血壓或出血
+
+[Plan] 下週計畫
+
+1. 預計 03/24 出院
+2. 安排心臟復健門診
+3. 2 週後心臟科回診
+4. 4 週後覆驗 Lipid panel
+5. 出院衛教重點：DAPT 用藥遵從性、胸痛處置、飲食與活動指引` },
 ]
 
-export function getMedicalWritingDraft(type: string, patientId: string): string {
-  const draft = MOCK_MEDICAL_WRITING_DRAFTS.find(d => d.type === type && d.patientId === patientId)
-  return draft?.content ?? '目前無此病人的草稿資料，請選擇其他病人或類型。'
+export function getMedicalWritingDraft(type: string, patientId: string, format: string = 'standard'): string {
+  const draft = MOCK_MEDICAL_WRITING_DRAFTS.find(d => d.type === type && d.patientId === patientId && d.format === format)
+  if (draft) return draft.content
+  // fallback: 如果找不到指定格式，嘗試 standard
+  const fallback = MOCK_MEDICAL_WRITING_DRAFTS.find(d => d.type === type && d.patientId === patientId && d.format === 'standard')
+  return fallback?.content ?? '目前無此病人的草稿資料，請選擇其他病人或類型。'
 }
+
+export const OUTPUT_FORMAT_OPTIONS = [
+  { label: 'Standard（標準格式）', value: 'standard' },
+  { label: 'SOAP（主觀/客觀/評估/計畫）', value: 'soap' },
+]
 
 // --- HIS 原始資料（餵給 AI 生成的來源資料）---
 
@@ -1642,3 +1973,409 @@ export const MOCK_AI_HELPER_STATS = {
   ],
   feedbackAvg: { ui: 4.2, content: 4.5, efficiency: 4.3 },
 }
+
+// ===== TWCI 重大傷病 假資料 =====
+
+import { TwciForm, exampleTwciValues } from '../components/Twci/type/twciform'
+
+export interface TwciSavedRecord {
+  id: string
+  createdAt: string
+  createdBy: string
+  updatedAt: string
+  updatedBy: string
+  data: TwciForm
+}
+
+export const MOCK_TWCI_SAVED_RECORDS: TwciSavedRecord[] = [
+  {
+    id: '1',
+    createdAt: '2026-03-10 09:00:00',
+    createdBy: '王大明',
+    updatedAt: '2026-03-10 10:30:00',
+    updatedBy: '王大明',
+    data: {
+      ...exampleTwciValues,
+      hosp: { ...exampleTwciValues.hosp, hospId: '1145010010' },
+      patient: { ...exampleTwciValues.patient, name: '陳美華', idCard: 'A223456789' },
+    } as TwciForm,
+  },
+  {
+    id: '2',
+    createdAt: '2026-03-08 14:20:00',
+    createdBy: '李小華',
+    updatedAt: '2026-03-08 15:45:00',
+    updatedBy: '李小華',
+    data: {
+      ...exampleTwciValues,
+      hosp: { ...exampleTwciValues.hosp, hospId: '0401180014', applDate: '2025-08-15' },
+      patient: { ...exampleTwciValues.patient, name: '林志明', idCard: 'B112233445', gender: 'male', birthday: '1975-03-20' },
+      diagnosis: {
+        ...exampleTwciValues.diagnosis,
+        icd10cmCode: 'C34.90',
+      },
+      condition: {
+        ...exampleTwciValues.condition,
+        clinicalStatus: 'active',
+        verificationStatus: 'confirmed',
+        severity: '24484000',
+      },
+    } as TwciForm,
+  },
+  {
+    id: '3',
+    createdAt: '2026-03-05 11:00:00',
+    createdBy: '張美玲',
+    updatedAt: '2026-03-06 09:00:00',
+    updatedBy: '張美玲',
+    data: {
+      ...exampleTwciValues,
+      hosp: { ...exampleTwciValues.hosp, hospId: '1501010018', applDate: '2025-09-22' },
+      patient: { ...exampleTwciValues.patient, name: '黃淑芬', idCard: 'F298765432', gender: 'female', birthday: '1968-07-10' },
+      diagnosis: {
+        ...exampleTwciValues.diagnosis,
+        icd10cmCode: 'C50.919',
+      },
+      cancerStage: { cancerStage: '2', assessScore: 'T2N1M0', assessDate: '2025-09-01' },
+    } as TwciForm,
+  },
+]
+
+export const MOCK_TWCI_FHIR_BUNDLE = {
+  resourceType: 'Bundle',
+  id: 'twci-bundle-example',
+  meta: {
+    profile: ['https://twcore.mohw.gov.tw/ig/twci/StructureDefinition/Bundle-twci'],
+  },
+  type: 'document',
+  timestamp: '2026-03-10T10:00:00+08:00',
+  entry: [
+    {
+      fullUrl: 'urn:uuid:composition-twci-001',
+      resource: {
+        resourceType: 'Composition',
+        status: 'final',
+        type: { coding: [{ system: 'http://loinc.org', code: '11503-0', display: 'Medical records' }] },
+        subject: { reference: 'urn:uuid:patient-001' },
+        date: '2026-03-10',
+        title: 'TWCI 重大傷病申請書',
+      },
+    },
+    {
+      fullUrl: 'urn:uuid:patient-001',
+      resource: {
+        resourceType: 'Patient',
+        identifier: [{ system: 'http://www.moi.gov.tw/', value: 'A123456789' }],
+        name: [{ text: '王大明' }],
+        gender: 'male',
+        birthDate: '2001-01-01',
+        address: [{ postalCode: '106', text: '台北市大安區信義路三段140號' }],
+        telecom: [
+          { system: 'phone', value: '0912345678', use: 'mobile' },
+          { system: 'email', value: 'a123456@nhi.gov.tw' },
+        ],
+      },
+    },
+    {
+      fullUrl: 'urn:uuid:condition-001',
+      resource: {
+        resourceType: 'Condition',
+        clinicalStatus: { coding: [{ code: 'remission' }] },
+        verificationStatus: { coding: [{ code: 'confirmed' }] },
+        severity: { coding: [{ system: 'http://snomed.info/sct', code: '24484000', display: 'Severe' }] },
+        code: { coding: [{ system: 'http://hl7.org/fhir/sid/icd-10-cm', code: 'C49.6', display: '軀幹結締組織惡性腫瘤' }] },
+        subject: { reference: 'urn:uuid:patient-001' },
+        recordedDate: '2024-01-10',
+      },
+    },
+    {
+      fullUrl: 'urn:uuid:questionnaire-response-001',
+      resource: {
+        resourceType: 'QuestionnaireResponse',
+        status: 'completed',
+        item: [
+          { linkId: 'cancerStage', text: '癌症期別', answer: [{ valueString: 'Stage I' }] },
+          { linkId: 'oriCancerAjcc', text: 'AJCC分期', answer: [{ valueString: '其他系統分期' }] },
+          { linkId: 'cancerStatus', text: '目前癌症狀態', answer: [{ valueString: '緩解中' }] },
+        ],
+      },
+    },
+  ],
+}
+
+export const TWCI_AI_FIELD_PROMPTS: Record<string, string> = {
+  icd10cmCode: `你是重大傷病(TWCI)的 AI 輔助助手。根據以下病人的臨床資訊，建議最可能的 ICD-10-CM 主診斷代碼。
+
+請考量：
+1. 病人的臨床表現與病理報告
+2. 腫瘤的原發部位與組織型態
+3. ICD-10-CM 編碼的精確性
+4. 是否符合重大傷病申請條件
+
+請以結構化格式回覆，並標註建議理由。`,
+
+  cancerStage: `你是重大傷病(TWCI)的 AI 輔助助手。根據以下病人的影像報告、病理報告與臨床資訊，建議適當的癌症分期。
+
+請考量：
+1. TNM 分期系統（AJCC 第8版）
+2. 影像檢查結果（CT/MRI/PET）
+3. 病理報告結果
+4. 臨床分期與病理分期的區別
+
+請以結構化格式回覆。`,
+
+  cancerStatus: `你是重大傷病(TWCI)的 AI 輔助助手。根據以下病人的治療紀錄與追蹤資料，評估目前的癌症狀態。
+
+請考量：
+1. 最近一次影像追蹤結果
+2. 腫瘤標記趨勢
+3. 治療反應評估（RECIST 標準）
+4. 臨床症狀變化
+
+請以結構化格式回覆。`,
+}
+
+export function generateTwciAiResponse(fieldKey: string, formData: TwciForm): string {
+  const diagCode = formData.diagnosis?.icd10cmCode || '（未填寫）'
+  const patientName = formData.patient?.name || '（未填寫）'
+  const cancerStageVal = formData.cancerStage?.cancerStage || '（未填寫）'
+  const clinicalStatus = formData.condition?.clinicalStatus || '（未填寫）'
+
+  if (fieldKey === 'icd10cmCode') {
+    return `## AI 診斷代碼建議
+
+### 案件摘要
+- **病患姓名**：${patientName}
+- **目前填寫 ICD-10**：${diagCode}
+- **臨床狀態**：${clinicalStatus}
+
+---
+
+### 建議主診斷代碼
+
+根據病患的臨床資料分析：
+
+| 優先序 | ICD-10-CM | 疾病名稱 | 建議理由 |
+|--------|-----------|---------|---------|
+| 1 | ${diagCode !== '（未填寫）' ? diagCode : 'C49.6'} | 軀幹結締組織惡性腫瘤 | 與病理報告一致 |
+| 2 | C49.4 | 腹部結締組織惡性腫瘤 | 需確認原發部位 |
+| 3 | C49.9 | 結締組織惡性腫瘤，未明示部位 | 若原發部位不明確 |
+
+### 注意事項
+
+- 請確認病理報告中的組織型態
+- 若為復發或轉移性腫瘤，應填寫原發部位代碼
+- ICD-10-CM 編碼應精確至小數點後一位
+
+> 參考依據：ICD-10-CM 2024版、重大傷病申請作業要點`
+  }
+
+  if (fieldKey === 'cancerStage') {
+    return `## AI 癌症分期建議
+
+### 案件摘要
+- **ICD-10**：${diagCode}
+- **目前填寫分期**：Stage ${cancerStageVal}
+
+---
+
+### 分期評估
+
+根據目前資料，建議的 AJCC 分期如下：
+
+**TNM 分期建議**：
+- **T (原發腫瘤)**：需依影像與病理報告判定
+- **N (淋巴結)**：需確認區域淋巴結狀態
+- **M (遠處轉移)**：需確認是否有遠處轉移
+
+### 分期依據核對表
+
+| 檢查項目 | 狀態 | 說明 |
+|---------|------|------|
+| 病理報告 | ${formData.diagnosis?.examinationReportArray?.[0]?.reportType ? '已填寫' : '未填寫'} | 確認組織學類型 |
+| 影像報告 | ${(formData.diagnosis?.imageStudy?.length ?? 0) > 0 ? '已填寫' : '未填寫'} | CT/MRI/PET 結果 |
+| 手術紀錄 | 待確認 | 手術發現與切除範圍 |
+
+> 參考依據：AJCC Cancer Staging Manual (8th Edition)`
+  }
+
+  if (fieldKey === 'cancerStatus') {
+    return `## AI 癌症狀態評估
+
+### 案件摘要
+- **ICD-10**：${diagCode}
+- **臨床狀態**：${clinicalStatus}
+- **分期**：Stage ${cancerStageVal}
+
+---
+
+### 狀態評估建議
+
+根據病患的治療紀錄與追蹤資料：
+
+**目前癌症狀態判定**：
+
+| 評估面向 | 結果 | 說明 |
+|---------|------|------|
+| 影像追蹤 | ${(formData.diagnosis?.imageStudy?.length ?? 0) > 0 ? '有影像資料' : '尚無影像追蹤'} | 依 RECIST 1.1 標準 |
+| 治療反應 | 需評估 | 依治療計畫與反應判定 |
+| 臨床症狀 | ${clinicalStatus} | 目前填寫的臨床狀態 |
+
+### 建議
+
+1. 若病患完成根治性治療且無殘餘腫瘤 → **緩解中(4)**
+2. 若持續接受治療中 → **治療中(3)**
+3. 若影像或腫瘤標記顯示惡化 → **復發(5)** 或 **惡化(6)**
+
+> 參考依據：NCCN Guidelines、重大傷病換發評估準則`
+  }
+
+  return `## AI 評估建議
+
+根據目前表單資料，針對「${fieldKey}」欄位的建議：
+
+- **病患**：${patientName}
+- **診斷**：${diagCode}
+- **分期**：Stage ${cancerStageVal}
+
+請確認所有必要欄位已正確填寫，系統將依據完整資料提供更精確的建議。`
+}
+
+// TWCI 案件流程追蹤（不含 CQL 驗證，官方尚未釋出）
+const TWCI_STEP_LABELS = ['地端FHIR驗證', '雲端FHIR預檢', '正式申請']
+
+let _twciRunCounter = 0
+
+export function generateTwciMockWorkflowRun(): WorkflowRun {
+  _twciRunCounter++
+  const ts = _formatNow()
+  const steps: WorkflowStep[] = []
+  const isOdd = _twciRunCounter % 2 === 1
+  if (isOdd) {
+    const failIdx = Math.floor(Math.random() * (TWCI_STEP_LABELS.length - 1))
+    for (let i = 0; i < TWCI_STEP_LABELS.length; i++) {
+      if (i === TWCI_STEP_LABELS.length - 1) { steps.push(_makeStep(TWCI_STEP_LABELS[i], 'pending')); continue }
+      if (i < failIdx) { steps.push(_makeStep(TWCI_STEP_LABELS[i], 'success', ts)) }
+      else if (i === failIdx) { steps.push(_makeStep(TWCI_STEP_LABELS[i], 'failed', ts)) }
+      else { steps.push(_makeStep(TWCI_STEP_LABELS[i], 'pending')) }
+    }
+  } else {
+    for (let i = 0; i < TWCI_STEP_LABELS.length; i++) {
+      if (i === TWCI_STEP_LABELS.length - 1) { steps.push(_makeStep(TWCI_STEP_LABELS[i], 'pending')); continue }
+      steps.push(_makeStep(TWCI_STEP_LABELS[i], 'success', ts))
+    }
+  }
+  return { id: `twci-run-${_twciRunCounter}`, timestamp: ts, steps }
+}
+
+// ===== TWCI 批次打包下載 假資料 =====
+
+export interface TwciBatchCase {
+  id: string
+  acptNo: string
+  hospId: string
+  patientName: string
+  idCard: string
+  icd10cmCode: string
+  icd10cmDisplay: string
+  applDate: string
+  verifiedAt: string
+  verifyStatus: 'passed' | 'failed'
+  files: TwciBatchFile[]
+}
+
+export interface TwciBatchFile {
+  type: 'XML' | 'ATT' | 'DCF' | 'EMR'
+  fileName: string
+  size: string
+}
+
+function _batchFiles(hospId: string, caseNo: string, hasAtt: boolean, hasDcf: boolean, hasEmr: boolean): TwciBatchFile[] {
+  const files: TwciBatchFile[] = [
+    { type: 'XML', fileName: `XML${hospId}_${caseNo}.XML`, size: `${12 + Math.floor(Math.random() * 30)} KB` },
+  ]
+  if (hasAtt) files.push({ type: 'ATT', fileName: `ATT${hospId}_${caseNo}.CAB`, size: `${200 + Math.floor(Math.random() * 800)} KB` })
+  if (hasDcf) files.push({ type: 'DCF', fileName: `DCF${hospId}_${caseNo}.CAB`, size: `${1 + Math.floor(Math.random() * 15)} MB` })
+  if (hasEmr) files.push({ type: 'EMR', fileName: `EMR${hospId}_${caseNo}.CAB`, size: `${50 + Math.floor(Math.random() * 200)} KB` })
+  return files
+}
+
+export const MOCK_TWCI_BATCH_CASES: TwciBatchCase[] = [
+  {
+    id: 'bc-01', acptNo: '11218800001', hospId: '0131060029',
+    patientName: '王大明', idCard: 'A123456789', icd10cmCode: 'C49.6', icd10cmDisplay: '軀幹結締組織惡性腫瘤',
+    applDate: '2025-10-22', verifiedAt: '2026-03-20 09:15:30', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025102200000001', true, true, true),
+  },
+  {
+    id: 'bc-02', acptNo: '11218800002', hospId: '0131060029',
+    patientName: '陳美華', idCard: 'A223456789', icd10cmCode: 'C34.90', icd10cmDisplay: '支氣管和肺惡性腫瘤',
+    applDate: '2025-10-23', verifiedAt: '2026-03-20 09:20:15', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025102300000002', true, true, false),
+  },
+  {
+    id: 'bc-03', acptNo: '11218800003', hospId: '0131060029',
+    patientName: '林志明', idCard: 'B112233445', icd10cmCode: 'C50.919', icd10cmDisplay: '女性乳房惡性腫瘤',
+    applDate: '2025-10-24', verifiedAt: '2026-03-20 09:25:00', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025102400000003', true, false, true),
+  },
+  {
+    id: 'bc-04', acptNo: '11218800004', hospId: '0131060029',
+    patientName: '黃淑芬', idCard: 'F298765432', icd10cmCode: 'C22.0', icd10cmDisplay: '肝細胞癌',
+    applDate: '2025-10-25', verifiedAt: '2026-03-20 10:00:45', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025102500000004', true, true, true),
+  },
+  {
+    id: 'bc-05', acptNo: '11218800005', hospId: '0131060029',
+    patientName: '張家豪', idCard: 'D145678901', icd10cmCode: 'C18.9', icd10cmDisplay: '結腸惡性腫瘤',
+    applDate: '2025-10-26', verifiedAt: '2026-03-20 10:10:22', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025102600000005', true, false, false),
+  },
+  {
+    id: 'bc-06', acptNo: '11218800006', hospId: '0131060029',
+    patientName: '劉怡君', idCard: 'F287654321', icd10cmCode: 'C73', icd10cmDisplay: '甲狀腺惡性腫瘤',
+    applDate: '2025-11-01', verifiedAt: '2026-03-20 10:30:18', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025110100000006', true, true, false),
+  },
+  {
+    id: 'bc-07', acptNo: '11218800007', hospId: '0131060029',
+    patientName: '吳建廷', idCard: 'A234567890', icd10cmCode: 'C61', icd10cmDisplay: '前列腺惡性腫瘤',
+    applDate: '2025-11-02', verifiedAt: '2026-03-20 11:05:00', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025110200000007', true, true, true),
+  },
+  {
+    id: 'bc-08', acptNo: '11218800008', hospId: '0131060029',
+    patientName: '蔡雅婷', idCard: 'F256789012', icd10cmCode: 'C53.9', icd10cmDisplay: '子宮頸惡性腫瘤',
+    applDate: '2025-11-05', verifiedAt: '2026-03-20 11:20:33', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025110500000008', true, false, true),
+  },
+  {
+    id: 'bc-09', acptNo: '11218800009', hospId: '0131060029',
+    patientName: '鄭國華', idCard: 'B223456780', icd10cmCode: 'C16.9', icd10cmDisplay: '胃惡性腫瘤',
+    applDate: '2025-11-08', verifiedAt: '2026-03-21 08:45:10', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025110800000009', true, true, false),
+  },
+  {
+    id: 'bc-10', acptNo: '11218800010', hospId: '0131060029',
+    patientName: '許文龍', idCard: 'E134567890', icd10cmCode: 'C71.9', icd10cmDisplay: '腦惡性腫瘤',
+    applDate: '2025-11-10', verifiedAt: '2026-03-21 09:00:55', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025111000000010', true, true, true),
+  },
+  {
+    id: 'bc-11', acptNo: '11218800011', hospId: '0131060029',
+    patientName: '周美玲', idCard: 'F212345678', icd10cmCode: 'C56.9', icd10cmDisplay: '卵巢惡性腫瘤',
+    applDate: '2025-11-12', verifiedAt: '2026-03-21 09:30:00', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025111200000011', true, true, true),
+  },
+  {
+    id: 'bc-12', acptNo: '11218800012', hospId: '0131060029',
+    patientName: '楊志強', idCard: 'C187654321', icd10cmCode: 'C92.00', icd10cmDisplay: '急性骨髓性白血病',
+    applDate: '2025-11-15', verifiedAt: '2026-03-21 10:15:20', verifyStatus: 'passed',
+    files: _batchFiles('0131060029', '2025111500000012', true, false, false),
+  },
+]
+
+export const TWCI_BATCH_BUSINESS_TYPES = [
+  { label: 'QB4-重大傷病', value: 'QB4' },
+  { label: 'QB4_T-重大傷病測試_FHIR格式', value: 'QB4_T' },
+]

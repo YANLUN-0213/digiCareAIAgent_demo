@@ -8,7 +8,7 @@ import { Tag } from 'primereact/tag'
 import PageHeader from '@/components/PageHeader'
 import { useToast } from '@/context/ToastContext'
 import { Panel } from 'primereact/panel'
-import { MOCK_MEDICAL_PATIENTS, getMedicalWritingDraft, getHisSourceData } from '@/data/mockData'
+import { MOCK_MEDICAL_PATIENTS, getMedicalWritingDraft, getHisSourceData, OUTPUT_FORMAT_OPTIONS } from '@/data/mockData'
 
 const WRITING_TYPES = [
   { key: 'admission', label: '入院病摘', subtitle: 'Admission Note', icon: 'pi pi-sign-in' },
@@ -21,6 +21,7 @@ const MedicalWriting = () => {
 
   const [selectedType, setSelectedType] = useState('admission')
   const [selectedPatient, setSelectedPatient] = useState<string | null>(null)
+  const [selectedFormat, setSelectedFormat] = useState('standard')
   const [draftText, setDraftText] = useState('')
   const [genStatus, setGenStatus] = useState<'idle' | 'generating' | 'complete'>('idle')
 
@@ -58,13 +59,13 @@ const MedicalWriting = () => {
       showInfo('請選擇病人', '請先選擇一位病人再進行 AI 生成')
       return
     }
-    const content = getMedicalWritingDraft(selectedType, selectedPatient)
+    const content = getMedicalWritingDraft(selectedType, selectedPatient, selectedFormat)
     startStreaming(content)
   }
 
   const handleRegenerate = () => {
     if (!selectedPatient) return
-    const content = getMedicalWritingDraft(selectedType, selectedPatient)
+    const content = getMedicalWritingDraft(selectedType, selectedPatient, selectedFormat)
     startStreaming(content)
   }
 
@@ -127,8 +128,15 @@ const MedicalWriting = () => {
             onChange={e => { setSelectedPatient(e.value); if (genStatus !== 'generating') { setGenStatus('idle'); setDraftText('') } }}
             placeholder="請選擇病人"
             className="flex-1"
-            style={{ minWidth: '300px' }}
+            style={{ minWidth: '280px' }}
             filter
+          />
+          <Dropdown
+            value={selectedFormat}
+            options={OUTPUT_FORMAT_OPTIONS}
+            onChange={e => { setSelectedFormat(e.value); if (genStatus !== 'generating') { setGenStatus('idle'); setDraftText('') } }}
+            placeholder="輸出格式"
+            style={{ minWidth: '220px' }}
           />
           <Button
             label="AI 生成"
