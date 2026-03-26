@@ -47,7 +47,7 @@ const router = createHashRouter([
       { path: 'agent/skills', element: <AgentSkills /> },
       { path: 'agent/execution', element: <AgentExecution /> },
       { path: 'agent/settings', element: <AgentSettings /> },
-      // 生成式醫囑 AI
+      // 生成式醫療紀錄 AI
       { path: 'medical-ai/teaching', element: <TeachingRecord /> },
       { path: 'medical-ai/writing', element: <MedicalWriting /> },
       // AI 小幫手

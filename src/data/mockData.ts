@@ -683,7 +683,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     id: 'medical-ai',
-    title: '生成式醫囑 AI',
+    title: '生成式醫療紀錄 AI',
     icon: 'pi pi-pen-to-square',
     children: [
       { id: 'teaching-record', title: '教學病歷', icon: 'pi pi-book', path: '/medical-ai/teaching' },
@@ -811,7 +811,7 @@ export function generateMockWorkflowRun(): WorkflowRun {
   return { id: `run-${_runCounter}`, timestamp: ts, steps }
 }
 
-// ===== 生成式醫囑 AI — Mock 資料 =====
+// ===== 生成式醫療紀錄 AI — Mock 資料 =====
 
 export interface MedicalAiPatient {
   id: string
