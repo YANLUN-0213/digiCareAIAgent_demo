@@ -12,6 +12,7 @@ import QualityMonitor from '@/pages/QualityMonitor'
 import DriftMonitor from '@/pages/DriftMonitor'
 import PlaceholderPage from '@/pages/PlaceholderPage'
 import FhirTwpas from '@/pages/FhirTwpas'
+import FhirTwci from '@/pages/FhirTwci'
 import AgentDashboard from '@/pages/AgentDashboard'
 import AgentExecution from '@/pages/AgentExecution'
 import AgentSkills from '@/pages/AgentSkills'
@@ -57,7 +58,7 @@ const router = createHashRouter([
       { path: 'ai-helper/statistics', element: <AiStatistics /> },
       // FHIR專區
       { path: 'fhir/twpas', element: <FhirTwpas /> },
-      { path: 'fhir/twci', element: <PlaceholderPage funcName="重大傷病TWCI" /> },
+      { path: 'fhir/twci', element: <FhirTwci /> },
       { path: 'fhir/twngs', element: <PlaceholderPage funcName="次世代基因定序檢測TWNGS" /> },
       { path: 'fhir/twiam', element: <PlaceholderPage funcName="流感抗病毒藥劑使用報告TWIAM" /> },
       // TWEMPD FHIR
