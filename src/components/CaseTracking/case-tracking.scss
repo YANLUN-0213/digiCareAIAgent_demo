@@ -1,0 +1,82 @@
+/* ===== Case Tracking Page ===== */
+
+.ct-page {
+  .p-datatable {
+    .p-datatable-tbody > tr {
+      cursor: pointer;
+    }
+  }
+}
+
+/* Mini pipeline dots in table */
+.ct-mini-pipeline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ct-mini-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+
+  &.ct-dot-success {
+    background: #22c55e;
+  }
+  &.ct-dot-failed {
+    background: #ef4444;
+  }
+  &.ct-dot-in_progress {
+    background: #3b82f6;
+    animation: ct-pulse 1.5s infinite;
+  }
+  &.ct-dot-pending {
+    background: #fff;
+    border: 2px solid #d1d5db;
+  }
+  &.ct-dot-skipped {
+    background: #fff;
+    border: 2px dashed #9ca3af;
+  }
+}
+
+@keyframes ct-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(59, 130, 246, 0); }
+}
+
+/* Detail dialog */
+.ct-detail {
+  .ct-patient-summary {
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .ct-step-panel {
+    padding: 1rem;
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+  }
+}
+
+/* VPN panel */
+.ct-vpn-panel {
+  padding: 1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+
+  .ct-vpn-result {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid #d1fae5;
+    border-radius: 6px;
+  }
+}
