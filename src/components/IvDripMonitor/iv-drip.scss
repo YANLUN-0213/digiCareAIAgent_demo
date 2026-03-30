@@ -1,0 +1,398 @@
+.iv-page {
+  .iv-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .iv-filters {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .iv-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+/* ── Summary stat cards ── */
+.iv-stats-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.iv-stat-card {
+  flex: 1;
+  min-width: 160px;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: default;
+
+  &.iv-stat-active {
+    border-left: 4px solid #3b82f6;
+  }
+
+  &.iv-stat-warning {
+    border-left: 4px solid #f59e0b;
+  }
+
+  &.iv-stat-danger {
+    border-left: 4px solid #ef4444;
+  }
+
+  &.iv-stat-success {
+    border-left: 4px solid #22c55e;
+  }
+
+  .iv-stat-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .iv-stat-label {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+}
+
+/* ── Countdown timer ── */
+.iv-countdown {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  &.iv-countdown-normal {
+    color: #22c55e;
+  }
+
+  &.iv-countdown-warning {
+    color: #f59e0b;
+  }
+
+  &.iv-countdown-danger {
+    color: #ef4444;
+    animation: iv-blink 1s infinite;
+  }
+
+  &.iv-countdown-done {
+    color: #9ca3af;
+  }
+}
+
+@keyframes iv-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ── Progress bar ── */
+.iv-progress {
+  position: relative;
+  height: 22px;
+  background: #f3f4f6;
+  border-radius: 11px;
+  overflow: hidden;
+
+  .iv-progress-fill {
+    height: 100%;
+    border-radius: 11px;
+    transition: width 1s linear, background 0.5s ease;
+  }
+
+  .iv-progress-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 22px;
+    color: #1e293b;
+  }
+}
+
+/* ── Detail dialog ── */
+.iv-detail {
+  .iv-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .iv-info-item {
+    .iv-info-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 0.15rem;
+    }
+
+    .iv-info-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #1e293b;
+    }
+  }
+
+  .iv-detail-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+}
+
+/* ── Event timeline ── */
+.iv-timeline {
+  position: relative;
+  padding-left: 1.5rem;
+
+  .iv-timeline-item {
+    position: relative;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid #e2e8f0;
+
+    &:last-child {
+      border-left-color: transparent;
+      padding-bottom: 0;
+    }
+
+    .iv-timeline-dot {
+      position: absolute;
+      left: -7px;
+      top: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3b82f6;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #e2e8f0;
+
+      &.iv-dot-started {
+        background: #22c55e;
+      }
+
+      &.iv-dot-completed {
+        background: #22c55e;
+      }
+
+      &.iv-dot-alarm_triggered {
+        background: #ef4444;
+      }
+
+      &.iv-dot-paused {
+        background: #f59e0b;
+      }
+
+      &.iv-dot-resumed {
+        background: #3b82f6;
+      }
+
+      &.iv-dot-rate_adjusted {
+        background: #8b5cf6;
+      }
+
+      &.iv-dot-issue_reported {
+        background: #ef4444;
+      }
+
+      &.iv-dot-replaced {
+        background: #06b6d4;
+      }
+    }
+
+    .iv-timeline-time {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .iv-timeline-desc {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .iv-timeline-operator {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  }
+}
+
+/* ── Barcode scan dialog ── */
+.iv-scan {
+  .iv-scan-input {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+  }
+
+  .iv-scan-result {
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+
+  .iv-scan-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .iv-verify-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .iv-verify-success {
+    color: #22c55e;
+  }
+
+  .iv-verify-fail {
+    color: #ef4444;
+  }
+
+  .iv-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+
+    .iv-step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #fff;
+      background: #d1d5db;
+
+      &.iv-step-active {
+        background: #3b82f6;
+      }
+
+      &.iv-step-done {
+        background: #22c55e;
+      }
+    }
+  }
+}
+
+/* ── Alert panel ── */
+.iv-alert-panel {
+  .iv-alert-item {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s;
+
+    &.iv-alert-unread {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .iv-alert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .iv-alert-type {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .iv-alert-time {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .iv-alert-message {
+      font-size: 0.85rem;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+/* ── FHIR export ── */
+.iv-fhir {
+  .iv-fhir-json {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.8rem;
+    max-height: 420px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .iv-fhir-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    align-items: center;
+  }
+}
+
+/* ── Badge on alert button ── */
+.iv-alert-badge {
+  position: relative;
+
+  .iv-badge-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+}
+
+/* ── Flow rate inline edit ── */
+.iv-rate-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

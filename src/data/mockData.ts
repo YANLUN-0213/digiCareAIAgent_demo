@@ -691,6 +691,14 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
+    id: 'nursing-ai',
+    title: '生成式護理紀錄 AI',
+    icon: 'pi pi-clipboard',
+    children: [
+      { id: 'nursing-writing', title: '護理紀錄寫作', icon: 'pi pi-file-edit', path: '/nursing-ai/writing' },
+    ],
+  },
+  {
     id: 'ai-helper',
     title: 'AI 小幫手',
     icon: 'pi pi-sparkles',
@@ -706,6 +714,7 @@ export const MENU_ITEMS: MenuItem[] = [
     title: 'FHIR專區',
     icon: 'pi pi-heart',
     children: [
+      { id: 'case-tracking', title: '案件追蹤', icon: 'pi pi-sitemap', path: '/fhir/case-tracking' },
       { id: 'twpas', title: '癌藥事審TWPAS IG', icon: 'pi pi-file-edit', path: '/fhir/twpas' },
       { id: 'twci', title: '重大傷病TWCI', icon: 'pi pi-file-edit', path: '/fhir/twci' },
       { id: 'twngs', title: '次世代基因定序檢測TWNGS', icon: 'pi pi-file-edit', path: '/fhir/twngs' },
@@ -719,6 +728,14 @@ export const MENU_ITEMS: MenuItem[] = [
     children: [
       { id: 'twempd-ep', title: '電子處方箋TWEMPD-EP', icon: 'pi pi-file-edit', path: '/twempd/ep' },
       { id: 'twempd-ds', title: '調劑單張TWEMPD-DS', icon: 'pi pi-file-edit', path: '/twempd/ds' },
+    ],
+  },
+  {
+    id: 'iv-drip-mgmt',
+    title: '點滴智慧管理',
+    icon: 'pi pi-heart-fill',
+    children: [
+      { id: 'iv-drip-monitor', title: '點滴條碼智慧提醒', icon: 'pi pi-clock', path: '/nursing/iv-drip-monitor' },
     ],
   },
   {
@@ -1720,6 +1737,736 @@ export const MOCK_HIS_SOURCE_DATA: HisSourceData[] = [
 
 export function getHisSourceData(patientId: string): HisSourceData | undefined {
   return MOCK_HIS_SOURCE_DATA.find(d => d.patientId === patientId)
+}
+
+// ===== 生成式護理紀錄 AI — Mock 資料 =====
+
+export const NURSING_FORMAT_OPTIONS = [
+  { label: 'ISBAR（識別/狀態/背景/評估/建議）', value: 'isbar' },
+  { label: 'DART（資料/行動/反應/教導）', value: 'dart' },
+  { label: 'Focus DAR（焦點/資料/行動/反應）', value: 'focus-dar' },
+  { label: 'SOAPIE（主觀/客觀/評估/計畫/介入/評價）', value: 'soapie' },
+  { label: 'Narrative（敘述式）', value: 'narrative' },
+]
+
+export interface NursingWritingDraft {
+  type: string
+  format: string
+  patientId: string
+  content: string
+}
+
+export const MOCK_NURSING_WRITING_DRAFTS: NursingWritingDraft[] = [
+  // ── mp1 王建民 (AMI) ──
+  { type: 'admission-nursing', format: 'isbar', patientId: 'mp1', content: `【入院護理評估】ISBAR 格式
+
+I — Identify（識別）
+病患姓名：王建民　　病歷號：A2025001
+年齡/性別：68歲/男　　床號：5A-12
+入院日期：2026-03-18　　主治醫師：李文哲
+
+S — Situation（狀態）
+因急性胸痛 3 小時由急診入院，診斷為急性下壁心肌梗塞 (Inferior STEMI)。
+目前意識清楚 (GCS E4V5M6 = 15)，主訴胸口悶痛改善中 NRS 3/10（PCI 術後）。
+生命徵象：BP 132/78 mmHg, HR 72 bpm, RR 18, BT 36.5°C, SpO2 98% (RA)。
+
+B — Background（背景）
+過去病史：高血壓 10 年，規則服用 Amlodipine 5mg QD。
+過敏史：NKDA
+手術史：2026-03-18 急診 PCI with stent to RCA
+家族史：父親 — 心肌梗塞病史
+
+C — Assessment（評估）
+1. 意識狀態：清醒，定向力完整
+2. 活動功能：Barthel Index 70 分（需協助沐浴、上下樓）
+3. 跌��風險：Morse Fall Scale 45 分（中度風險）
+4. 壓傷風險：Braden Scale 18 分（輕度風險）
+5. 疼痛評估：NRS 3/10（胸口悶痛）
+6. 管路：左手 PIV 20G (03/18 置入)、Foley 16Fr (03/18)
+7. 皮膚完整性：完整，無壓傷
+8. 營養篩檢：BMI 26.2，無營養不良風險
+
+R — Recommendation（建議）
+1. 持續心電圖監測，注意 ST 段變化
+2. 依醫囑給予 Dual antiplatelet therapy (DAPT)
+3. 臥床休息 24 小時，之後漸進式活動
+4. 低鈉低脂飲食
+5. ���痛評估 Q4H，NRS ≥ 4 通知醫師
+6. 跌倒預防措施：床欄上升、呼叫鈴置於手邊
+7. 安排心臟復健衛教` },
+
+  { type: 'narrative-nursing', format: 'isbar', patientId: 'mp1', content: `【敘述性護理紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：王建民，68歲男性，A2025001，5A-12 床
+日期：2026-03-19 08:00　　記錄護理師：張雅芳
+
+S — Situation（狀態���
+病患今晨主訴昨夜睡眠品質尚可，偶有胸悶感但較入院時改善，NRS 2/10。
+今晨生命徵象穩定：BP 128/76, HR 68, SpO2 99% (RA)。
+晨間進食半碗稀飯，食慾普通。
+
+B — Background（背景）
+03/18 急診 PCI with stent to RCA，術後第一天。
+目前使用 DAPT (Aspirin + Clopidogrel)、Atorvastatin、Metoprolol。
+昨日 Troponin-I 追蹤 2.8 ng/mL（較前日 8.5 下降中）。
+
+A — Assessment（評估）
+1. 胸痛症狀持續改善中
+2. PCI 穿刺部位（右橈動脈）無紅腫、滲血
+3. 可在床邊坐起，未出現頭暈或胸悶加劇
+4. 排尿順暢，Foley 引流清澈尿液約 1200ml/day
+5. 情緒穩定，家屬陪��中
+
+R — Recommendation（建議）
+1. 繼續監測心電圖至 PCI 術後 48 小時
+2. 今日可嘗試在協助下下床活動
+3. 預計明日移除 Foley catheter
+4. 進行心臟復健第一階段衛教` },
+
+  { type: 'shift-handoff', format: 'isbar', patientId: 'mp1', content: `【交班護理紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：王建民，68歲/男，A2025001，5A-12 床
+交班時間：2026-03-19 小夜班 → 大夜班
+交班護理師：李佳蓉 → 王小芬
+
+S — Situation（狀態）
+小夜班期間病患生命徵象穩定，無胸痛發作。
+20:00 NRS 1/10，21:00 已入睡。
+I/O 本班：進 800ml / 出 650ml（Foley 引流）。
+22:00 最後一次生命徵象：BP 126/72, HR 65, SpO2 99%。
+
+B — Background（背景）
+Dx: Inferior STEMI s/p PCI with stent to RCA (03/18)
+目前 DAPT + Statin + β-blocker 治療中。
+左手 PIV 20G 通暢，Foley 16Fr 引流正常。
+
+A — Assessment（評估）
+1. 心臟狀態穩定，無再發胸痛
+2. 穿刺部位乾燥無滲血
+3. 下肢無水腫
+4. 睡眠品質改善中
+5. 明日預計：移除 Foley、開始下床活動、Troponin 追蹤
+
+R — Recommendation（建議）
+1. 大夜��繼續心電圖監測
+2. 03:00 給予 Metoprolol 25mg PO（已備藥）
+3. 注意夜間胸悶/呼吸困難主訴
+4. 晨間 06:00 抽血 Troponin-I, CBC, BMP` },
+
+  { type: 'inter-unit-transfer', format: 'isbar', patientId: 'mp1', content: `【單位間交班紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：王建民，68歲/男，A2025001
+轉出單位：CCU (5A-12) → 轉入單位：一般病房 (6A-03)
+轉送日期：2026-03-21 14:00
+轉出護理師：張雅芳　　接收護理師：陳美玲
+
+S — Situation（狀態）
+病患 03/18 因 Inferior STEMI 急診入院，同日 PCI with stent to RCA。
+目前 PCI 術後第 3 天，生命徵象穩定 48 小時以上。
+意識清楚，可自行下床活動，無胸痛主訴 (NRS 0/10)。
+BP 124/74, HR 66, SpO2 99% (RA)。
+
+B — Background（背景）
+PMH: HTN × 10 yr
+Allergy: NKDA
+目前用藥：Aspirin 100mg QD, Clopidogrel 75mg QD, Atorvastatin 40mg HS,
+　　　　　Metoprolol 25mg BID, Amlodipine 5mg QD
+Troponin-I trend: 8.5 → 2.8 → 0.6 ng/mL（持續下降）
+
+A — Assessment（評估）
+1. 管路：左手 PIV 20G (03/18, 通暢)，Foley 已移除 (03/20)
+2. 活動：可自行如廁、走廊步行 200m 無不適
+3. 飲食：低鈉低脂飲食，進食量約 8 成
+4. 排泄：自解小便正常，大便 03/20 解 1 次
+5. 傷口：橈動脈穿刺處已癒合
+6. 護理問題：急性疼痛（已改善）、活動功能障礙（已改善）
+7. 跌倒風險：Morse 30 分（低風險）
+
+R — Recommendation（建議）
+1. 轉入一般病房繼續 DAPT 治療
+2. 每日監測生命徵象 QID
+3. 漸進式增加活動量（心臟復健第二階段）
+4. 預計住院 5-7 天，安排出院衛教
+5. 注意再發性胸痛，若 NRS ≥ 3 通知醫師` },
+
+  { type: 'discharge-nursing', format: 'isbar', patientId: 'mp1', content: `【出院護理摘要】ISBAR 格式
+
+I — Identify（識別）
+病患：王建民，68歲/男，A2025001
+住院日期：2026-03-18 ～ 2026-03-25（共 7 天）
+出院診斷：Acute inferior STEMI s/p PCI with stent to RCA
+
+S — Situation（狀態）
+病患出院時意識清楚，生命徵象穩定。
+BP 122/72, HR 64, BT 36.4°C, SpO2 99%。
+無胸痛 (NRS 0/10)，可自行步行活動，日常生活自理。
+
+B — Background（背景）
+住院經過：03/18 急診 PCI with stent → CCU 監測 3 天 → 轉一般病房。
+Troponin-I 高峰 8.5 ng/mL，出院前 0.2 ng/mL。
+住院期間無併發症（無心律不整、心衰竭、出血）。
+
+A — Assessment（評估）
+1. 出院帶藥：Aspirin 100mg QD, Clopidogrel 75mg QD (需服用至少 12 個月),
+   Atorvastatin 40mg HS, Metoprolol 25mg BID, Amlodipine 5mg QD
+2. 管路：全數移除，傷口癒合良好
+3. 活動能力：Barthel Index 100 分（完全獨立）
+4. 衛教完成度：心臟復健衛教 ✓、用藥指導 ✓、飲食衛教 ✓、緊急就醫衛教 ✓
+5. 家庭支持：太太全��陪同，理解照護要點
+
+R — Recommendation（建議）
+1. 返診：03/31 心臟內科門診（李文哲醫師）
+2. 持續服用 DAPT，勿自行停藥
+3. 規律低強度運動（每日步行 30 分鐘）
+4. 低鈉低脂飲食，戒菸
+5. 緊急就醫警示：胸痛 > 15 分鐘、呼吸困難、冒冷汗、意識改變
+6. 心臟復健門診預約：04/02` },
+
+  // ── mp2 林美珍 (COPD) ──
+  { type: 'admission-nursing', format: 'isbar', patientId: 'mp2', content: `【入院護理評估】ISBAR 格式
+
+I — Identify（識別）
+病患姓名：林美珍　　病歷號：A2025002
+年齡/性別：55歲/女　　床號：6B-03
+入院日期：2026-03-20　　主治醫師：張惠雯
+
+S — Situation（狀態）
+因呼吸困難加劇伴咳嗽濃痰 3 天由急診入院，診斷 COPD acute exacerbation。
+目前使用 O2 nasal cannula 3L/min，SpO2 92%。
+意識清楚，端坐呼吸，呼吸費力伴哮鳴音。
+BP 148/88, HR 98, RR 26, BT 37.8°C。
+
+B — Background（背景）
+PMH: COPD GOLD Stage III × 8 年、HTN、30 pack-year 吸菸史（已戒 2 年）
+用藥：Tiotropium inhaler QD, Budesonide/Formoterol BID, Amlodipine 5mg QD
+過敏：Penicillin（皮���）
+近期：1 週前感冒症狀，未就醫，3 天前呼吸困難加劇
+
+A — Assessment（評估）
+1. 呼吸型態：費力、使用輔助肌、RR 26
+2. Barthel Index: 55 分（需中度協助）
+3. Morse Fall Scale: 55 分（高風險）
+4. Braden Scale: 16 分（中度風險）
+5. 痰液：黃綠色濃稠痰，咳出困難
+6. 管路：右手 PIV 22G
+7. 營養：BMI 21.5，食慾差
+
+R — Recommendation（建議）
+1. 持續 O2 監測，維持 SpO2 88-92%（避免高流量氧氣）
+2. 依醫囑給予 Nebulizer Q6H + IV Methylprednisolone
+3. 鼓勵有效咳嗽技巧、噘嘴呼吸
+4. 抬高床頭 45-60 度
+5. 跌倒高風險：黃色手圈、床欄上升、防滑鞋
+6. I/O 記錄，鼓勵飲水 1500ml/day` },
+
+  { type: 'narrative-nursing', format: 'isbar', patientId: 'mp2', content: `【敘述性護理紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：林美珍，55歲女性，A2025002，6B-03 床
+日期：2026-03-21 14:00　　記錄護理師：王小芬
+
+S — Situation（狀態）
+入院第 2 天，呼吸困難較昨日改善。O2 降至 2L/min, SpO2 93%。
+仍有間歇性咳嗽，痰量減少且顏色轉為淡黃。
+今日可在床邊坐起進食，食慾略改善。
+
+B — Background（背景）
+昨日 CXR 顯示肺部過度充氣，無新浸潤。
+目前 Levofloxacin IV Day 2 + Methylprednisolone tapering。
+ABG (03/20): pH 7.35, pCO2 52, pO2 68, HCO3 28。
+
+A — Assessment（評估）
+1. 呼吸音：雙側散在性哮鳴音減少，右下葉仍有粗囉音
+2. 咳痰能力改善，可自行咳出
+3. RR 22（較昨日 26 改善）
+4. 活動耐受力仍低，如廁需協助
+
+R — Recommendation（建議）
+1. 繼續 Nebulizer 治療及胸腔物理治療
+2. 明日追蹤 ABG
+3. 評估是否可降 O2 至 1L/min 或改 Room Air trial` },
+
+  { type: 'shift-handoff', format: 'isbar', patientId: 'mp2', content: `【交班護理紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：林美珍，55歲/女，A2025002，6B-03 床
+交班時間：2026-03-21 白班 → 小夜班
+
+S — Situation（狀態）
+COPD AE 入院 Day 2，呼吸狀況持續改善中。
+O2 2L/min, SpO2 93-94%。RR 20-22。
+白班 I/O：進 1200ml / 出 900ml。
+14:00 Nebulizer 已執行，痰液淡黃少量。
+
+B — Background（背景）
+Levofloxacin 750mg IV QD (Day 2), Methylprednisolone 40mg IV Q12H。
+右手 PIV 22G 通暢，無紅腫。
+
+A — Assessment（評估）
+1. 呼吸改善中，哮鳴音減少
+2. 可床邊坐起用餐，如廁需輪椅
+3. 18:00 有 Nebulizer 需執行
+4. 明晨預計抽 ABG
+
+R — Recommendation（建議）
+1. 小夜班 18:00 Nebulizer + chest PT
+2. 睡前注意呼吸型態，SpO2 < 88% 通知醫師
+3. 鼓勵飲水，目標 1500ml/day` },
+
+  { type: 'inter-unit-transfer', format: 'isbar', patientId: 'mp2', content: `【單位間交班紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：林美珍，55歲/女，A2025002
+轉出：胸腔內科 6B-03 → 轉入：呼吸照護中心 RCC-05
+轉送日期：2026-03-22 10:00
+
+S — Situation（狀態）
+COPD AE 入院 Day 3，因呼吸狀況未如預期改善需轉呼吸照護中心。
+ABG (03/22 06:00): pH 7.32, pCO2 58, pO2 62 on O2 3L/min。
+RR 24, SpO2 90%, 呼吸費力加劇。
+
+B — Background（背景）
+Levofloxacin Day 3, Methylprednisolone tapering 中。
+Allergy: Penicillin。右手 PIV 22G。
+
+A — Assessment（評估）
+1. 呼吸型態惡���，考慮 NIV (BiPAP) 介入
+2. Barthel Index 45 分
+3. 護理問題：氣體交換障礙、活動功能障礙、清除呼吸道功能失效
+4. 情緒焦慮，需心理支持
+
+R — Recommendation（建議）
+1. 轉入後立即評估 NIV 需求
+2. 密切監測 ABG Q6H
+3. 加強胸腔物理治療
+4. 家屬已告知轉床，女兒下午會來探視` },
+
+  { type: 'discharge-nursing', format: 'isbar', patientId: 'mp2', content: `【出院護理摘要】ISBAR 格式
+
+I — Identify（識別）
+病患：林美珍，55歲/女，A2025002
+住院日期：2026-03-20 ～ 2026-03-28（共 8 天）
+出院診斷：COPD with acute exacerbation
+
+S — Situation（狀態）
+出院時呼吸平順，Room Air SpO2 93%。
+RR 18, BP 132/80, HR 78。無發燒。
+可自行步行活動，日常生活大致自理。
+
+B — Background（背景）
+住院經過：急性發作 → 抗生素 + 類固醇治療 → RCC 使用 BiPAP 2 天 → 改善後轉回一般病房。
+
+A — Assessment（評估）
+1. 出院帶藥：Tiotropium inhaler, Budesonide/Formoterol BID, Prednisolone taper, Amlodipine 5mg
+2. 吸入器使用技巧：示範正確 ✓
+3. 衛教完成：COPD 自我管理 ✓、感染預防 ✓、��吸運動 ✓、緊急就醫 ✓
+4. Barthel Index: 90 分
+
+R — Recommendation（建議）
+1. 返診 04/03 胸腔內科
+2. 每日噘嘴呼吸練習 + 腹式呼吸
+3. 流感疫苗接種（04 月安排）
+4. 出現痰量增加、發燒、呼吸困難加劇 → 立即就醫` },
+
+  // ── mp3 張志豪 (DKA) ──
+  { type: 'admission-nursing', format: 'isbar', patientId: 'mp3', content: `【入院護理評估】ISBAR 格式
+
+I — Identify（識別）
+病患姓名：張志豪　　病歷號：A2025003
+年齡/性別：42歲/男　　床號：3C-08
+入院日期：2026-03-22　　主治醫師：陳淑芬
+
+S — Situation（狀態）
+因噁心嘔吐、腹痛及呼吸急促 1 天由急診入院，診斷 DKA。
+到院血糖 580 mg/dL, pH 7.18, ketone (+++)。
+目前 Insulin drip 中，意識清楚但倦怠。
+BP 108/68, HR 110, RR 28 (Kussmaul), BT 36.8°C, SpO2 98%。
+
+B — Background（背景）
+PMH: T2DM × 5 年 (poorly controlled, 自述停藥 2 週因經濟困難), HTN
+用藥（原）：Metformin 1000mg BID, Glargine 20U HS, Losartan 50mg QD
+過敏：NKDA
+
+A — Assessment（評估）
+1. 脫水徵象：皮膚帳篷現象(+)、口腔乾燥、尿量偏少
+2. Barthel Index: 60 分
+3. Morse Fall Scale: 50 分（高風險）
+4. Braden Scale: 17 分（輕度風險）
+5. 管路：右手 PIV 18G, Foley 16Fr
+6. ���糖 Q1H 監測中
+7. 營養：NPO 中，待醫囑恢復飲食
+
+R — Recommendation（建議）
+1. 嚴密 I/O 監測，目標補液 4-6L/24hr
+2. 血糖 Q1H + 血鉀 Q2H 追蹤
+3. Insulin drip titration per protocol
+4. pH > 7.3 + 血糖 < 250 後轉 SC insulin
+5. 跌倒高風險措施
+6. 社工轉介評估（經濟困難導致停藥）` },
+
+  { type: 'narrative-nursing', format: 'isbar', patientId: 'mp3', content: `【敘述性護理紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：張志豪，42歲男性，A2025003，3C-08 床
+日期：2026-03-23 08:00　　記錄護理師：李佳蓉
+
+S — Situation（狀態）
+DKA 入院 Day 2，代謝狀況明顯改善。
+06:00 ABG: pH 7.34, HCO3 20。血糖 198 mg/dL（趨勢下降）。
+Insulin drip 已於 04:00 ���止，轉為 SC Glargine 22U HS + Sliding scale。
+噁心感消退，今晨開始進食清流質。
+
+B — Background（背景）
+昨日 24hr I/O: 進 5200ml (IV 4500 + PO 700) / 出 4100ml。
+K+ 由入院 5.8 降至 4.2 mEq/L（已停 KCl 補充）。
+
+A — Assessment（評估）
+1. 意識精神改善，可自行翻身坐起
+2. 脫水改善：皮膚彈性恢復，口腔黏膜濕潤
+3. 仍有輕微腹部不適，無壓痛反彈痛
+4. Foley 引流 > 0.5ml/kg/hr
+5. 情緒低落，表達經濟壓力
+
+R — Recommendation（建議）
+1. 血糖改為 AC/PC + HS 監測
+2. 逐步恢復飲食：清流質 → 半流質 → 糖尿病飲食
+3. 社工已排定 03/24 訪視
+4. 開始糖尿病自我管理衛教` },
+
+  { type: 'shift-handoff', format: 'isbar', patientId: 'mp3', content: `【交班護理紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：張志豪，42歲/男，A2025003，3C-08 床
+交班時間：2026-03-23 白班 → 小夜班
+
+S — Situation（狀態）
+DKA 入院 Day 2，已脫離 Insulin drip，改 SC insulin。
+白班血糖：AC 198 → PC2h 245 → 午 AC 176。
+進食清流質約 500ml，無噁心嘔吐。
+I/O 白班：進 2100ml / 出 1800ml。
+
+B — Background（背景）
+SC Glargine 22U HS + Lispro sliding scale。
+右手 PIV 18G 通暢，NS 1000ml Q8H running。
+Foley 16Fr 引流正常。K+ 4.2（穩定）。
+
+A — Assessment（評估）
+1. 代謝狀況改善中
+2. 活動力改善，可在協助下如廁
+3. 情緒有改善，願意與護理師討論
+4. 明日預計：移除 Foley、開始糖尿病飲食
+
+R — Recommendation（建議）
+1. 小夜班 17:30 晚 AC 血糖監測
+2. HS Glargine 22U (21:00 給予)
+3. 鼓勵飲水，記錄 I/O
+4. 注意低血糖症狀（血糖 < 70 通知醫師）` },
+
+  { type: 'inter-unit-transfer', format: 'isbar', patientId: 'mp3', content: `【單位間交班紀錄】ISBAR 格式
+
+I — Identify（識別）
+病患：張志豪，42歲/男，A2025003
+轉出：內科加護病房 ICU-3C-08 → 轉入：一般內科 7A-02
+轉送日期：2026-03-24 10:00
+
+S — Situation（狀態）
+DKA 入院 Day 3，代謝已穩定。
+pH 7.38, 血糖 AC 162, K+ 4.0。
+SC insulin 控制良好，已恢復糖尿病飲食。
+BP 122/76, HR 82, RR 16, SpO2 99%。
+
+B — Background（背景）
+目前用藥：Glargine 22U HS, Lispro sliding scale, Metformin 500mg BID (今日開始),
+Losartan 50mg QD。
+右手 PIV 18G，Foley 已移除 (03/24 06:00)。
+
+A — Assessment（評估）
+1. 可自行下床活動、如廁
+2. Barthel Index 90 分
+3. 護理問題：血糖控制不穩定（改善中）、知識缺���/糖尿病自我管理
+4. 社工已介入評估，協助健保重大傷病卡申請
+
+R — Recommendation（建議）
+1. 繼續血糖 QID 監測 (AC 三餐 + HS)
+2. 糖尿病衛教持續中（飲食、運動、胰島素注射、低血糖處理）
+3. 社工追蹤中，預計 03/25 完成補助評估
+4. 預計住院 7 天，安排 HbA1c 追蹤` },
+
+  { type: 'discharge-nursing', format: 'isbar', patientId: 'mp3', content: `【出院護理摘要】ISBAR 格式
+
+I — Identify（識別）
+病患：張志豪，42歲/男，A2025003
+住院日期：2026-03-22 ～ 2026-03-29（共 7 天）
+出院診斷：T2DM with DKA
+
+S — Situation（狀態）
+出院時血糖穩定，AC 128-165 mg/dL。
+意識清楚，可完全自理日常生活。
+BP 120/74, HR 76, BT 36.5°C。
+
+B — Background（背景）
+住院經過：DKA → Insulin drip → SC insulin → 口服藥+胰島素併用。
+社工介入：已完成重大傷病卡申請，協助藥費補助。
+
+A — Assessment（評估）
+1. 出院帶藥：Glargine 20U HS, Metformin 1000mg BID, Losartan 50mg QD
+2. 胰島素注射技術：病患回覆示教正確 ✓
+3. 血糖自我監測：使用血糖機示範正確 ✓
+4. 衛教完成：飲食 ✓、運動 ✓、低血糖處理 ✓、足部照護 ✓、緊急就醫 ✓
+5. Barthel Index: 100 分
+
+R — Recommendation（建議）
+1. 返診 04/05 新陳代謝科（陳淑芬醫師）
+2. 每日血糖監測 AC breakfast + HS
+3. 規律飲食及運動
+4. 低血糖處理：隨身攜帶糖果，血糖 < 70 立即補充 15g 醣類
+5. 社工持續追蹤經濟補助進度` },
+
+  // ── 額外格式範例 ──
+  { type: 'shift-handoff', format: 'dart', patientId: 'mp1', content: `【交班護理紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-19 小夜班交班
+病患：王建民，68歲/男，5A-12 床，Dx: Inferior STEMI s/p PCI (03/18)
+生命徵象 22:00：BP 126/72, HR 65, RR 16, SpO2 99% (RA)
+疼痛：NRS 1/10（胸口微悶）
+I/O 本班：進 800ml / 出 650ml (Foley)
+管路：左手 PIV 20G 通暢、Foley 16Fr 正常引流
+
+A — Action（行動）
+1. 20:00 Metoprolol 25mg PO given
+2. 20:30 執行心電圖監測記錄，結果穩定
+3. 21:00 協助晚間口腔清潔及舒適臥位
+4. 22:00 執行生命徵象評估
+
+R — Response（反應）
+1. 病患全班無胸痛發作
+2. 心電圖無 ST 段異常變化
+3. 21:00 入睡，睡眠品質佳
+4. 穿刺部位乾燥無滲血
+
+T — Teaching（教導）
+1. 衛教病患夜間如有胸悶/呼吸困難立即按呼叫鈴
+2. 提醒明日晨間 06:00 需空腹抽血
+3. 說明明日將開始下床活動計畫` },
+
+  { type: 'narrative-nursing', format: 'focus-dar', patientId: 'mp2', content: `【敘述性護理紀錄】Focus DAR 格式
+
+日期：2026-03-21 14:00
+病患：林美珍，55歲/女，6B-03 床
+
+Focus（焦點）：氣體交換障礙 / 呼吸道清除功能失效
+
+D — Data（資料）
+- 入院 Day 2，COPD AE，O2 2L/min NC
+- SpO2 93%, RR 22
+- 雙側散在性哮鳴音，右下葉粗囉音
+- 痰液淡黃少量，較昨日改善
+- 病患主訴「今天比較不喘了」
+- 可在床邊坐起進食
+
+A — Action（行動）
+1. 14:00 執行 Nebulizer (Combivent) 治療
+2. 14:20 執行胸腔叩擊引流（右下葉加強）
+3. 指導有效咳嗽技巧：深呼吸 → 用力咳出
+4. 協助半坐臥位（床頭抬高 45 度）
+5. 鼓勵飲水 200ml
+
+R — Response（反應）
+1. Nebulizer 後 SpO2 上升至 94%
+2. 胸腔叩擊後成功咳出淡黃痰約 5ml
+3. 病患表示呼吸較順暢
+4. 哮鳴音較叩擊前減少
+5. 15:00 RR 20，��吸費力程度減輕` },
+
+  { type: 'admission-nursing', format: 'soapie', patientId: 'mp3', content: `【入院護理評估】SOAPIE 格式
+
+日期：2026-03-22
+病患：張志豪，42歲/男，3C-08 床
+護理問題：#1 體液容積缺失 #2 血糖控制不穩定
+
+S — Subjective（主觀）
+「我已經吐了一整天，肚子很痛，全身沒力氣。」
+「因為沒錢買藥，胰島素和血糖藥停了快兩個禮拜。」
+
+O — Objective（客觀）
+- V/S: BP 108/68, HR 110, RR 28 (Kussmaul), BT 36.8°C
+- 血糖 580 mg/dL, pH 7.18, K+ 5.8, ketone (+++)
+- 皮膚帳篷現象(+)，口腔黏膜乾燥
+- 尿量入院前 6 小時約 200ml
+- 體重 72kg（自述平時 75kg）
+
+A — Assessment（評估）
+1. 嚴重脫水合併 DKA
+2. 跌倒高風險 (Morse 50)
+3. 知識缺失：未理解停藥後果
+4. 社經因素影響治療遵從性
+
+P — Plan（計畫）
+1. 積極補液 NS 1L/hr × 2hr → 500ml/hr × 4hr → 250ml/hr
+2. Insulin drip protocol 啟動
+3. 血糖 Q1H + K+ Q2H 監測
+4. 嚴密 I/O 記錄
+5. 轉介社工評估經濟補助
+
+I — Intervention（介入）
+1. 09:00 開始 NS 1000ml/hr IV infusion
+2. 09:00 啟動 Insulin drip 0.1U/kg/hr
+3. 09:00 Foley 16Fr 置入，記錄 hourly UO
+4. 09:30 抽血 CBC, BMP, ABG
+5. 10:00 床欄上升、呼叫鈴置手邊、黃色手圈
+
+E — Evaluation（評價）
+- 12:00 血糖降至 380 mg/dL（4 小時下降 200）
+- 12:00 UO 150ml/2hr（>0.5ml/kg/hr ✓）
+- pH 7.22（改善中）
+- K+ 4.8（下降中，繼續監測）
+- 病患表示腹痛稍緩，NRS 5→3` },
+]
+
+export const MOCK_NURSING_HIS_SOURCE_DATA: HisSourceData[] = [
+  {
+    patientId: 'mp1',
+    sections: [
+      { title: '基本資料', source: 'HIS 病患主檔', items: [
+        { label: '姓名', value: '王建民' }, { label: '病歷號', value: 'A2025001' },
+        { label: '年齡/性別', value: '68歲/男' }, { label: '床號', value: '5A-12' },
+        { label: '入院日期', value: '2026-03-18' }, { label: '診斷', value: 'Acute inferior STEMI' },
+        { label: '主治醫師', value: '李文哲' }, { label: '主責護理師', value: '張雅芳' },
+      ]},
+      { title: '護理評估', source: 'NIS 護理評估系統', items: [
+        { label: 'ADL (Barthel Index)', value: '70 分（需部分協助）' },
+        { label: '跌倒風險 (Morse)', value: '45 分（中度風險）↑' },
+        { label: '壓傷風險 (Braden)', value: '18 分（輕度風險）' },
+        { label: '意識 (GCS)', value: 'E4V5M6 = 15' },
+        { label: '疼痛 (NRS)', value: '3/10（胸口悶痛）' },
+        { label: '營養篩檢', value: 'BMI 26.2，MUST 低風險' },
+      ]},
+      { title: '生命徵象', source: 'HIS 護理站系統', items: [
+        { label: 'BP', value: '132/78 mmHg' }, { label: 'HR', value: '72 bpm' },
+        { label: 'RR', value: '18 次/分' }, { label: 'BT', value: '36.5°C' },
+        { label: 'SpO2', value: '98% (RA)' }, { label: 'Pain', value: 'NRS 3/10' },
+      ]},
+      { title: '管路評估', source: 'NIS 管路系統', items: [
+        { label: 'PIV', value: '左手 20G (03/18 置入)，通暢' },
+        { label: 'Foley', value: '16Fr (03/18 置入)，引流清澈' },
+        { label: 'EKG Monitor', value: '持續監測中' },
+        { label: 'O2', value: '未使用（Room Air）' },
+      ]},
+      { title: '用藥紀錄', source: 'HIS 藥囑系統', items: [
+        { label: 'Aspirin', value: '100mg PO QD (08:00)' },
+        { label: 'Clopidogrel', value: '75mg PO QD (08:00)' },
+        { label: 'Atorvastatin', value: '40mg PO HS (21:00)' },
+        { label: 'Metoprolol', value: '25mg PO BID (08:00, 20:00)' },
+        { label: 'Amlodipine', value: '5mg PO QD (08:00)' },
+        { label: 'Heparin', value: '5000U SC Q12H (08:00, 20:00)' },
+      ]},
+      { title: '護理問題', source: 'NIS 護理計畫系統', items: [
+        { label: '#1', value: '急性���痛 / 與心肌缺氧有關' },
+        { label: '#2', value: '活動功能障礙 / 與臥床休息有關' },
+        { label: '#3', value: '焦慮 / 與疾病預後不確定有關' },
+        { label: '#4', value: '知識缺失 / 與心血管疾病自我管理有關' },
+      ]},
+    ],
+  },
+  {
+    patientId: 'mp2',
+    sections: [
+      { title: '基本資料', source: 'HIS 病患主檔', items: [
+        { label: '姓名', value: '林美珍' }, { label: '病歷號', value: 'A2025002' },
+        { label: '年齡/性別', value: '55歲/女' }, { label: '床號', value: '6B-03' },
+        { label: '入院日期', value: '2026-03-20' }, { label: '診斷', value: 'COPD with acute exacerbation' },
+        { label: '主治醫師', value: '張惠雯' }, { label: '主責護理師', value: '王小芬' },
+      ]},
+      { title: '護理評估', source: 'NIS 護理評估系統', items: [
+        { label: 'ADL (Barthel Index)', value: '55 分（需中度協助）↓' },
+        { label: '跌倒風險 (Morse)', value: '55 分（高風險）↑' },
+        { label: '壓傷風險 (Braden)', value: '16 分（中度風險）↑' },
+        { label: '意識 (GCS)', value: 'E4V5M6 = 15' },
+        { label: '疼痛 (NRS)', value: '2/10（無明顯疼痛）' },
+        { label: '呼��評估', value: '呼吸費力，使用輔助肌，端坐呼吸' },
+      ]},
+      { title: '生命徵象', source: 'HIS 護理站系統', items: [
+        { label: 'BP', value: '148/88 mmHg ↑' }, { label: 'HR', value: '98 bpm ↑' },
+        { label: 'RR', value: '26 次/分 ↑' }, { label: 'BT', value: '37.8°C ↑' },
+        { label: 'SpO2', value: '92% (O2 3L NC) ↓' }, { label: 'Pain', value: 'NRS 2/10' },
+      ]},
+      { title: '管路評估', source: 'NIS 管路系統', items: [
+        { label: 'PIV', value: '右手 22G (03/20 置入)，通暢' },
+        { label: 'O2', value: 'Nasal Cannula 3L/min' },
+        { label: 'Nebulizer', value: 'Q6H 使用中' },
+      ]},
+      { title: '用藥紀錄', source: 'HIS 藥囑系統', items: [
+        { label: 'Levofloxacin', value: '750mg IV QD (10:00)' },
+        { label: 'Methylprednisolone', value: '40mg IV Q12H (08:00, 20:00)' },
+        { label: 'Combivent Neb', value: 'Q6H (06, 12, 18, 24)' },
+        { label: 'Tiotropium', value: 'inhaler QD (08:00)' },
+        { label: 'Amlodipine', value: '5mg PO QD (08:00)' },
+      ]},
+      { title: '護理問題', source: 'NIS 護理計畫系統', items: [
+        { label: '#1', value: '氣體交換障礙 / 與肺部發炎及支氣管痙攣有關' },
+        { label: '#2', value: '清除呼吸道功能失效 / 與痰液黏稠有關' },
+        { label: '#3', value: '活動功能障礙 / 與呼吸困難及體力下降有關' },
+        { label: '#4', value: '焦慮 / 與呼吸困難及住院有關' },
+      ]},
+    ],
+  },
+  {
+    patientId: 'mp3',
+    sections: [
+      { title: '基本資料', source: 'HIS 病患主檔', items: [
+        { label: '姓名', value: '張志豪' }, { label: '病歷號', value: 'A2025003' },
+        { label: '年齡/性別', value: '42歲/男' }, { label: '床號', value: '3C-08' },
+        { label: '入院日期', value: '2026-03-22' }, { label: '診斷', value: 'T2DM with DKA' },
+        { label: '主治醫師', value: '陳淑芬' }, { label: '主責護理師', value: '李佳蓉' },
+      ]},
+      { title: '護理評估', source: 'NIS 護理評估系統', items: [
+        { label: 'ADL (Barthel Index)', value: '60 分（需中度協助）↓' },
+        { label: '跌倒風險 (Morse)', value: '50 分（高風險）↑' },
+        { label: '壓傷風險 (Braden)', value: '17 分（輕度風險）' },
+        { label: '意識 (GCS)', value: 'E4V5M6 = 15（倦怠）' },
+        { label: '疼痛 (NRS)', value: '5/10（腹痛）↑' },
+        { label: '脫水評估', value: '皮膚帳篷(+)、口腔乾燥、眼窩凹陷' },
+      ]},
+      { title: '生命徵象', source: 'HIS 護理站系統', items: [
+        { label: 'BP', value: '108/68 mmHg ↓' }, { label: 'HR', value: '110 bpm ↑' },
+        { label: 'RR', value: '28 次/分 (Kussmaul) ↑' }, { label: 'BT', value: '36.8°C' },
+        { label: 'SpO2', value: '98% (RA)' }, { label: '血糖', value: '580 mg/dL ↑↑' },
+      ]},
+      { title: '管路評估', source: 'NIS 管路系統', items: [
+        { label: 'PIV', value: '右手 18G (03/22 置入)，Insulin drip running' },
+        { label: 'Foley', value: '16Fr (03/22 置入)，hourly UO 記錄中' },
+        { label: 'O2', value: '未使用' },
+      ]},
+      { title: '用藥紀錄', source: 'HIS 藥囑系統', items: [
+        { label: 'Regular Insulin', value: 'drip 0.1U/kg/hr (7.2U/hr)' },
+        { label: 'Normal Saline', value: '1000ml/hr × 2hr → 500ml/hr' },
+        { label: 'KCl', value: '20mEq/L in IV fluid (K+ < 5.0 時給予)' },
+        { label: 'Losartan', value: '50mg PO QD (暫停中)' },
+      ]},
+      { title: '護理問題', source: 'NIS 護理計畫系統', items: [
+        { label: '#1', value: '體液容積缺失 / 與滲透性利尿及嘔吐有關' },
+        { label: '#2', value: '血糖控制不穩定 / 與胰島素缺乏及停藥有關' },
+        { label: '#3', value: '噁心 / 與酮酸中毒有關' },
+        { label: '#4', value: '知識缺失 / 與糖尿病自我管理有關' },
+        { label: '#5', value: '無效性健康管理 / 與經濟困難導致停藥有關' },
+      ]},
+    ],
+  },
+]
+
+export function getNursingWritingDraft(type: string, patientId: string, format: string = 'isbar'): string {
+  const draft = MOCK_NURSING_WRITING_DRAFTS.find(d => d.type === type && d.patientId === patientId && d.format === format)
+  if (draft) return draft.content
+  const fallback = MOCK_NURSING_WRITING_DRAFTS.find(d => d.type === type && d.patientId === patientId)
+  return fallback?.content ?? '目前無此病人的護理紀錄草稿資料，請選擇其他病人或類型。'
+}
+
+export function getNursingHisSourceData(patientId: string): HisSourceData | undefined {
+  return MOCK_NURSING_HIS_SOURCE_DATA.find(d => d.patientId === patientId)
 }
 
 // ===== AI 小幫手 — Mock 資料 =====

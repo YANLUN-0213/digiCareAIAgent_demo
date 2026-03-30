@@ -23,6 +23,9 @@ import AiHelper from '@/pages/AiHelper'
 import AiTemplates from '@/pages/AiTemplates'
 import AiSharedMarket from '@/pages/AiSharedMarket'
 import AiStatistics from '@/pages/AiStatistics'
+import CaseTracking from '@/pages/CaseTracking'
+import IvDripMonitor from '@/pages/IvDripMonitor'
+import NursingWriting from '@/pages/NursingWriting'
 
 const router = createHashRouter([
   {
@@ -51,12 +54,15 @@ const router = createHashRouter([
       // 生成式醫療紀錄 AI
       { path: 'medical-ai/teaching', element: <TeachingRecord /> },
       { path: 'medical-ai/writing', element: <MedicalWriting /> },
+      // 生成式護理紀錄 AI
+      { path: 'nursing-ai/writing', element: <NursingWriting /> },
       // AI 小幫手
       { path: 'ai-helper/generate', element: <AiHelper /> },
       { path: 'ai-helper/templates', element: <AiTemplates /> },
       { path: 'ai-helper/shared', element: <AiSharedMarket /> },
       { path: 'ai-helper/statistics', element: <AiStatistics /> },
       // FHIR專區
+      { path: 'fhir/case-tracking', element: <CaseTracking /> },
       { path: 'fhir/twpas', element: <FhirTwpas /> },
       { path: 'fhir/twci', element: <FhirTwci /> },
       { path: 'fhir/twngs', element: <PlaceholderPage funcName="次世代基因定序檢測TWNGS" /> },
@@ -64,6 +70,8 @@ const router = createHashRouter([
       // TWEMPD FHIR
       { path: 'twempd/ep', element: <PlaceholderPage funcName="電子處方箋TWEMPD-EP" /> },
       { path: 'twempd/ds', element: <PlaceholderPage funcName="調劑單張TWEMPD-DS" /> },
+      // 點滴智慧管理
+      { path: 'nursing/iv-drip-monitor', element: <IvDripMonitor /> },
       // EMR IG
       { path: 'emr/ep', element: <PlaceholderPage funcName="電子處方簽EMR-EP" /> },
       { path: 'emr/ds', element: <PlaceholderPage funcName="調劑單張EMR-DS" /> },
