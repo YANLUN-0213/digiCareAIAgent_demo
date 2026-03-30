@@ -2325,6 +2325,1759 @@ E — Evaluation（評價）
 - pH 7.22（改善中）
 - K+ 4.8（下降中，繼續監測）
 - 病患表示腹痛稍緩，NRS 5→3` },
+
+  // ══════════════════════════════════════════════════════════════
+  // mp1 — 王建民, 68歲/男, 5A-12床, Dx: Inferior STEMI s/p PCI
+  // ══════════════════════════════════════════════════════════════
+
+  // ── mp1 × DART ──
+
+  { type: 'admission-nursing', format: 'dart', patientId: 'mp1', content: `【入院護理評估】DART 格式
+
+D — Data（資料）
+日期：2026-03-18
+病患：王建民，68歲/男，5A-12 床，Dx: Inferior STEMI s/p PCI
+由急診轉入，主訴胸痛約 3 小時，心導管術後返回病房
+V/S: BP 118/74, HR 72, RR 18, SpO2 98% (O2 2L NC), BT 36.5°C
+疼痛：NRS 3/10（胸口悶痛）
+右橈動脈穿刺處 TR Band 加壓中，無滲血
+心電圖：ST elevation II, III, aVF（改善中）
+過去病史：HTN 10 年、DM 5 年、高血脂
+目前用藥：Aspirin, Clopidogrel, Atorvastatin, Metoprolol, Lisinopril
+
+A — Action（行動）
+1. 18:00 安排入院，完成入院護理評估
+2. 18:00 連接心電圖持續監測
+3. 18:10 確認 TR Band 壓迫情形，右手抬高固定
+4. 18:15 Aspirin 100mg + Clopidogrel 75mg PO given
+5. 18:20 建立左手 PIV 20G，接 NS 500ml KVO
+6. 18:30 抽血 Troponin-I, CK-MB, CBC, BMP
+7. 19:00 Foley 16Fr 置入
+
+R — Response（反應）
+1. 入院後胸痛 NRS 3→2，未再發作劇烈胸痛
+2. 心電圖監測無新發心律不整
+3. TR Band 穿刺處乾燥無腫脹
+4. PIV 通暢，無紅腫滲漏
+5. Foley 引流順暢，尿液清澈淡黃
+
+T — Teaching（教導）
+1. 衛教絕對臥床休息 24 小時，右手勿用力握拳
+2. 說明胸痛時立即按呼叫鈴通知護理師
+3. 介紹心電圖監測設備及導線注意事項
+4. 衛教 TR Band 約 4 小時後逐步減壓` },
+
+  { type: 'narrative-nursing', format: 'dart', patientId: 'mp1', content: `【敘述性護理紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-20 08:00
+病患：王建民，68歲/男，5A-12 床，Dx: Inferior STEMI s/p PCI (03/18)
+入院 Day 3，昨夜睡眠尚可，主訴「今天胸口不太悶了」
+V/S 08:00: BP 122/76, HR 68, RR 16, SpO2 99% (RA)
+疼痛：NRS 0/10
+飲食：低鈉低脂心臟飲食，早餐進食 80%
+Lab (03/19): Troponin-I 1.2→0.8 ng/mL (下降中), Cr 1.0, K+ 4.2
+I/O (昨日): 進 1500ml / 出 1400ml
+
+A — Action（行動）
+1. 08:00 晨間照護：協助盥洗、口腔清潔
+2. 08:30 Aspirin 100mg + Clopidogrel 75mg + Atorvastatin 40mg PO given
+3. 09:00 Metoprolol 25mg PO given
+4. 09:30 協助病患首次下床坐輪椅 30 分鐘
+5. 10:00 執行 12-lead ECG
+
+R — Response（反應）
+1. 下床活動期間無胸悶、頭暈
+2. 活動後 HR 75, BP 128/78，血行動力學穩定
+3. ECG 顯示 ST 段回歸基線
+4. 病患情緒穩定，主動詢問後續復健計畫
+5. 傷口穿刺處已完全止血，局部無瘀斑
+
+T — Teaching（教導）
+1. 衛教漸進式活動：坐起→坐輪椅→走廊步行
+2. 說明心臟復健運動注意事項
+3. 衛教抗血小板藥物需持續服用，勿自行停藥
+4. 提醒低鈉低脂飲食原則` },
+
+  // mp1 × shift-handoff × dart already exists (line 2229)
+
+  { type: 'inter-unit-transfer', format: 'dart', patientId: 'mp1', content: `【單位間交班紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-19 10:00
+病患：王建民，68歲/男，由 CCU 轉入 5A-12 床
+Dx: Inferior STEMI s/p PCI (03/18)
+V/S: BP 120/72, HR 66, RR 16, SpO2 99% (RA)
+疼痛：NRS 1/10
+意識：清醒 E4V5M6
+管路：左手 PIV 20G (03/18)、Foley 16Fr (03/18)
+Lab (今晨): Troponin-I 2.4 ng/mL, CK-MB 45, Cr 1.0, K+ 4.0
+用藥：DAPT (Aspirin + Clopidogrel), Metoprolol 25mg BID, Atorvastatin 40mg HS
+過敏：NKDA
+
+A — Action（行動）
+1. 10:00 CCU 護理師完成交班，確認管路及藥物
+2. 10:10 連接 5A 病房心電圖 telemetry 監測
+3. 10:15 確認床欄上升、呼叫鈴放置手邊
+4. 10:20 重新評估 Braden Scale 18 分、Morse 35 分
+5. 10:30 通知主治李文哲醫師轉入完成
+
+R — Response（反應）
+1. 轉運過程平穩，無胸痛發作
+2. 病患適應病房環境，情緒穩定
+3. 心電圖監測轉換順利，波形正常
+4. 家屬（配偶）陪伴中，已介紹病房環境
+
+T — Teaching（教導）
+1. 介紹病房設施、作息時間及會客規範
+2. 衛教活動限制：目前可床上翻身，需漸進下床
+3. 說明 telemetry 監測重要性，勿自行拔除
+4. 提醒有任何不適立即通知護理站` },
+
+  { type: 'discharge-nursing', format: 'dart', patientId: 'mp1', content: `【出院護理摘要】DART 格式
+
+D — Data（資料）
+日期：2026-03-25 出院日
+病患：王建民，68歲/男，5A-12 床
+Dx: Inferior STEMI s/p PCI (03/18)，住院 8 天
+出院 V/S: BP 118/72, HR 64, RR 16, SpO2 99% (RA)
+Lab (03/24): Troponin-I 0.1 ng/mL, LDL 82, HbA1c 7.2%, Cr 0.9
+ECG: NSR, 無 ST 段異常
+活動能力：可獨立步行 200 公尺，無胸悶
+出院帶藥：Aspirin 100mg QD, Clopidogrel 75mg QD, Atorvastatin 40mg HS, Metoprolol 25mg BID, Lisinopril 5mg QD
+
+A — Action（行動）
+1. 完成出院護理指導（藥物、飲食、活動、返診）
+2. 確認出院帶藥數量及用法
+3. 拔除 PIV，穿刺處覆蓋無菌敷料
+4. 協助整理個人物品
+5. 安排門診預約：03/31 心臟內科、04/05 新陳代謝科
+
+R — Response（反應）
+1. 病患及家屬能正確複述藥物服用時間
+2. 病患能說出胸痛時應立即就醫的情況
+3. 理解低鈉低脂飲食原則
+4. 病患表示「知道要按時吃藥，不敢再亂停了」
+
+T — Teaching（教導）
+1. DAPT 需服用至少 12 個月，不可自行停藥
+2. 低鈉低脂心臟飲食，每日鈉攝取 < 2g
+3. 漸進式運動：步行→快走，避免劇烈運動
+4. 返診前一天禁食 12 小時（空腹抽血）
+5. 緊急就醫警示：胸痛 > 15 分鐘、呼吸困難、冒冷汗` },
+
+  // ── mp1 × Focus DAR ──
+
+  { type: 'admission-nursing', format: 'focus-dar', patientId: 'mp1', content: `【入院護理評估】Focus DAR 格式
+
+日期：2026-03-18 18:00
+病患：王建民，68歲/男，5A-12 床
+
+Focus（焦點）：急性冠心症後心肌灌流異常 / 急性疼痛
+
+D — Data（資料）
+- 急診轉入，Inferior STEMI s/p PCI (RCA stent × 1)
+- 胸痛 NRS 3/10，悶痛感
+- V/S: BP 118/74, HR 72, RR 18, SpO2 98% (O2 2L NC)
+- 右橈動脈 TR Band 加壓中
+- Troponin-I 5.6 ng/mL, CK-MB 120
+- ECG: ST elevation II, III, aVF（術後改善中）
+- PMH: HTN, DM, Hyperlipidemia
+- 意識清醒 GCS E4V5M6
+- Braden 20 分，Morse 30 分
+
+A — Action（行動）
+1. 完成入院評估及護理計畫建立
+2. 連接持續心電圖監測
+3. 建立 PIV 20G (左手)，NS 500ml KVO
+4. 給予 DAPT: Aspirin 100mg + Clopidogrel 75mg
+5. TR Band 穿刺處照護：每 30 分鐘評估
+6. 絕對臥床，床頭抬高 30 度
+7. Foley 16Fr 置入，I/O 記錄
+
+R — Response（反應）
+1. 入院 2 小時後胸痛 NRS 3→1
+2. 心電圖未見新發 arrhythmia
+3. 穿刺處無活動性出血
+4. 病患配合臥床，情緒穩定
+5. 22:00 入睡，睡眠品質可` },
+
+  { type: 'narrative-nursing', format: 'focus-dar', patientId: 'mp1', content: `【敘述性護理紀錄】Focus DAR 格式
+
+日期：2026-03-20 14:00
+病患：王建民，68歲/男，5A-12 床
+
+Focus（焦點）：活動耐受力下降 / 心臟復健
+
+D — Data（資料）
+- 入院 Day 3，PCI 術後 Day 2
+- 晨間已首次下床坐輪椅 30 分鐘無不適
+- 午後主訴「想再多走動一下」
+- V/S 14:00: BP 124/76, HR 70, RR 16, SpO2 99% (RA)
+- 胸痛 NRS 0/10
+- ECG telemetry 穩定，NSR
+
+A — Action（行動）
+1. 14:00 評估活動前 V/S 基準值
+2. 14:10 協助病患床邊站立 5 分鐘
+3. 14:15 陪同走廊步行約 50 公尺
+4. 14:25 步行後返回床邊休息
+5. 14:30 監測活動後 V/S
+
+R — Response（反應）
+1. 站立時無頭暈、胸悶
+2. 步行過程 HR 70→80，步行後 2 分鐘回復至 72
+3. BP 活動後 130/80（較基準微升，可接受）
+4. SpO2 維持 98-99%
+5. 病患表示「走一走覺得精神比較好」` },
+
+  { type: 'shift-handoff', format: 'focus-dar', patientId: 'mp1', content: `【交班護理紀錄】Focus DAR 格式
+
+日期：2026-03-19 大夜班交班 07:00
+病患：王建民，68歲/男，5A-12 床
+
+Focus（焦點）：心肌梗塞術後監測 / 疼痛管理
+
+D — Data（資料）
+- PCI 術後 Day 1，CCU 轉入 5A 首夜
+- 00:00-06:00 間歇睡眠，02:00 曾醒來如廁
+- 02:00 主訴胸口微悶 NRS 2/10，無放射痛
+- V/S 06:00: BP 116/70, HR 62, RR 14, SpO2 99% (RA)
+- ECG telemetry 全夜 NSR，無 arrhythmia
+- I/O 本班：進 300ml / 出 400ml (Foley)
+- TR Band 已移除（昨日 22:00），穿刺處乾燥
+
+A — Action（行動）
+1. 02:00 評估胸悶情形，NRS 2/10，持續觀察
+2. 02:15 確認 ECG 無 ST 段變化
+3. 02:30 胸悶自行緩解，NRS 0/10
+4. 06:00 晨間 V/S 測量
+5. 06:30 抽血 Troponin-I, BMP
+
+R — Response（反應）
+1. 02:00 胸悶短暫發作後 30 分鐘內自行緩解
+2. 全夜無劇烈胸痛事件
+3. 心電圖監測穩定
+4. 穿刺處無出血或血腫
+5. 晨間精神尚可，可配合護理活動` },
+
+  { type: 'inter-unit-transfer', format: 'focus-dar', patientId: 'mp1', content: `【單位間交班紀錄】Focus DAR 格式
+
+日期：2026-03-19 10:00
+病患：王建民，68歲/男，CCU → 5A-12 床
+
+Focus（焦點）：CCU 轉一般病房照護銜接
+
+D — Data（資料）
+- Inferior STEMI s/p PCI (03/18 RCA stent × 1)
+- CCU 住 1 天，血行動力學穩定可轉出
+- V/S: BP 120/72, HR 66, RR 16, SpO2 99% (RA)
+- Troponin-I 2.4→1.8 ng/mL（持續下降）
+- 疼痛 NRS 1/10
+- 管路：PIV 20G (左手)、Foley 16Fr
+- DAPT + β-blocker + Statin 持續使用中
+- 過敏：NKDA
+- ADL 部分依賴（Barthel 70）
+
+A — Action（行動）
+1. CCU 護理師當面交班，雙方確認管路及用藥
+2. 轉運至 5A 途中持續 SpO2 監測
+3. 到達後連接 telemetry 及重新評估 V/S
+4. 更新護理計畫及跌倒風險評估
+5. 通知主治醫師李文哲轉入完成
+
+R — Response（反應）
+1. 轉運過程穩定，無胸痛或血壓波動
+2. telemetry 連接順利，心律 NSR
+3. 病患表示「換到這裡比較安靜，比較好睡」
+4. 家屬了解轉出代表病情改善` },
+
+  { type: 'discharge-nursing', format: 'focus-dar', patientId: 'mp1', content: `【出院護理摘要】Focus DAR 格式
+
+日期：2026-03-25
+病患：王建民，68歲/男，5A-12 床
+
+Focus（焦點）：出院準備及自我照護能力
+
+D — Data（資料）
+- Inferior STEMI s/p PCI (03/18)，住院 8 天
+- 出院 V/S: BP 118/72, HR 64, RR 16, SpO2 99%
+- 可獨立步行 200 公尺無胸悶
+- Troponin-I 0.1, LDL 82, HbA1c 7.2%
+- ECG: NSR，無 ST 異常
+- 出院帶藥：Aspirin, Clopidogrel, Atorvastatin, Metoprolol, Lisinopril
+- 返診：03/31 心臟內科、04/05 新陳代謝科
+
+A — Action（行動）
+1. 完成出院護理指導及藥物衛教
+2. 提供書面出院衛教單張
+3. 拔除 PIV，評估穿刺處
+4. 確認門診預約及轉介心臟復健
+5. 通知居家護理轉介
+
+R — Response（反應）
+1. 病患正確示範含舌下 NTG 使用時機
+2. 家屬能複述返診日期及注意事項
+3. 病患表示「回家後會乖乖吃藥，飲食也會注意」
+4. PIV 拔除處無紅腫，覆蓋敷料
+5. 病患及家屬對出院準備表達信心` },
+
+  // ── mp1 × SOAPIE ──
+
+  { type: 'admission-nursing', format: 'soapie', patientId: 'mp1', content: `【入院護理評估】SOAPIE 格式
+
+日期：2026-03-18
+病患：王建民，68歲/男，5A-12 床
+護理問題：#1 急性疼痛 #2 心輸出量減少之危險性
+
+S — Subjective（主觀）
+「胸口很悶，像被壓住一樣，痛了大概三個小時。」
+「做完心導管好多了，但還是有一點不舒服。」
+
+O — Objective（客觀）
+- V/S: BP 118/74, HR 72, RR 18, SpO2 98% (O2 2L NC)
+- 疼痛 NRS 3/10，胸口悶痛
+- ECG: ST elevation II, III, aVF（術後改善中）
+- Troponin-I 5.6 ng/mL, CK-MB 120
+- 右橈動脈 TR Band 加壓中，無滲血
+- 意識清醒，面色略蒼白
+
+A — Assessment（評估）
+1. 急性心肌梗塞術後急性疼痛（改善中）
+2. 心輸出量減少風險（需持續監測）
+3. 出血風險（DAPT + 穿刺處）
+4. 焦慮（首次心臟手術）
+
+P — Plan（計畫）
+1. 持續心電圖監測，注意 arrhythmia
+2. 疼痛評估 Q2H
+3. TR Band 加壓處 Q30min 評估
+4. 絕對臥床 24 小時
+5. I/O 嚴密記錄
+
+I — Intervention（介入）
+1. 18:00 連接持續心電圖監測
+2. 18:10 確認 TR Band 壓力適當
+3. 18:15 給予 DAPT 及 Statin
+4. 18:20 建立 PIV，NS KVO
+5. 18:30 Foley 置入，開始 I/O 計算
+
+E — Evaluation（評價）
+- 20:00 胸痛 NRS 3→2
+- 心電圖穩定，無新 arrhythmia
+- TR Band 無滲血
+- 尿量 200ml/2hr（充足）
+- 病患表示「有比剛來好多了」` },
+
+  { type: 'narrative-nursing', format: 'soapie', patientId: 'mp1', content: `【敘述性護理紀錄】SOAPIE 格式
+
+日期：2026-03-21
+病患：王建民，68歲/男，5A-12 床
+護理問題：#1 活動耐受力下降
+
+S — Subjective（主觀）
+「昨天有下床走一小段，覺得還可以，今天想多走一點。」
+「不過走太久腳會有點軟。」
+
+O — Objective（客觀）
+- 入院 Day 4，PCI 術後 Day 3
+- V/S 09:00: BP 120/74, HR 66, RR 16, SpO2 99% (RA)
+- 昨日步行 50 公尺無不適
+- 心肌酶持續下降 Troponin-I 0.5 ng/mL
+- ECG telemetry: NSR
+- Barthel Index 85 分
+
+A — Assessment（評估）
+1. 活動耐受力漸改善
+2. 心肌恢復中，可增加活動量
+3. 下肢肌力稍弱（臥床 3 天）
+
+P — Plan（計畫）
+1. 漸進增加步行距離至 100 公尺
+2. 活動前後監測 V/S
+3. 下肢肌力訓練
+4. 評估心臟復健轉介時機
+
+I — Intervention（介入）
+1. 09:30 活動前基準 V/S 測量
+2. 09:40 協助下床，走廊步行 100 公尺
+3. 09:55 步行後休息，監測 V/S
+4. 10:10 指導床上下肢主動運動
+5. 10:30 記錄活動耐受情形
+
+E — Evaluation（評價）
+- 步行 100 公尺完成，中途無休息
+- HR 66→78→68（3 分鐘恢復）
+- 無胸悶、頭暈或呼吸困難
+- 病患表示「今天走比較遠，感覺不錯」
+- 預計明日增加至 150 公尺` },
+
+  { type: 'shift-handoff', format: 'soapie', patientId: 'mp1', content: `【交班護理紀錄】SOAPIE 格式
+
+日期：2026-03-20 白班交班 15:00
+病患：王建民，68歲/男，5A-12 床
+護理問題：#1 心肌灌流異常 #2 活動耐受力下降
+
+S — Subjective（主觀）
+「今天有下床坐輪椅，感覺還好。」
+「胸口都沒有不舒服了。」
+
+O — Objective（客觀）
+- PCI 術後 Day 2，入院 Day 3
+- V/S 14:00: BP 124/76, HR 70, RR 16, SpO2 99% (RA)
+- 疼痛 NRS 0/10
+- 下床坐輪椅 30 分鐘＋走廊步行 50 公尺
+- I/O 本班：進 800ml / 出 750ml
+- Lab: Troponin-I 0.8 (↓), K+ 4.2
+- ECG 14:00: NSR，ST 回歸基線
+
+A — Assessment（評估）
+1. 胸痛已緩解，心肌酶持續下降
+2. 活動耐受力漸改善中
+3. 血行動力學穩定
+
+P — Plan（計畫）
+1. 繼續漸進活動計畫
+2. 明日增加步行距離
+3. 持續 telemetry 監測
+4. 明日追蹤 lipid panel
+
+I — Intervention（介入）
+1. 09:30 協助下床坐輪椅
+2. 10:00 執行 12-lead ECG
+3. 14:00 陪同走廊步行 50 公尺
+4. 按時給予 DAPT + β-blocker + Statin
+
+E — Evaluation（評價）
+- 全班無胸痛事件
+- 活動後 V/S 穩定
+- ECG 改善中
+- 病患配合度佳，情緒穩定` },
+
+  { type: 'inter-unit-transfer', format: 'soapie', patientId: 'mp1', content: `【單位間交班紀錄】SOAPIE 格式
+
+日期：2026-03-19 10:00
+病患：王建民，68歲/男，CCU → 5A-12 床
+護理問題：#1 心輸出量減少之危險性 #2 急性疼痛
+
+S — Subjective（主觀）
+「昨天做完心導管後好多了，胸口只剩一點點悶。」
+「在加護病房睡不太著，換到普通病房會不會比較好？」
+
+O — Objective（客觀）
+- Inferior STEMI s/p PCI (03/18)，CCU 住 1 天
+- V/S: BP 120/72, HR 66, RR 16, SpO2 99% (RA)
+- NRS 1/10
+- Troponin-I 2.4→1.8 ng/mL
+- ECG: NSR，ST elevation 改善中
+- 管路：PIV 20G (左手)、Foley 16Fr
+- Barthel 70 分，Morse 35 分
+
+A — Assessment（評估）
+1. 血行動力學穩定，符合轉出條件
+2. 心肌酶下降趨勢良好
+3. 疼痛控制良好
+4. 跌倒中度風險
+
+P — Plan（計畫）
+1. 轉至 5A 後持續 telemetry 監測
+2. 漸進活動計畫啟動
+3. 跌倒預防措施
+4. 持續用藥及心臟復健評估
+
+I — Intervention（介入）
+1. CCU 護理師對 5A 護理師當面交班
+2. 轉運中持續 SpO2 監測
+3. 到達 5A 後連接 telemetry
+4. 重新評估跌倒風險，執行預防措施
+5. 通知主治醫師轉入完成
+
+E — Evaluation（評價）
+- 轉運過程穩定，無胸痛
+- telemetry 接上後心律穩定
+- 病房環境介紹完成
+- 病患表示「這裡比較安靜舒服」` },
+
+  { type: 'discharge-nursing', format: 'soapie', patientId: 'mp1', content: `【出院護理摘要】SOAPIE 格式
+
+日期：2026-03-25
+病患：王建民，68歲/男，5A-12 床
+護理問題：#1 知識缺失（心臟疾病自我照護）
+
+S — Subjective（主觀）
+「住院這幾天學了很多，回去會注意飲食和運動。」
+「藥要吃多久？可以停嗎？」
+
+O — Objective（客觀）
+- STEMI s/p PCI 住院 8 天，病情穩定出院
+- V/S: BP 118/72, HR 64, RR 16, SpO2 99%
+- 可獨立步行 200 公尺無不適
+- Troponin-I 0.1, LDL 82, HbA1c 7.2%
+- 出院帶藥 5 種，病患及家屬已完成衛教
+
+A — Assessment（評估）
+1. 心臟功能恢復良好
+2. 自我照護知識仍需加強（尤其用藥遵從性）
+3. 多重慢性病需長期追蹤
+
+P — Plan（計畫）
+1. DAPT 至少持續 12 個月
+2. 心臟復健門診轉介
+3. 慢性病共同照護門診追蹤
+4. 居家護理訪視評估
+
+I — Intervention（介入）
+1. 逐項說明 5 種出院用藥之作用及副作用
+2. 提供出院衛教單張（藥物、飲食、運動、緊急就醫）
+3. 示範含舌下 NTG 使用方式
+4. 預約返診時間
+5. 轉介心臟復健及居家護理
+
+E — Evaluation（評價）
+- 病患正確複述各藥物用法
+- 可示範 NTG 使用步驟
+- 家屬了解緊急就醫情境
+- 病患表示「這次嚇到了，一定會好好照顧自己」` },
+
+  // ── mp1 × Narrative ──
+
+  { type: 'admission-nursing', format: 'narrative', patientId: 'mp1', content: `【入院護理評估】Narrative 敘述式
+
+日期：2026-03-18 18:00
+病患：王建民，68歲/男，5A-12 床
+Dx: Inferior STEMI s/p PCI
+
+病患於今日 15:00 因胸痛約 3 小時由急診入院，經心導管檢查診斷為下壁 ST 段上升型心肌梗塞，已完成右冠狀動脈支架置放術一枚，術後由 CCU 觀察後轉入本病房。
+
+入院時意識清醒 GCS 15 分，主訴胸口仍有悶痛感 NRS 3/10，生命徵象：血壓 118/74 mmHg、心跳 72 次/分、呼吸 18 次/分、血氧 98%（鼻導管 2L/min），體溫 36.5°C。右橈動脈穿刺處以 TR Band 加壓止血中，局部無腫脹及滲血。
+
+過去病史包括高血壓 10 年、糖尿病 5 年及高血脂，目前使用藥物為 Aspirin、Clopidogrel、Atorvastatin、Metoprolol 及 Lisinopril。無藥物過敏史。
+
+護理處置：連接持續心電圖監測，建立左手靜脈留置針 20G 接生理食鹽水維持，予以 Aspirin 100mg 及 Clopidogrel 75mg 口服給藥，置入 Foley 16Fr 開始記錄出入量。評估跌倒風險 Morse 30 分、壓傷風險 Braden 20 分。
+
+衛教病患絕對臥床休息 24 小時，右手避免用力握拳，如有胸痛加劇或呼吸困難立即按呼叫鈴通知。家屬（配偶王太太）陪伴中，已說明目前病情及照護計畫。入院後 2 小時胸痛由 NRS 3 降至 2，心電圖穩定無新發心律不整。` },
+
+  { type: 'narrative-nursing', format: 'narrative', patientId: 'mp1', content: `【敘述性護理紀錄】Narrative 敘述式
+
+日期：2026-03-20 14:00
+病患：王建民，68歲/男，5A-12 床
+Dx: Inferior STEMI s/p PCI (03/18)
+
+入院第 3 天，PCI 術後第 2 天。病患今日精神良好，主訴胸口無不適，疼痛 NRS 0/10。晨間生命徵象穩定：血壓 122/76、心跳 68、呼吸 16、血氧 99%（已拔除鼻導管）。
+
+上午 09:30 首次協助病患下床坐輪椅，持續 30 分鐘，期間無胸悶或頭暈不適，心跳及血壓變化在正常範圍內。午後 14:10 進一步協助床邊站立及走廊步行約 50 公尺，步行過程中心跳由 70 升至 80 次/分，步行後 2 分鐘恢復至 72 次/分，血壓 130/80，病患表示無任何不適。
+
+今日 12-lead ECG 顯示 ST 段已回歸基線，telemetry 監測全日為正常竇性心律。檢驗數據 Troponin-I 由 1.2 降至 0.8 ng/mL，持續改善中。飲食方面病患已開始低鈉低脂心臟飲食，早餐進食約 80%。
+
+持續衛教漸進式活動原則、心臟復健運動注意事項，以及抗血小板藥物不可自行停用之重要性。病患情緒穩定，主動詢問出院後的復健計畫，配合度良好。` },
+
+  { type: 'shift-handoff', format: 'narrative', patientId: 'mp1', content: `【交班護理紀錄】Narrative 敘述式
+
+日期：2026-03-19 小夜班交班 23:00
+病患：王建民，68歲/男，5A-12 床
+Dx: Inferior STEMI s/p PCI (03/18)
+
+PCI 術後第 1 天，今日 10:00 由 CCU 轉入 5A 病房。小夜班期間病患整體狀況穩定。生命徵象 22:00 測量：血壓 126/72、心跳 65、呼吸 16、血氧 99%（Room Air），胸痛 NRS 1/10（微悶感）。
+
+本班出入量：進 800ml、出 650ml（Foley 引流）。管路方面左手 PIV 20G 通暢無紅腫，Foley 16Fr 引流順暢尿液清澈。TR Band 已於 22:00 移除，穿刺處乾燥無出血。
+
+藥物給予：20:00 Metoprolol 25mg PO。20:30 執行心電圖監測記錄，結果穩定無 ST 段異常變化。21:00 協助晚間口腔清潔及調整舒適臥位後入睡，睡眠品質佳。
+
+衛教病患夜間如有胸悶或呼吸困難立即按呼叫鈴，提醒明日晨間 06:00 需空腹抽血，並說明明日將開始下床活動計畫。全班無胸痛發作事件。` },
+
+  { type: 'inter-unit-transfer', format: 'narrative', patientId: 'mp1', content: `【單位間交班紀錄】Narrative 敘述式
+
+日期：2026-03-19 10:00
+病患：王建民，68歲/男，CCU → 5A-12 床
+Dx: Inferior STEMI s/p PCI (03/18)
+
+病患因下壁 ST 段上升型心肌梗塞於 03/18 接受右冠狀動脈支架置放術，術後於 CCU 觀察一天，血行動力學穩定，今日 10:00 轉入 5A 一般病房。
+
+轉入時生命徵象：血壓 120/72、心跳 66、呼吸 16、血氧 99%（Room Air），意識清醒，胸痛 NRS 1/10。今晨檢驗 Troponin-I 2.4 ng/mL（較昨日下降），CK-MB 45。現行用藥包括 DAPT（Aspirin + Clopidogrel）、Metoprolol 25mg BID、Atorvastatin 40mg HS。無藥物過敏。
+
+管路：左手 PIV 20G（03/18 建立）通暢、Foley 16Fr（03/18 置入）引流正常。Braden 18 分、Morse 35 分（中度跌倒風險）。
+
+CCU 護理師與 5A 護理師完成當面交班，確認管路、用藥及醫囑。到達後連接 telemetry 心電圖監測，波形正常。床欄上升、呼叫鈴置於手邊，跌倒預防措施已執行。已通知主治醫師李文哲轉入完成。家屬（配偶）陪伴中，已介紹病房環境及作息時間。病患表示對轉出 CCU 感到放心，適應良好。` },
+
+  { type: 'discharge-nursing', format: 'narrative', patientId: 'mp1', content: `【出院護理摘要】Narrative 敘述式
+
+日期：2026-03-25
+病患：王建民，68歲/男，5A-12 床
+Dx: Inferior STEMI s/p PCI (03/18)
+
+病患因下壁心肌梗塞住院 8 天，經 PCI 支架置放術及藥物治療後病情穩定，今日准予出院。出院時生命徵象：血壓 118/72、心跳 64、呼吸 16、血氧 99%，活動能力恢復良好，可獨立步行 200 公尺無胸悶不適。
+
+出院檢驗數據：Troponin-I 0.1 ng/mL（已回歸正常）、LDL 82 mg/dL、HbA1c 7.2%、Cr 0.9。心電圖顯示正常竇性心律，無 ST 段異常。
+
+出院帶藥 5 種：Aspirin 100mg QD、Clopidogrel 75mg QD（DAPT 至少持續 12 個月）、Atorvastatin 40mg HS、Metoprolol 25mg BID、Lisinopril 5mg QD。已逐項向病患及家屬說明各藥物之作用、用法及副作用，並示範含舌下 NTG 緊急使用方式。
+
+出院衛教重點包括：低鈉低脂心臟飲食、漸進式運動復健、抗血小板藥物不可自行停用、緊急就醫警示徵兆（胸痛超過 15 分鐘、呼吸困難、冒冷汗）。已安排門診追蹤：03/31 心臟內科（李文哲醫師）、04/05 新陳代謝科。已轉介心臟復健及居家護理。病患及家屬表示理解出院注意事項，有信心執行自我照護。` },
+
+  // ══════════════════════════════════════════════════════════════
+  // mp2 — 林美珍, 55歲/女, 6B-03床, Dx: COPD with acute exacerbation
+  // ══════════════════════════════════════════════════════════════
+
+  // ── mp2 × DART ──
+
+  { type: 'admission-nursing', format: 'dart', patientId: 'mp2', content: `【入院護理評估】DART 格式
+
+D — Data（資料）
+日期：2026-03-20
+病患：林美珍，55歲/女，6B-03 床，Dx: COPD with acute exacerbation
+由急診入院，主訴呼吸困難加劇 2 天，咳嗽伴黃綠色痰
+V/S: BP 138/82, HR 96, RR 26, SpO2 89% (RA), BT 37.8°C
+呼吸型態：使用輔助呼吸肌，唇微紫
+肺音：雙側散在性哮鳴音及右下葉粗囉音
+PMH: COPD 8 年，抽菸史 30 pack-years（已戒 2 年）
+目前用藥：Spiriva, Symbicort, Salbutamol PRN
+ABG (RA): pH 7.35, PaCO2 52, PaO2 58, HCO3- 28
+
+A — Action（行動）
+1. 20:00 入院安置，半坐臥位（床頭抬高 45 度）
+2. 20:00 給予 O2 2L/min via NC（注意 COPD 低流量原則）
+3. 20:10 Nebulizer (Combivent) 治療
+4. 20:15 Methylprednisolone 40mg IV push
+5. 20:20 抽血 CBC, CRP, ABG, Sputum C/S
+6. 20:30 Levofloxacin 750mg IV drip 開始
+7. 21:00 完成入院護理評估
+
+R — Response（反應）
+1. O2 使用後 SpO2 上升至 93%
+2. Nebulizer 後呼吸較順，RR 24→22
+3. 病患表示「噴藥後比較吸得到氣」
+4. 哮鳴音稍改善但仍存在
+5. 21:30 可平靜說完整句話
+
+T — Teaching（教導）
+1. 說明低流量氧氣使用原則及注意事項
+2. 衛教噘嘴式呼吸（pursed-lip breathing）
+3. 指導呼叫鈴使用，呼吸困難時立即通知
+4. 說明痰液留檢方式` },
+
+  { type: 'narrative-nursing', format: 'dart', patientId: 'mp2', content: `【敘述性護理紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-22 10:00
+病患：林美珍，55歲/女，6B-03 床，Dx: COPD AE
+入院 Day 3，O2 由 2L 降至 1L/min NC
+V/S 10:00: BP 132/78, HR 84, RR 20, SpO2 95% (O2 1L NC)
+肺音：哮鳴音明顯減少，右下葉囉音消失
+痰液轉為白色少量，易咳出
+CRP 12→5.8 (↓)，WBC 11000→8500 (↓)
+病患主訴「今天好很多，可以自己走去廁所了」
+
+A — Action（行動）
+1. 10:00 Nebulizer (Combivent) QID 持續執行
+2. 10:30 Methylprednisolone 由 IV 轉 PO Prednisolone 30mg
+3. 11:00 指導吸入器正確使用技巧（MDI + spacer）
+4. 11:30 協助病患走廊步行 30 公尺做活動評估
+5. 繼續 Levofloxacin 750mg IV QD
+
+R — Response（反應）
+1. 步行 30 公尺後 SpO2 維持 93%，RR 22
+2. 休息 3 分鐘後 SpO2 回升至 95%
+3. 病患能正確示範 MDI + spacer 操作步驟
+4. 呼吸費力感明顯改善
+5. 食慾改善，午餐進食 70%
+
+T — Teaching（教導）
+1. 持續衛教噘嘴式呼吸及腹式呼吸
+2. 示範吸入器使用：吐氣→按壓→慢吸→閉氣 10 秒
+3. 說明類固醇漸減計畫，勿自行停藥
+4. 衛教活動後呼吸困難加劇時應休息` },
+
+  { type: 'shift-handoff', format: 'dart', patientId: 'mp2', content: `【交班護理紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-21 白班交班 15:00
+病患：林美珍，55歲/女，6B-03 床，Dx: COPD AE
+入院 Day 2，O2 2L/min NC
+V/S 14:00: BP 134/80, HR 88, RR 22, SpO2 93% (O2 2L NC)
+肺音：哮鳴音較昨日減少，右下葉仍有粗囉音
+痰液淡黃少量
+I/O 本班：進 1000ml / 出 800ml
+Lab: WBC 11000, CRP 12, Sputum C/S pending
+Methylprednisolone 40mg IV Q12H 持續中
+
+A — Action（行動）
+1. 08:00 Nebulizer (Combivent) 治療
+2. 08:30 Methylprednisolone 40mg IV push
+3. 09:00 Levofloxacin 750mg IV drip
+4. 10:00 胸腔叩擊引流（右下葉加強）
+5. 14:00 Nebulizer (Combivent) 治療
+6. 協助半坐臥位，鼓勵飲水
+
+R — Response（反應）
+1. Nebulizer 後 SpO2 93→94%
+2. 胸腔叩擊後咳出淡黃痰約 5ml
+3. 病患主訴「今天比較不喘了」
+4. 可在床邊坐起進食
+5. RR 較晨間 24→22
+
+T — Teaching（教導）
+1. 指導有效咳嗽技巧
+2. 衛教充足水分攝取以利痰液排出
+3. 說明治療進展及預計恢復時程` },
+
+  { type: 'inter-unit-transfer', format: 'dart', patientId: 'mp2', content: `【單位間交班紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-20 22:00
+病患：林美珍，55歲/女，由急診轉入 6B-03 床
+Dx: COPD with acute exacerbation
+V/S: BP 136/80, HR 92, RR 24, SpO2 92% (O2 2L NC)
+意識清醒，呼吸費力，使用輔助肌
+ABG: pH 7.35, PaCO2 52, PaO2 62 (O2 2L)
+管路：右手 PIV 22G (急診建立)
+急診已給予：Nebulizer × 2, Methylprednisolone 40mg IV, Levofloxacin 750mg IV
+PMH: COPD 8 年，HTN
+過敏：Penicillin（皮疹）
+
+A — Action（行動）
+1. 22:00 急診護理師完成交班
+2. 22:10 確認管路及藥物，核對急診用藥紀錄
+3. 22:15 安置半坐臥位，床頭 45 度
+4. 22:20 連接 SpO2 持續監測
+5. 22:30 完成入院護理評估
+6. 22:30 通知值班醫師到院評估
+
+R — Response（反應）
+1. 轉運過程 SpO2 維持 91-93%
+2. 到達病房後呼吸型態改善（半坐臥）
+3. 病患表示「躺著比較喘，坐起來好一點」
+4. 了解過敏史 Penicillin，目前用藥無衝突
+
+T — Teaching（教導）
+1. 介紹病房環境及呼叫鈴使用
+2. 說明 O2 使用注意事項，勿自行調整流量
+3. 衛教呼吸困難加劇時立即通知
+4. 告知家屬探視時間及陪病注意事項` },
+
+  { type: 'discharge-nursing', format: 'dart', patientId: 'mp2', content: `【出院護理摘要】DART 格式
+
+D — Data（資料）
+日期：2026-03-27 出院日
+病患：林美珍，55歲/女，6B-03 床
+Dx: COPD with acute exacerbation，住院 8 天
+出院 V/S: BP 128/76, HR 78, RR 18, SpO2 96% (RA)
+肺音：少量散在性哮鳴音，無囉音
+Lab: CRP 1.2, WBC 7200 (正常)
+Sputum C/S: H. influenzae (Levofloxacin sensitive)
+FEV1/FVC: 52% (較入院 45% 改善)
+可獨立行走 100 公尺，SpO2 維持 93% 以上
+出院帶藥：Spiriva 18mcg QD, Symbicort 160/4.5 BID, Salbutamol MDI PRN, Prednisolone 10mg QD ×5天
+
+A — Action（行動）
+1. 完成出院護理指導（藥物、吸入器、呼吸訓練）
+2. 確認病患能正確操作所有吸入器
+3. 提供肺復原運動衛教單
+4. 拔除 PIV，評估穿刺處
+5. 安排返診：04/03 胸腔內科
+
+R — Response（反應）
+1. 病患正確示範 Spiriva HandiHaler 及 Symbicort 操作
+2. 能說出 Salbutamol 使用時機及上限次數
+3. 理解 Prednisolone 漸減原則
+4. 能演示噘嘴式呼吸及腹式呼吸
+
+T — Teaching（教導）
+1. 吸入器使用後務必漱口（預防口腔念珠菌）
+2. 避免接觸二手菸、空污、粉塵
+3. 每年接種流感及肺炎鏈球菌疫苗
+4. Salbutamol 一天使用超過 4 次需回診
+5. 緊急就醫：呼吸困難加劇、嘴唇發紫、意識改變` },
+
+  // ── mp2 × Focus DAR ──
+
+  { type: 'admission-nursing', format: 'focus-dar', patientId: 'mp2', content: `【入院護理評估】Focus DAR 格式
+
+日期：2026-03-20 20:00
+病患：林美珍，55歲/女，6B-03 床
+
+Focus（焦點）：氣體交換障礙 / 呼吸道清除功能失效
+
+D — Data（資料）
+- 急診入院，COPD AE，呼吸困難加劇 2 天
+- V/S: BP 138/82, HR 96, RR 26, SpO2 89% (RA)
+- 使用輔助呼吸肌，唇微紫
+- 肺音：雙側哮鳴音、右下葉粗囉音
+- 咳嗽伴黃綠色黏稠痰
+- ABG: pH 7.35, PaCO2 52, PaO2 58
+- PMH: COPD 8 年，30 pack-years 抽菸史（戒菸 2 年）
+- BT 37.8°C，疑似感染引發急性惡化
+
+A — Action（行動）
+1. 安置半坐臥位（床頭 45 度）
+2. 給予 O2 2L/min NC（低流量原則）
+3. Nebulizer (Combivent) 治療
+4. Methylprednisolone 40mg IV push
+5. Levofloxacin 750mg IV drip 開始
+6. 抽血及痰液培養送檢
+7. 完成入院評估及護理計畫
+
+R — Response（反應）
+1. O2 使用後 SpO2 89→93%
+2. Nebulizer 後 RR 26→22，呼吸稍順
+3. 病患可完整說出短句
+4. 半坐臥位後呼吸費力感改善
+5. 21:00 痰液成功留檢送出` },
+
+  // mp2 × narrative-nursing × focus-dar already exists (line 2256)
+
+  { type: 'shift-handoff', format: 'focus-dar', patientId: 'mp2', content: `【交班護理紀錄】Focus DAR 格式
+
+日期：2026-03-21 大夜班交班 07:00
+病患：林美珍，55歲/女，6B-03 床
+
+Focus（焦點）：呼吸功能維持 / 感染控制
+
+D — Data（資料）
+- 入院 Day 2，COPD AE，O2 2L/min NC
+- V/S 06:00: BP 130/78, HR 86, RR 22, SpO2 93%
+- 夜間咳嗽間歇發作，02:00 及 04:00 各有一次痰多難咳
+- 痰液黃色黏稠，量中等
+- BT 37.2°C（較昨日 37.8°C 下降）
+- 睡眠斷續，約共睡 4 小時
+- I/O 本班：進 400ml / 出 350ml
+
+A — Action（行動）
+1. 02:00 Nebulizer (Combivent) 治療
+2. 02:20 執行胸腔叩擊引流
+3. 04:00 協助半坐臥位，鼓勵深呼吸
+4. 06:00 Methylprednisolone 40mg IV push
+5. 06:30 晨間 V/S 及 SpO2 評估
+
+R — Response（反應）
+1. 02:00 Nebulizer 後咳出黃痰約 8ml
+2. 叩擊後呼吸音稍改善
+3. 04:00 後可再次入睡
+4. 體溫下降趨勢，感染指標待追蹤
+5. 晨間精神尚可，可配合護理活動` },
+
+  { type: 'inter-unit-transfer', format: 'focus-dar', patientId: 'mp2', content: `【單位間交班紀錄】Focus DAR 格式
+
+日期：2026-03-20 22:00
+病患：林美珍，55歲/女，急診 → 6B-03 床
+
+Focus（焦點）：急性呼吸惡化轉入照護銜接
+
+D — Data（資料）
+- COPD AE，急診治療後轉入一般病房
+- V/S: BP 136/80, HR 92, RR 24, SpO2 92% (O2 2L NC)
+- 急診已給予 Nebulizer × 2, Steroid IV, 抗生素
+- 管路：右手 PIV 22G
+- 過敏：Penicillin（皮疹）
+- 意識清醒但呼吸費力
+- 家屬（女兒）陪伴
+
+A — Action（行動）
+1. 急診護理師完成交班
+2. 確認管路通暢及用藥紀錄
+3. 安置半坐臥位，SpO2 持續監測
+4. 完成入院護理評估
+5. 通知值班醫師到院評估
+
+R — Response（反應）
+1. 轉運過程 SpO2 維持 91-93%
+2. 半坐臥位後呼吸型態改善
+3. 病患表示比急診時舒服些
+4. 家屬已了解病情及治療計畫` },
+
+  { type: 'discharge-nursing', format: 'focus-dar', patientId: 'mp2', content: `【出院護理摘要】Focus DAR 格式
+
+日期：2026-03-27
+病患：林美珍，55歲/女，6B-03 床
+
+Focus（焦點）：出院準備 / 呼吸功能自我管理
+
+D — Data（資料）
+- COPD AE 住院 8 天，病情穩定出院
+- V/S: BP 128/76, HR 78, RR 18, SpO2 96% (RA)
+- 肺音：少量哮鳴音，無囉音
+- CRP 1.2, WBC 7200（感染控制）
+- FEV1/FVC 52%（改善中）
+- 可獨立步行 100 公尺
+- 出院帶藥：Spiriva, Symbicort, Salbutamol PRN, Prednisolone 10mg × 5 天
+
+A — Action（行動）
+1. 逐項衛教吸入器正確使用
+2. 指導噘嘴式呼吸及腹式呼吸
+3. 提供肺復原運動衛教單
+4. 預約返診 04/03 胸腔內科
+5. 說明急性惡化徵兆及緊急就醫時機
+
+R — Response（反應）
+1. 正確示範 Spiriva HandiHaler 及 Symbicort 操作
+2. 理解 Prednisolone 短期漸減用法
+3. 能說出急性惡化需就醫的情況
+4. 病患表示「這次住院學到很多呼吸運動」
+5. 家屬表示會協助監督用藥` },
+
+  // ── mp2 × SOAPIE ──
+
+  { type: 'admission-nursing', format: 'soapie', patientId: 'mp2', content: `【入院護理評估】SOAPIE 格式
+
+日期：2026-03-20
+病患：林美珍，55歲/女，6B-03 床
+護理問題：#1 氣體交換障礙 #2 呼吸道清除功能失效
+
+S — Subjective（主觀）
+「這兩天越來越喘，痰咳不出來，又黃又稠。」
+「之前有在用吸入器，但最近感冒後就一直惡化。」
+
+O — Objective（客觀）
+- V/S: BP 138/82, HR 96, RR 26, SpO2 89% (RA), BT 37.8°C
+- 使用輔助呼吸肌，唇微紫
+- 肺音：雙側哮鳴音、右下葉粗囉音
+- ABG: pH 7.35, PaCO2 52, PaO2 58
+- 痰液黃綠色黏稠
+- 胸部 X 光：雙側肺過度充氣，右下肺野浸潤
+
+A — Assessment（評估）
+1. COPD 急性惡化合併下呼吸道感染
+2. 第二型呼吸衰竭風險（CO2 滯留）
+3. 呼吸道清除功能下降
+4. 營養攝取不足（因呼吸困難影響進食）
+
+P — Plan（計畫）
+1. 低流量氧氣 O2 2L/min（目標 SpO2 88-92%）
+2. 支氣管擴張劑 + 類固醇 + 抗生素
+3. 胸腔物理治療促進排痰
+4. 監測 ABG 及呼吸型態
+5. 半坐臥位維持
+
+I — Intervention（介入）
+1. 20:00 O2 2L/min NC 開始
+2. 20:10 Nebulizer (Combivent) 治療
+3. 20:15 Methylprednisolone 40mg IV
+4. 20:30 Levofloxacin 750mg IV drip
+5. 半坐臥 45 度，指導噘嘴式呼吸
+
+E — Evaluation（評價）
+- 21:00 SpO2 93%, RR 22（改善）
+- 病患表示呼吸較順暢
+- 可以完整句表達
+- 痰液仍黃稠但量減少
+- 持續監測，預計明日追蹤 ABG` },
+
+  { type: 'narrative-nursing', format: 'soapie', patientId: 'mp2', content: `【敘述性護理紀錄】SOAPIE 格式
+
+日期：2026-03-22
+病患：林美珍，55歲/女，6B-03 床
+護理問題：#1 氣體交換障礙（改善中）
+
+S — Subjective（主觀）
+「今天呼吸順多了，痰也比較容易咳出來。」
+「可以自己去上廁所了，不用叫護理師幫忙。」
+
+O — Objective（客觀）
+- 入院 Day 3，O2 由 2L→1L/min NC
+- V/S: BP 132/78, HR 84, RR 20, SpO2 95% (O2 1L)
+- 肺音：哮鳴音明顯減少，囉音消失
+- 痰液轉白色少量，易咳出
+- CRP 5.8 (↓), WBC 8500 (↓)
+- BT 36.8°C（正常）
+- 步行 30 公尺後 SpO2 93%，休息 3 分鐘回升 95%
+
+A — Assessment（評估）
+1. 呼吸功能持續改善
+2. 感染指標下降
+3. 活動耐受力漸恢復
+4. 可考慮降階治療
+
+P — Plan（計畫）
+1. 類固醇由 IV 轉 PO
+2. 嘗試脫離 O2，觀察 SpO2 維持
+3. 增加活動量
+4. 吸入器技巧教育
+
+I — Intervention（介入）
+1. Prednisolone 30mg PO 開始
+2. 指導 MDI + spacer 正確使用
+3. 協助走廊步行 30 公尺活動評估
+4. 持續 Nebulizer QID
+5. 鼓勵充足水分攝取
+
+E — Evaluation（評價）
+- 步行後呼吸費力感輕微
+- 正確示範 MDI + spacer 步驟
+- 食慾改善，午餐進食 70%
+- 情緒良好，對恢復有信心` },
+
+  { type: 'shift-handoff', format: 'soapie', patientId: 'mp2', content: `【交班護理紀錄】SOAPIE 格式
+
+日期：2026-03-21 小夜班交班 23:00
+病患：林美珍，55歲/女，6B-03 床
+護理問題：#1 呼吸道清除功能失效 #2 睡眠型態紊亂
+
+S — Subjective（主觀）
+「躺下來就開始喘，坐著比較好。」
+「痰一直卡在喉嚨，咳不乾淨。」
+
+O — Objective（客觀）
+- 入院 Day 2，O2 2L/min NC
+- V/S 22:00: BP 132/78, HR 90, RR 22, SpO2 93%
+- 小夜班期間咳嗽頻繁，痰黃色黏稠
+- 半坐臥位可緩解呼吸費力
+- I/O 本班：進 600ml / 出 500ml
+- 晚間 Nebulizer 後暫時改善
+
+A — Assessment（評估）
+1. 痰液排出仍困難
+2. 平躺時呼吸困難加劇
+3. 睡眠品質受呼吸症狀影響
+
+P — Plan（計畫）
+1. 維持半坐臥位入睡
+2. 夜間 PRN Nebulizer
+3. 胸腔叩擊促進排痰
+4. 夜間 Q4H 評估呼吸
+
+I — Intervention（介入）
+1. 20:00 Nebulizer (Combivent)
+2. 21:00 胸腔叩擊引流
+3. 22:00 調整臥位（床頭 45 度）
+4. 鼓勵小口飲水
+
+E — Evaluation（評價）
+- 叩擊後咳出黃痰約 5ml
+- 半坐臥位後 SpO2 維持 93%
+- 22:30 開始入睡但易醒
+- 交班時呼吸尚平穩` },
+
+  { type: 'inter-unit-transfer', format: 'soapie', patientId: 'mp2', content: `【單位間交班紀錄】SOAPIE 格式
+
+日期：2026-03-20 22:00
+病患：林美珍，55歲/女，急診 → 6B-03 床
+護理問題：#1 氣體交換障礙 #2 呼吸道清除功能失效
+
+S — Subjective（主觀）
+「在急診噴了兩次藥有好一些，但還是很喘。」
+「拜託讓我坐著，躺著真的沒辦法呼吸。」
+
+O — Objective（客觀）
+- COPD AE，急診治療後轉入
+- V/S: BP 136/80, HR 92, RR 24, SpO2 92% (O2 2L NC)
+- 使用輔助呼吸肌，端坐呼吸
+- 急診已給予 Nebulizer × 2, Steroid IV, Levofloxacin IV
+- 管路：右手 PIV 22G
+- 過敏：Penicillin
+
+A — Assessment（評估）
+1. 急性呼吸惡化，需持續氧氣支持
+2. 感染引發之 COPD 惡化
+3. CO2 滯留風險
+4. 端坐呼吸影響休息
+
+P — Plan（計畫）
+1. 半坐臥位，O2 2L/min 持續
+2. 按時 Nebulizer + Steroid + 抗生素
+3. SpO2 持續監測
+4. 明日追蹤 ABG
+
+I — Intervention（介入）
+1. 急診護理師完成交班
+2. 安置半坐臥位 45 度
+3. 連接 SpO2 持續監測
+4. 確認用藥及過敏史
+5. 完成入院評估
+
+E — Evaluation（評價）
+- 半坐臥後 RR 24→22
+- SpO2 維持 92-93%
+- 病患表示比急診舒服些
+- 病房環境介紹完成` },
+
+  { type: 'discharge-nursing', format: 'soapie', patientId: 'mp2', content: `【出院護理摘要】SOAPIE 格式
+
+日期：2026-03-27
+病患：林美珍，55歲/女，6B-03 床
+護理問題：#1 知識缺失（COPD 自我管理）
+
+S — Subjective（主觀）
+「現在呼吸好多了，走路也不太會喘。」
+「吸入器我有學會怎麼用了，回家會按時噴。」
+
+O — Objective（客觀）
+- COPD AE 住院 8 天，病情穩定出院
+- V/S: BP 128/76, HR 78, RR 18, SpO2 96% (RA)
+- FEV1/FVC 52%（改善）
+- CRP 1.2, WBC 7200
+- 可獨立步行 100 公尺
+- 正確示範所有吸入器操作
+
+A — Assessment（評估）
+1. 呼吸功能恢復至基準值
+2. 感染已控制
+3. 吸入器使用技巧掌握良好
+4. 需長期呼吸復健
+
+P — Plan（計畫）
+1. 門診追蹤 04/03 胸腔內科
+2. Prednisolone 漸減 5 天
+3. 長期維持 Spiriva + Symbicort
+4. 年度疫苗接種
+
+I — Intervention（介入）
+1. 逐項衛教出院帶藥
+2. 確認吸入器操作正確
+3. 提供肺復原運動衛教單
+4. 說明急性惡化警示徵兆
+5. 安排返診及轉介肺復原
+
+E — Evaluation（評價）
+- 病患複述用藥正確
+- 能說出需緊急就醫的 3 種情況
+- 示範噘嘴式呼吸正確
+- 家屬（女兒）了解照護重點
+- 出院準備完善` },
+
+  // ── mp2 × Narrative ──
+
+  { type: 'admission-nursing', format: 'narrative', patientId: 'mp2', content: `【入院護理評估】Narrative 敘述式
+
+日期：2026-03-20 20:00
+病患：林美珍，55歲/女，6B-03 床
+Dx: COPD with acute exacerbation
+
+病患因呼吸困難加劇 2 天、咳嗽伴黃綠色黏稠痰，由急診入院。過去病史為 COPD 8 年，有 30 pack-years 抽菸史，已戒菸 2 年，平時使用 Spiriva 及 Symbicort 維持治療。此次疑似上呼吸道感染誘發急性惡化。
+
+入院時意識清醒但呼吸費力，使用輔助呼吸肌，唇色微紫。生命徵象：血壓 138/82、心跳 96、呼吸 26 次/分、血氧 89%（Room Air）、體溫 37.8°C。肺部聽診雙側散在性哮鳴音、右下葉粗囉音。動脈血液氣體分析：pH 7.35、PaCO2 52、PaO2 58，呈現第二型呼吸衰竭傾向。藥物過敏：Penicillin（皮疹）。
+
+護理處置：立即安置半坐臥位（床頭抬高 45 度），給予氧氣 2L/min 鼻導管（遵循 COPD 低流量原則），執行 Nebulizer Combivent 治療，靜脈注射 Methylprednisolone 40mg 及 Levofloxacin 750mg。抽血送檢 CBC、CRP 及痰液培養。
+
+治療 1 小時後血氧上升至 93%，呼吸次數降至 22，病患表示呼吸稍順。衛教噘嘴式呼吸技巧，指導呼吸困難加劇時立即通知護理師。` },
+
+  { type: 'narrative-nursing', format: 'narrative', patientId: 'mp2', content: `【敘述性護理紀錄】Narrative 敘述式
+
+日期：2026-03-22 10:00
+病患：林美珍，55歲/女，6B-03 床
+Dx: COPD with acute exacerbation
+
+入院第 3 天，病患呼吸狀況持續改善中。今日氧氣已由 2L 降至 1L/min 鼻導管，生命徵象穩定：血壓 132/78、心跳 84、呼吸 20 次/分、血氧 95%。肺部聽診哮鳴音明顯減少，右下葉囉音已消失。痰液轉為白色少量，病患可自行咳出。
+
+檢驗數據改善中：CRP 由 12 降至 5.8、WBC 由 11000 降至 8500，體溫恢復正常 36.8°C。類固醇由靜脈注射轉為口服 Prednisolone 30mg，抗生素 Levofloxacin 750mg IV 持續使用。
+
+今日指導病患正確使用 MDI + spacer 吸入器，教導操作步驟：先吐氣→按壓藥罐→慢慢深吸→閉氣 10 秒。病患經 3 次練習後能正確示範。協助走廊步行 30 公尺做活動評估，步行後血氧維持 93%，休息 3 分鐘回升至 95%，無明顯呼吸費力。
+
+病患主訴「今天好很多，可以自己走去廁所了」，食慾改善，午餐進食約 70%。持續衛教噘嘴式呼吸及腹式呼吸，強調吸入器使用後漱口之重要性。` },
+
+  { type: 'shift-handoff', format: 'narrative', patientId: 'mp2', content: `【交班護理紀錄】Narrative 敘述式
+
+日期：2026-03-21 白班交班 15:00
+病患：林美珍，55歲/女，6B-03 床
+Dx: COPD with acute exacerbation
+
+入院第 2 天白班紀錄。病患持續使用 O2 2L/min 鼻導管，生命徵象 14:00 測量：血壓 134/80、心跳 88、呼吸 22 次/分、血氧 93%。肺音較昨日改善，哮鳴音減少但右下葉仍有粗囉音，痰液淡黃少量。
+
+本班藥物給予包含：Nebulizer Combivent 08:00 及 14:00 各一次、Methylprednisolone 40mg IV 08:30、Levofloxacin 750mg IV drip 09:00。10:00 執行胸腔叩擊引流以右下葉加強，叩擊後病患咳出淡黃痰約 5ml。病患主訴「今天比較不喘了」，可在床邊坐起進食。
+
+出入量本班：進 1000ml、出 800ml。檢驗報告 WBC 11000、CRP 12，痰液培養 pending。體溫 37.2°C 較昨日 37.8°C 下降。衛教有效咳嗽技巧及充足水分攝取之重要性。整體呼吸狀況較昨日改善中。` },
+
+  { type: 'inter-unit-transfer', format: 'narrative', patientId: 'mp2', content: `【單位間交班紀錄】Narrative 敘述式
+
+日期：2026-03-20 22:00
+病患：林美珍，55歲/女，急診 → 6B-03 床
+Dx: COPD with acute exacerbation
+
+病患因 COPD 急性惡化於急診治療後轉入 6B 一般病房。急診期間已給予 Nebulizer Combivent 兩次、Methylprednisolone 40mg IV 及 Levofloxacin 750mg IV。
+
+轉入時生命徵象：血壓 136/80、心跳 92、呼吸 24 次/分、血氧 92%（O2 2L/min NC）。意識清醒，仍有呼吸費力情形，使用輔助呼吸肌，偏好端坐呼吸。管路：右手 PIV 22G（急診建立）通暢。藥物過敏：Penicillin（皮疹），目前用藥未含 Penicillin 類抗生素。
+
+急診護理師完成交班，確認管路及用藥紀錄無誤。安置半坐臥位（床頭 45 度），連接 SpO2 持續監測，完成入院護理評估及護理計畫建立。通知值班醫師到院評估。
+
+病患表示「坐起來比較能呼吸」，半坐臥位後呼吸次數由 24 降至 22。家屬（女兒）陪伴中，已介紹病房環境及探視規範，說明氧氣使用注意事項及呼吸困難加劇時之處理方式。` },
+
+  { type: 'discharge-nursing', format: 'narrative', patientId: 'mp2', content: `【出院護理摘要】Narrative 敘述式
+
+日期：2026-03-27
+病患：林美珍，55歲/女，6B-03 床
+Dx: COPD with acute exacerbation
+
+病患因 COPD 急性惡化住院 8 天，經支氣管擴張劑、類固醇及抗生素治療後病情穩定出院。出院時生命徵象：血壓 128/76、心跳 78、呼吸 18 次/分、血氧 96%（Room Air），肺音僅少量散在性哮鳴音，無囉音。檢驗 CRP 1.2、WBC 7200，感染已控制。痰液培養結果為 H. influenzae（對 Levofloxacin 敏感）。肺功能 FEV1/FVC 52%，較入院時 45% 改善。
+
+出院帶藥包含：Spiriva 18mcg QD、Symbicort 160/4.5 BID、Salbutamol MDI PRN、Prednisolone 10mg QD 短期漸減 5 天。已逐項衛教各藥物用法，病患能正確示範 Spiriva HandiHaler 及 Symbicort 吸入器操作，了解使用後需漱口預防口腔念珠菌。
+
+出院衛教重點：噘嘴式呼吸及腹式呼吸技巧、避免接觸二手菸及空污、每年接種流感及肺炎鏈球菌疫苗、Salbutamol 每日使用超過 4 次需回診。急性惡化警示：呼吸困難加劇、嘴唇發紫、意識改變需立即就醫。已安排 04/03 胸腔內科（張惠雯醫師）回診，並轉介肺復原計畫。` },
+
+  // ══════════════════════════════════════════════════════════════
+  // mp3 — 張志豪, 42歲/男, 3C-08床, Dx: T2DM with DKA
+  // ══════════════════════════════════════════════════════════════
+
+  // ── mp3 × DART ──
+
+  { type: 'admission-nursing', format: 'dart', patientId: 'mp3', content: `【入院護理評估】DART 格式
+
+D — Data（資料）
+日期：2026-03-22
+病患：張志豪，42歲/男，3C-08 床，Dx: T2DM with DKA
+急診入院，嘔吐一天、腹痛、全身無力
+自述停用胰島素及口服降血糖藥約 2 週（經濟因素）
+V/S: BP 108/68, HR 110, RR 28 (Kussmaul), BT 36.8°C
+血糖 580 mg/dL, pH 7.18, K+ 5.8, ketone (+++)
+皮膚帳篷現象(+)，口腔黏膜乾燥
+體重 72kg（平時 75kg，近期體重下降 3kg）
+意識清醒但倦怠
+
+A — Action（行動）
+1. 09:00 NS 1000ml/hr IV infusion 開始積極補液
+2. 09:00 Insulin drip 0.1U/kg/hr 啟動
+3. 09:00 Foley 16Fr 置入，hourly UO 記錄
+4. 09:30 抽血 CBC, BMP, ABG, ketone
+5. 10:00 床欄上升、呼叫鈴置手邊、黃色手圈（跌倒高風險）
+6. 血糖 Q1H + K+ Q2H 監測
+7. 嚴密 I/O 記錄
+
+R — Response（反應）
+1. 12:00 血糖 580→380 mg/dL（4 小時下降 200）
+2. UO 150ml/2hr（>0.5ml/kg/hr ✓）
+3. pH 7.18→7.22（改善中）
+4. K+ 5.8→4.8（需持續監測）
+5. 病患表示腹痛稍緩 NRS 5→3
+
+T — Teaching（教導）
+1. 說明 DKA 原因及嚴重性
+2. 強調胰島素及降血糖藥不可自行停用
+3. 衛教低血糖症狀及處理方式
+4. 告知社工轉介評估經濟補助` },
+
+  { type: 'narrative-nursing', format: 'dart', patientId: 'mp3', content: `【敘述性護理紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-24 10:00
+病患：張志豪，42歲/男，3C-08 床，Dx: T2DM with DKA
+入院 Day 3，DKA 已矯正
+V/S: BP 118/72, HR 82, RR 18, SpO2 99% (RA)
+血糖 186 mg/dL (AC breakfast)
+Lab (03/23): pH 7.38, K+ 4.2, HCO3- 22, ketone (-)
+Insulin drip 已於昨日 18:00 轉為 SC insulin
+目前用藥：Lantus 18U HS + NovoRapid sliding scale AC
+飲食：DM 1800 kcal 飲食，三餐進食 90%
+精神改善，可自行下床如廁
+
+A — Action（行動）
+1. 10:00 指導血糖自我監測（SMBG）技巧
+2. 10:30 示範胰島素注射技術（筆型注射器）
+3. 11:00 衛教碳水化合物計算及飲食規劃
+4. 11:30 社工訪視，評估經濟補助方案
+5. 血糖 AC + HS 監測持續
+
+R — Response（反應）
+1. 病患能正確操作血糖機並判讀數值
+2. 可示範胰島素注射步驟（部位選擇、消毒、注射角度）
+3. 了解飲食中醣類份量概念
+4. 社工已確認符合慢性病補助資格
+5. 病患表示「這次住院才知道停藥這麼嚴重」
+
+T — Teaching（教導）
+1. 胰島素保存：未開封冷藏、開封後室溫 28 天
+2. 注射部位輪替原則
+3. 低血糖處理：隨身攜帶糖果，血糖 < 70 立即補充 15g 醣類
+4. 生病日管理：發燒或嘔吐仍需使用胰島素，勿自行停藥` },
+
+  { type: 'shift-handoff', format: 'dart', patientId: 'mp3', content: `【交班護理紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-22 小夜班交班 23:00
+病患：張志豪，42歲/男，3C-08 床，Dx: T2DM with DKA
+入院 Day 1，Insulin drip 持續中
+V/S 22:00: BP 112/70, HR 92, RR 22, SpO2 99% (RA)
+血糖 Q1H: 16:00 320→18:00 280→20:00 245→22:00 210
+pH 7.26 (16:00), K+ 4.5 (16:00)
+I/O 本班：進 2500ml (NS 2000 + PO 500) / 出 1800ml (Foley)
+腹痛 NRS 2/10（較白班 NRS 3 改善）
+Kussmaul 呼吸已減輕
+
+A — Action（行動）
+1. Insulin drip 0.1U/kg/hr 持續
+2. 16:00 NS 轉為 500ml/hr
+3. 18:00 K+ 4.5，加入 KCl 20mEq/L IV
+4. 20:00 血糖 245，Insulin drip 調整為 0.05U/kg/hr
+5. 22:00 執行 V/S 評估
+
+R — Response（反應）
+1. 血糖穩定下降中（目標 150-200 range 轉 SC insulin）
+2. 腹痛持續緩解
+3. 精神較白班改善，可進食少量
+4. 尿量充足（>0.5ml/kg/hr）
+5. 呼吸型態漸改善，Kussmaul 減輕
+
+T — Teaching（教導）
+1. 說明血糖監測及胰島素治療目的
+2. 鼓勵少量多餐嘗試進食
+3. 提醒如有噁心嘔吐加劇立即告知` },
+
+  { type: 'inter-unit-transfer', format: 'dart', patientId: 'mp3', content: `【單位間交班紀錄】DART 格式
+
+D — Data（資料）
+日期：2026-03-22 09:00
+病患：張志豪，42歲/男，由急診轉入 3C-08 床
+Dx: T2DM with DKA
+V/S: BP 108/68, HR 110, RR 28 (Kussmaul), BT 36.8°C
+血糖 580, pH 7.18, K+ 5.8, ketone (+++)
+意識：清醒但倦怠
+管路：右手 PIV 18G (急診建立)
+急診已開始 NS 1L/hr
+過去病史：T2DM 10 年，未規則用藥
+過敏：NKDA
+急診 ABG: pH 7.18, PaCO2 22, PaO2 95, HCO3- 8
+
+A — Action（行動）
+1. 急診護理師完成交班
+2. 確認 IV route 通暢，維持 NS 1L/hr
+3. 啟動 Insulin drip protocol
+4. Foley 16Fr 置入
+5. 跌倒預防措施（Morse 50 分）
+6. 通知主治醫師陳淑芬
+
+R — Response（反應）
+1. 轉運過程穩定
+2. Insulin drip 順利啟動
+3. 病患配合各項處置
+4. 家屬（父親）陪伴中，已說明病情
+
+T — Teaching（教導）
+1. 說明目前治療目標及監測頻率
+2. 衛教不可自行調整點滴速度
+3. 告知如有噁心嘔吐加劇需通知
+4. 介紹病房環境及呼叫鈴位置` },
+
+  { type: 'discharge-nursing', format: 'dart', patientId: 'mp3', content: `【出院護理摘要】DART 格式
+
+D — Data（資料）
+日期：2026-03-29 出院日
+病患：張志豪，42歲/男，3C-08 床
+Dx: T2DM with DKA，住院 8 天
+出院 V/S: BP 120/74, HR 78, RR 16, SpO2 99%
+血糖 AC 142 mg/dL, pH 7.40, K+ 4.3, ketone (-)
+HbA1c 12.5%（需長期改善）
+體重 73kg（補液後恢復）
+出院帶藥：Lantus 20U HS, NovoRapid 8-8-8U AC, Metformin 500mg BID
+社工已安排慢性病藥費補助
+
+A — Action（行動）
+1. 完成出院衛教：胰島素注射、SMBG、飲食、低血糖處理
+2. 確認病患正確操作血糖機及胰島素筆
+3. 提供 DM 衛教手冊及飲食指南
+4. 拔除 PIV 及 Foley
+5. 安排返診：04/05 新陳代謝科（陳淑芬醫師）
+
+R — Response（反應）
+1. 病患正確示範胰島素注射全步驟
+2. 能說出低血糖症狀及處理方式
+3. 了解飲食醣類份量及分配原則
+4. 病患表示「這次真的學到教訓了，不會再停藥」
+5. 社工確認補助資格及申請流程
+
+T — Teaching（教導）
+1. 胰島素保存及注射注意事項
+2. 每日血糖監測 AC breakfast + HS
+3. 低血糖：血糖 < 70 立即補充 15g 醣類
+4. 生病日不可自行停用胰島素
+5. 足部照護：每日檢視，避免赤腳
+6. 返診 04/05 需空腹抽血` },
+
+  // ── mp3 × Focus DAR ──
+
+  { type: 'admission-nursing', format: 'focus-dar', patientId: 'mp3', content: `【入院護理評估】Focus DAR 格式
+
+日期：2026-03-22 09:00
+病患：張志豪，42歲/男，3C-08 床
+
+Focus（焦點）：體液容積缺失 / 代謝性酸中毒
+
+D — Data（資料）
+- 急診入院，T2DM with DKA
+- 嘔吐一天、腹痛 NRS 5/10、全身無力
+- 停用胰島素及口服藥約 2 週（經濟因素）
+- V/S: BP 108/68, HR 110, RR 28 (Kussmaul), BT 36.8°C
+- 血糖 580, pH 7.18, K+ 5.8, ketone (+++)
+- 皮膚帳篷現象(+)，口腔黏膜乾燥
+- 體重 72kg（平時 75kg）
+- 尿量入院前 6 小時約 200ml
+
+A — Action（行動）
+1. NS 1000ml/hr IV infusion 積極補液
+2. Insulin drip 0.1U/kg/hr 啟動
+3. Foley 16Fr 置入，hourly UO 記錄
+4. 血糖 Q1H + K+ Q2H + ABG Q4H 監測
+5. 床欄上升，跌倒預防（Morse 50）
+6. 轉介社工經濟補助評估
+
+R — Response（反應）
+1. 4 小時後血糖 580→380 mg/dL
+2. UO 150ml/2hr（腎灌流改善）
+3. pH 7.18→7.22
+4. K+ 5.8→4.8
+5. 腹痛 NRS 5→3
+6. Kussmaul 呼吸略減輕` },
+
+  { type: 'narrative-nursing', format: 'focus-dar', patientId: 'mp3', content: `【敘述性護理紀錄】Focus DAR 格式
+
+日期：2026-03-24 10:00
+病患：張志豪，42歲/男，3C-08 床
+
+Focus（焦點）：知識缺失 / 糖尿病自我管理
+
+D — Data（資料）
+- 入院 Day 3，DKA 已矯正
+- 血糖 AC 186 mg/dL，pH 7.38，ketone (-)
+- Insulin drip 已轉為 SC: Lantus 18U HS + sliding scale
+- 精神改善，可自行下床活動
+- 病患對胰島素注射及血糖監測無經驗
+- 自述「以前都是吃藥控制，沒打過針」
+
+A — Action（行動）
+1. 指導 SMBG 血糖自我監測操作
+2. 示範胰島素筆型注射器使用
+3. 衛教注射部位選擇及輪替
+4. 說明碳水化合物計算及飲食規劃
+5. 社工訪視評估經濟補助
+
+R — Response（反應）
+1. 經指導後能獨立操作血糖機
+2. 胰島素注射示範 3 次後可正確執行
+3. 了解腹部、大腿注射部位輪替原則
+4. 社工確認符合慢性病補助資格
+5. 病患表示「打針沒有想像中可怕」` },
+
+  { type: 'shift-handoff', format: 'focus-dar', patientId: 'mp3', content: `【交班護理紀錄】Focus DAR 格式
+
+日期：2026-03-23 白班交班 15:00
+病患：張志豪，42歲/男，3C-08 床
+
+Focus（焦點）：血糖控制 / DKA 矯正進度
+
+D — Data（資料）
+- 入院 Day 2，Insulin drip 持續中
+- V/S 14:00: BP 116/72, HR 86, RR 18, SpO2 99%
+- 血糖本班：08:00 230→10:00 200→12:00 185→14:00 178
+- ABG 10:00: pH 7.35, K+ 4.3, HCO3- 20, ketone (trace)
+- I/O 本班：進 2000ml / 出 1600ml (Foley)
+- 腹痛緩解 NRS 1/10
+- 已開始少量進食，DM 1800kcal 飲食
+
+A — Action（行動）
+1. Insulin drip 0.05U/kg/hr 持續
+2. IV fluid NS 250ml/hr
+3. 10:00 追蹤 ABG + BMP
+4. 12:00 嘗試少量飲食
+5. 14:00 血糖 178，準備轉 SC insulin
+
+R — Response（反應）
+1. DKA 趨近矯正（pH 7.35, ketone trace）
+2. 血糖穩定下降至目標範圍
+3. 可耐受口服進食無嘔吐
+4. 精神明顯改善，活力增加
+5. 預計 18:00 轉為 SC insulin` },
+
+  { type: 'inter-unit-transfer', format: 'focus-dar', patientId: 'mp3', content: `【單位間交班紀錄】Focus DAR 格式
+
+日期：2026-03-22 09:00
+病患：張志豪，42歲/男，急診 → 3C-08 床
+
+Focus（焦點）：DKA 急性處置之照護銜接
+
+D — Data（資料）
+- T2DM with DKA，急診轉入
+- V/S: BP 108/68, HR 110, RR 28, BT 36.8°C
+- 血糖 580, pH 7.18, K+ 5.8
+- 嚴重脫水，皮膚帳篷現象(+)
+- 急診已開始 NS 1L/hr
+- 管路：右手 PIV 18G
+- 過敏：NKDA
+
+A — Action（行動）
+1. 急診護理師完成交班
+2. 確認 IV 通暢，維持補液
+3. 啟動 Insulin drip protocol
+4. Foley 置入，開始 hourly UO
+5. 跌倒預防措施執行
+6. 通知主治陳淑芬醫師
+
+R — Response（反應）
+1. 轉運過程穩定
+2. Insulin drip 順利啟動
+3. 病患雖虛弱但配合處置
+4. 已向家屬說明 DKA 嚴重性及治療計畫` },
+
+  { type: 'discharge-nursing', format: 'focus-dar', patientId: 'mp3', content: `【出院護理摘要】Focus DAR 格式
+
+日期：2026-03-29
+病患：張志豪，42歲/男，3C-08 床
+
+Focus（焦點）：出院準備 / 糖尿病自我管理能力
+
+D — Data（資料）
+- T2DM with DKA 住院 8 天，DKA 完全矯正
+- V/S: BP 120/74, HR 78, RR 16
+- 血糖 AC 142, pH 7.40, ketone (-)
+- HbA1c 12.5%（基準值，需長期追蹤）
+- 可正確操作血糖機及胰島素筆
+- 社工已安排慢性病藥費補助
+- 出院帶藥：Lantus 20U HS, NovoRapid 8-8-8U AC, Metformin 500mg BID
+
+A — Action（行動）
+1. 完成出院衛教全套（注射、SMBG、飲食、低血糖）
+2. 提供 DM 衛教手冊
+3. 預約 04/05 新陳代謝科返診
+4. 社工確認補助申請文件
+5. 拔除 PIV 及 Foley
+
+R — Response（反應）
+1. 正確示範胰島素注射及血糖監測
+2. 能說出低血糖症狀及 15-15 法則
+3. 了解飲食醣類分配
+4. 病患表示「不會再停藥了，而且有補助就不用擔心藥費」
+5. 家屬（父親）了解協助監督重點` },
+
+  // ── mp3 × SOAPIE ──
+
+  // mp3 × admission-nursing × soapie already exists (line 2285)
+
+  { type: 'narrative-nursing', format: 'soapie', patientId: 'mp3', content: `【敘述性護理紀錄】SOAPIE 格式
+
+日期：2026-03-24
+病患：張志豪，42歲/男，3C-08 床
+護理問題：#1 知識缺失（糖尿病自我管理）
+
+S — Subjective（主觀）
+「以前都吃藥控制，第一次要打針，有點緊張。」
+「如果有補助的話我就比較不會停藥了。」
+
+O — Objective（客觀）
+- 入院 Day 3，DKA 已矯正
+- 血糖 AC 186 mg/dL, pH 7.38, ketone (-)
+- 已轉 SC insulin: Lantus 18U HS + sliding scale
+- 未曾自行注射胰島素經驗
+- 精神良好，學習意願高
+
+A — Assessment（評估）
+1. 胰島素注射技巧需教育
+2. 血糖自我監測技巧需建立
+3. 飲食知識不足
+4. 經濟因素影響用藥遵從性（社工介入中）
+
+P — Plan（計畫）
+1. SMBG 教育及回覆示教
+2. 胰島素注射技術訓練
+3. DM 飲食衛教
+4. 社工協助經濟補助申請
+
+I — Intervention（介入）
+1. 10:00 SMBG 操作教學（含採血技巧）
+2. 10:30 胰島素筆注射示範及練習
+3. 11:00 飲食衛教：醣類份量及食物代換
+4. 11:30 社工訪視經濟評估
+5. 提供 DM 衛教手冊
+
+E — Evaluation（評價）
+- 可獨立操作血糖機並正確判讀
+- 胰島素注射經 3 次練習後可正確執行
+- 理解注射部位輪替原則
+- 社工確認補助資格
+- 病患表示「打針沒想像中那麼痛」` },
+
+  { type: 'shift-handoff', format: 'soapie', patientId: 'mp3', content: `【交班護理紀錄】SOAPIE 格式
+
+日期：2026-03-22 白班交班 15:00
+病患：張志豪，42歲/男，3C-08 床
+護理問題：#1 體液容積缺失 #2 代謝性酸中毒
+
+S — Subjective（主觀）
+「肚子比早上好很多了，沒那麼痛。」
+「還是覺得很累，想睡覺。」
+
+O — Objective（客觀）
+- 入院 Day 1，Insulin drip 0.1U/kg/hr 持續中
+- V/S 14:00: BP 114/70, HR 96, RR 24, SpO2 99%
+- 血糖本班：09:00 580→11:00 420→13:00 350→15:00 310
+- ABG 14:00: pH 7.24, K+ 5.0, HCO3- 14
+- I/O 本班：進 3500ml / 出 2200ml (Foley)
+- 腹痛 NRS 5→3
+- Kussmaul 呼吸略改善
+
+A — Assessment（評估）
+1. 血糖穩定下降中
+2. 代謝性酸中毒漸改善
+3. 補液效果良好，尿量充足
+4. 仍有倦怠感（脫水改善中）
+
+P — Plan（計畫）
+1. 繼續 Insulin drip
+2. IV fluid 調整為 500ml/hr
+3. 血糖 Q1H + K+ Q2H 持續
+4. 目標血糖 < 300 後調整 Insulin drip rate
+
+I — Intervention（介入）
+1. NS 由 1L/hr→500ml/hr (11:00 起)
+2. K+ 5.0→加入 KCl 20mEq/L
+3. 血糖 Q1H 監測及紀錄
+4. ABG Q4H 追蹤
+5. 15:00 交班時 V/S 完整評估
+
+E — Evaluation（評價）
+- 血糖 6 小時下降 270 mg/dL（速率適當）
+- 尿量 >0.5ml/kg/hr
+- pH 7.18→7.24（持續改善）
+- 腹痛減輕，Kussmaul 呼吸改善` },
+
+  { type: 'inter-unit-transfer', format: 'soapie', patientId: 'mp3', content: `【單位間交班紀錄】SOAPIE 格式
+
+日期：2026-03-22 09:00
+病患：張志豪，42歲/男，急診 → 3C-08 床
+護理問題：#1 體液容積缺失 #2 代謝性酸中毒
+
+S — Subjective（主觀）
+「吐了一整天，肚子很痛。」
+「藥停了大概兩個禮拜，因為沒錢買。」
+
+O — Objective（客觀）
+- T2DM with DKA，急診轉入
+- V/S: BP 108/68, HR 110, RR 28, BT 36.8°C
+- 血糖 580, pH 7.18, K+ 5.8, ketone (+++)
+- 嚴重脫水：帳篷現象(+)、口腔乾燥
+- 急診已開始 NS 1L/hr
+- 管路：PIV 18G (右手)
+- NKDA
+
+A — Assessment（評估）
+1. DKA 需積極治療
+2. 嚴重脫水需大量補液
+3. 高血鉀需監測（insulin 開始後會下降）
+4. 跌倒高風險（虛弱 + 脫水）
+
+P — Plan（計畫）
+1. Insulin drip + 積極補液
+2. 密集實驗室監測
+3. 嚴密 I/O
+4. 跌倒預防
+
+I — Intervention（介入）
+1. 急診交班完成
+2. 維持 NS 1L/hr，啟動 Insulin drip
+3. Foley 置入
+4. 跌倒預防措施
+5. 通知主治醫師
+
+E — Evaluation（評價）
+- 轉入過程穩定
+- Insulin drip 啟動順利
+- Foley 引流順暢
+- 跌倒預防到位` },
+
+  { type: 'discharge-nursing', format: 'soapie', patientId: 'mp3', content: `【出院護理摘要】SOAPIE 格式
+
+日期：2026-03-29
+病患：張志豪，42歲/男，3C-08 床
+護理問題：#1 知識缺失（糖尿病自我照護）#2 治療遵從性障礙
+
+S — Subjective（主觀）
+「這次住院學到很多，不會再停藥了。」
+「社工說有補助可以申請，這樣藥費就不用擔心了。」
+
+O — Objective（客觀）
+- DKA 住院 8 天，完全矯正
+- V/S: BP 120/74, HR 78, RR 16
+- 血糖 AC 142, pH 7.40, ketone (-)
+- HbA1c 12.5%
+- 可正確操作 SMBG 及胰島素注射
+- 出院帶藥：Lantus 20U HS, NovoRapid 8U AC TID, Metformin 500mg BID
+- 社工確認慢性病補助資格
+
+A — Assessment（評估）
+1. DKA 已完全矯正
+2. 自我管理技巧已建立
+3. 經濟障礙已有解決方案
+4. 仍需長期追蹤 HbA1c 改善
+
+P — Plan（計畫）
+1. 返診 04/05 新陳代謝科
+2. 每日 SMBG AC breakfast + HS
+3. 慢性病補助持續追蹤
+4. 長期 HbA1c 目標 < 7%
+
+I — Intervention（介入）
+1. 完成出院衛教全套
+2. 提供 DM 衛教手冊
+3. 預約返診
+4. 確認補助申請文件
+5. 拔除 PIV 及 Foley
+
+E — Evaluation（評價）
+- 正確示範注射及 SMBG
+- 說出低血糖症狀及處理
+- 了解生病日管理原則
+- 補助申請文件備齊
+- 病患及家屬有信心執行照護計畫` },
+
+  // ── mp3 × Narrative ──
+
+  { type: 'admission-nursing', format: 'narrative', patientId: 'mp3', content: `【入院護理評估】Narrative 敘述式
+
+日期：2026-03-22 09:00
+病患：張志豪，42歲/男，3C-08 床
+Dx: T2DM with DKA
+
+病患因嘔吐一天、腹痛及全身無力由急診入院。自述罹患第二型糖尿病約 10 年，因經濟因素自行停用胰島素及口服降血糖藥約 2 週。入院時意識清醒但明顯倦怠，腹痛 NRS 5/10。
+
+生命徵象：血壓 108/68（低於正常）、心跳 110 次/分（代償性心搏過速）、呼吸 28 次/分呈 Kussmaul 呼吸（代謝性酸中毒代償）、體溫 36.8°C。血糖 580 mg/dL，動脈血液氣體 pH 7.18、K+ 5.8、酮體強陽性（+++），確診糖尿病酮酸中毒。理學檢查皮膚帳篷現象陽性、口腔黏膜乾燥，顯示嚴重脫水。體重 72kg，較平時 75kg 減少 3kg。
+
+護理處置：立即開始生理食鹽水 1000ml/hr 積極補液、啟動 Insulin drip 0.1U/kg/hr、置入 Foley 16Fr 記錄每小時尿量。監測計畫包括血糖每小時、鉀離子每 2 小時、ABG 每 4 小時。執行跌倒預防措施（Morse 50 分高風險）：床欄上升、呼叫鈴置手邊、配戴黃色手圈。轉介社工評估經濟補助。
+
+4 小時後血糖降至 380 mg/dL（下降速率適當）、尿量 150ml/2hr 顯示腎臟灌流改善、pH 上升至 7.22、K+ 降至 4.8。腹痛由 NRS 5 降至 3。病患開始理解停藥的嚴重後果。` },
+
+  { type: 'narrative-nursing', format: 'narrative', patientId: 'mp3', content: `【敘述性護理紀錄】Narrative 敘述式
+
+日期：2026-03-24 10:00
+病患：張志豪，42歲/男，3C-08 床
+Dx: T2DM with DKA
+
+入院第 3 天，DKA 已成功矯正。今日血糖飯前 186 mg/dL，酸鹼值 pH 7.38，酮體陰性。Insulin drip 已於昨日 18:00 順利轉換為皮下注射：Lantus 18U 睡前 + NovoRapid sliding scale 飯前。生命徵象穩定：血壓 118/72、心跳 82、呼吸 18、血氧 99%。病患精神明顯改善，可自行下床如廁及走動。
+
+今日主要護理重點為糖尿病自我管理衛教。10:00 指導血糖自我監測（SMBG），教導採血技巧及血糖機操作，病患經練習後能獨立操作並正確判讀數值。10:30 示範胰島素筆型注射器使用，包含劑量設定、部位選擇（腹部及大腿前側）、消毒及注射角度，經 3 次練習後可正確執行，病患表示「打針沒有想像中可怕」。11:00 衛教碳水化合物計算及飲食規劃，介紹醣類份量概念及食物代換。
+
+11:30 社工訪視評估，確認病患符合慢性病藥費補助資格，將協助申請相關文件。病患對此感到安心，表示「有補助就不用擔心藥費了，這次住院才知道停藥這麼嚴重」。持續衛教胰島素保存方式及低血糖處理原則。` },
+
+  { type: 'shift-handoff', format: 'narrative', patientId: 'mp3', content: `【交班護理紀錄】Narrative 敘述式
+
+日期：2026-03-22 小夜班交班 23:00
+病患：張志豪，42歲/男，3C-08 床
+Dx: T2DM with DKA
+
+入院第 1 天小夜班紀錄。Insulin drip 0.1U/kg/hr 持續中，本班血糖每小時監測呈穩定下降趨勢：16:00 血糖 320、18:00 降至 280、20:00 降至 245、22:00 降至 210 mg/dL。16:00 追蹤 ABG：pH 7.26、K+ 4.5（較入院時 5.8 下降，已開始補充 KCl 20mEq/L IV）。
+
+20:00 血糖降至 245，將 Insulin drip 調整為 0.05U/kg/hr。IV fluid 於 16:00 由 1L/hr 調整為 500ml/hr。生命徵象 22:00：血壓 112/70、心跳 92（較入院 110 改善）、呼吸 22 次/分，Kussmaul 呼吸已減輕。
+
+出入量本班：進 2500ml（IV 2000 + PO 500）、出 1800ml（Foley），尿量充足。腹痛由 NRS 3 降至 2。病患表示仍感倦怠想休息，已開始嘗試少量進食流質飲食無嘔吐。持續衛教不可自行調整點滴速度，如有噁心嘔吐加劇需立即告知。` },
+
+  { type: 'inter-unit-transfer', format: 'narrative', patientId: 'mp3', content: `【單位間交班紀錄】Narrative 敘述式
+
+日期：2026-03-22 09:00
+病患：張志豪，42歲/男，急診 → 3C-08 床
+Dx: T2DM with DKA
+
+病患因糖尿病酮酸中毒由急診轉入 3C 一般病房。急診已開始生理食鹽水 1L/hr 補液。
+
+轉入時生命徵象：血壓 108/68、心跳 110、呼吸 28 次/分呈 Kussmaul 型態、體溫 36.8°C。血糖 580 mg/dL，ABG：pH 7.18、PaCO2 22、PaO2 95、HCO3- 8，K+ 5.8，酮體強陽性。意識清醒但明顯虛弱倦怠，皮膚帳篷現象陽性。管路：右手 PIV 18G（急診建立）通暢。過去病史：T2DM 10 年，未規則用藥。無藥物過敏。
+
+急診護理師完成交班，確認管路及用藥紀錄。維持 NS 1L/hr 補液，立即啟動 Insulin drip 0.1U/kg/hr。置入 Foley 16Fr 開始記錄每小時尿量。執行跌倒預防措施：Morse 評分 50 分高風險，床欄上升、呼叫鈴置手邊、配戴黃色手圈。已通知主治醫師陳淑芬轉入完成。
+
+家屬（父親）陪伴中，已說明 DKA 的嚴重性、目前治療計畫及密集監測必要性。病患虛弱但配合各項處置。` },
+
+  { type: 'discharge-nursing', format: 'narrative', patientId: 'mp3', content: `【出院護理摘要】Narrative 敘述式
+
+日期：2026-03-29
+病患：張志豪，42歲/男，3C-08 床
+Dx: T2DM with DKA
+
+病患因糖尿病酮酸中毒住院 8 天，經積極補液、胰島素治療及電解質矯正後，DKA 已完全恢復。出院時生命徵象穩定：血壓 120/74、心跳 78、呼吸 16、血氧 99%。血糖飯前 142 mg/dL，pH 7.40，酮體陰性，K+ 4.3。HbA1c 12.5% 作為基準值，需長期追蹤改善。體重恢復至 73kg。
+
+出院帶藥：Lantus 20U 睡前、NovoRapid 8U 三餐飯前、Metformin 500mg 每日兩次。住院期間完成完整糖尿病自我管理衛教，病患能正確操作血糖機進行自我監測、正確示範胰島素筆注射全步驟（包含劑量設定、部位選擇輪替、消毒及注射角度），並了解低血糖症狀辨識及 15-15 法則處理方式。
+
+社工已確認病患符合慢性病藥費補助資格，相關申請文件已備齊。病患表示「這次住院真的學到教訓，不會再因為沒錢就自己停藥」。飲食方面已衛教醣類份量計算及食物代換原則，提供 DM 衛教手冊。
+
+出院衛教重點：每日血糖監測飯前早餐及睡前、生病日不可自行停用胰島素、足部每日檢視避免赤腳、低血糖時隨身糖果補充。返診安排 04/05 新陳代謝科（陳淑芬醫師），需空腹 12 小時抽血。社工持續追蹤經濟補助進度。` },
 ]
 
 export const MOCK_NURSING_HIS_SOURCE_DATA: HisSourceData[] = [
