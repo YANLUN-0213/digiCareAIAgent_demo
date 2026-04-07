@@ -13,7 +13,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import PageHeader from '@/components/PageHeader'
 import { useToast } from '@/context/ToastContext'
-import { TwpasForm, defaultTwpasValues, exampleTwpasValues } from '@/components/Twpas/type/twpasform'
+import { TwpasForm, defaultTwpasValues, exampleTwpasValues, exampleTwpasImmValues } from '@/components/Twpas/type/twpasform'
 import HospInfo from '@/components/Twpas/hospinfo/HospInfo'
 import PatientInfo from '@/components/Twpas/patientinfo/PatientInfo'
 import OpdInfo from '@/components/Twpas/opdInfo/OpdInfo'
@@ -26,6 +26,7 @@ import ApplyInfo from '@/components/Twpas/applyInfo/ApplyInfo'
 import {
   MOCK_FHIR_BUNDLE_SNIPPET,
   MOCK_TWPAS_SAVED_RECORDS,
+  MOCK_TWPAS_IMM_SAVED_RECORDS,
   TWPAS_AI_FIELD_PROMPTS,
   generateTwpasAiResponse,
   generateMockWorkflowRun,
@@ -59,8 +60,25 @@ const AI_FIELD_LABELS: Record<string, string> = {
 /* ------------------------------------------------------------------ */
 /*  Main Page                                                         */
 /* ------------------------------------------------------------------ */
-const FhirTwpas = () => {
+interface FhirTwpasProps {
+  igType?: 'pas' | 'imm'
+}
+
+const IG_VERSION_MAP: Record<'pas' | 'imm', string> = {
+  pas: '1.2.0',
+  imm: '1.2.0',
+}
+const IG_TITLE_MAP: Record<'pas' | 'imm', string> = {
+  pas: '癌藥事前審查',
+  imm: '免疫製劑事前審查',
+}
+
+const FhirTwpas = ({ igType = 'pas' }: FhirTwpasProps) => {
   const { showSuccess, showError, showInfo } = useToast()
+  const igTitle = IG_TITLE_MAP[igType]
+  const igVersion = IG_VERSION_MAP[igType]
+  const savedRecords = igType === 'imm' ? MOCK_TWPAS_IMM_SAVED_RECORDS : MOCK_TWPAS_SAVED_RECORDS
+  const initialValues = igType === 'imm' ? exampleTwpasImmValues : exampleTwpasValues
 
   const methods = useForm<TwpasForm>({
     defaultValues: defaultTwpasValues as TwpasForm,
@@ -154,7 +172,7 @@ const FhirTwpas = () => {
   }, [startStreaming, methods])
 
   const handleLoadExample = () => {
-    methods.reset(exampleTwpasValues as TwpasForm)
+    methods.reset(initialValues as unknown as TwpasForm)
     showSuccess('已帶入範例', '表單已帶入範例資料')
   }
 
@@ -231,12 +249,12 @@ const FhirTwpas = () => {
   return (
     <div className="content-inner">
       <ConfirmDialog />
-      <PageHeader funcName="癌藥事審TWPAS IG" />
+      <PageHeader funcName={igType === 'imm' ? '免疫製劑事前審查TWPAS-IMM IG' : '癌藥事審TWPAS IG'} />
 
       {/* 主要內容 */}
       <FormProvider {...methods}>
         <Card className="card mt-3">
-          <h3 className="mt-0 mb-3">TWPAS IG版本 1.1.0</h3>
+          <h3 className="mt-0 mb-3">TWPAS IG ({igTitle}) 版本 {igVersion}</h3>
           <form onSubmit={(e) => e.preventDefault()}>
             {/* TabView (9 Tabs) */}
             <TabView
@@ -251,9 +269,11 @@ const FhirTwpas = () => {
               <TabPanel header={renderTabHeader('patient')}>
                 <PatientInfo methods={methods} />
               </TabPanel>
-              <TabPanel header={renderTabHeader('opd')}>
-                <OpdInfo methods={methods} />
-              </TabPanel>
+              {igType === 'imm' && (
+                <TabPanel header={renderTabHeader('opd')}>
+                  <OpdInfo methods={methods} />
+                </TabPanel>
+              )}
               <TabPanel header={renderTabHeader('diagnosis')}>
                 <MedicalInfo methods={methods} onAiHelper={openAiSidebar} />
               </TabPanel>
@@ -263,9 +283,11 @@ const FhirTwpas = () => {
               <TabPanel header={renderTabHeader('treat')}>
                 <TreatmentForm methods={methods} />
               </TabPanel>
-              <TabPanel header={renderTabHeader('gene')}>
-                <GeneticTestSection methods={methods} />
-              </TabPanel>
+              {igType === 'pas' && (
+                <TabPanel header={renderTabHeader('gene')}>
+                  <GeneticTestSection methods={methods} />
+                </TabPanel>
+              )}
               <TabPanel header={renderTabHeader('result')}>
                 <ResultForm methods={methods} />
               </TabPanel>
@@ -304,7 +326,7 @@ const FhirTwpas = () => {
 
       {/* 查詢舊案清單 Dialog */}
       <Dialog
-        header="TWPAS IG 暫存清單"
+        header={`TWPAS IG (${igTitle}) 暫存清單`}
         visible={oldCaseDialogVisible}
         onHide={() => {
           setOldCaseDialogVisible(false)
@@ -319,7 +341,7 @@ const FhirTwpas = () => {
         }
       >
         <DataTable
-          value={MOCK_TWPAS_SAVED_RECORDS}
+          value={savedRecords}
           selectionMode="single"
           selection={selectedSavedRecord}
           onSelectionChange={(e) => setSelectedSavedRecord(e.value as TwpasSavedRecord)}
@@ -418,7 +440,7 @@ const FhirTwpas = () => {
 
       {/* FHIR Dialog */}
       <Dialog
-        header="FHIR格式 (TWPAS IG版本 1.1.0)"
+        header={`FHIR格式 (TWPAS IG ${igTitle} 版本 ${igVersion})`}
         visible={fhirDialogVisible}
         onHide={() => setFhirDialogVisible(false)}
         style={{ width: '700px' }}

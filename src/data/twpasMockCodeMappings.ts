@@ -13,6 +13,8 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "408443003", display: "General medical practice", display_tw: "一般醫學實務" },
       { code: "394609007", display: "General surgery", display_tw: "一般外科" },
       { code: "394585009", display: "Obstetrics and gynecology", display_tw: "婦產科" },
+      { code: "408459003", display: "Rheumatology", display_tw: "風濕免疫科" },
+      { code: "419365004", display: "Gastroenterology", display_tw: "腸胃科" },
     ]
   },
   blood: {
@@ -121,6 +123,10 @@ const mockMappings: Record<string, SelOptionType<any>> = {
   inspect: {
     select: [
       { code: "48423-8", display: "WBC & Differential", display_tw: "白血球分類計數", CLASS: "CHEM", inspectResultType: "valueQuantity" },
+      { code: "1988-5", display: "C-reactive protein", display_tw: "C-反應蛋白(CRP)", CLASS: "CHEM", inspectResultType: "valueQuantity" },
+      { code: "30341-2", display: "Erythrocyte sedimentation rate", display_tw: "紅血球沉降率(ESR)", CLASS: "CHEM", inspectResultType: "valueQuantity" },
+      { code: "11572-5", display: "Rheumatoid factor", display_tw: "類風濕因子(RF)", CLASS: "CHEM", inspectResultType: "valueQuantity" },
+      { code: "53027-1", display: "Anti-CCP antibody", display_tw: "抗環瓜氨酸抗體", CLASS: "CHEM", inspectResultType: "valueQuantity" },
       { code: "26464-8", display: "WBC count", display_tw: "白血球計數", CLASS: "CHEM", inspectResultType: "valueQuantity" },
       { code: "718-7", display: "Hemoglobin", display_tw: "血紅素", CLASS: "CHEM", inspectResultType: "valueQuantity" },
       { code: "24323-8", display: "Comprehensive metabolic panel", display_tw: "綜合代謝檢驗套組", CLASS: "PANEL" },
@@ -145,6 +151,10 @@ const mockMappings: Record<string, SelOptionType<any>> = {
   patAst: {
     select: [
       { code: "88020-3", display: "Functional Assessment", display_tw: "功能評估", patAstResult: [] },
+      { code: "DAS28CRP", display: "DAS28CRP 疾病活動度", display_tw: "DAS28CRP 疾病活動度", patAstResult: [] },
+      { code: "CDAI", display: "Crohn Disease Activity Index", display_tw: "克隆氏症疾病活動度", patAstResult: [] },
+      { code: "BASDAI", display: "BASDAI 僵直性脊椎炎疾病活動度", display_tw: "BASDAI", patAstResult: [] },
+      { code: "EASI", display: "Eczema Area and Severity Index", display_tw: "濕疹面積與嚴重度指數", patAstResult: [] },
       { code: "72166-2", display: "Tobacco smoking status", display_tw: "吸菸狀態", patAstResult: [
         { code: "449868002", display: "Current every day smoker" },
         { code: "428041000124106", display: "Current some day smoker" },
@@ -171,6 +181,7 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "疾病進展", display: "疾病進展" },
       { code: "治療完成", display: "治療完成" },
       { code: "病人要求", display: "病人要求" },
+      { code: "療效不足", display: "療效不足" },
     ]
   },
   drugStatus: {
@@ -202,6 +213,10 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "PC", display: "PC - 飯後" },
       { code: "HS", display: "HS - 睡前" },
       { code: "PRN", display: "PRN - 需要時" },
+      { code: "QW", display: "QW - 每週一次" },
+      { code: "Q2W", display: "Q2W - 每兩週一次" },
+      { code: "Q4W", display: "Q4W - 每四週一次" },
+      { code: "Q8W", display: "Q8W - 每八週一次" },
     ]
   },
   drugRoute: {
@@ -283,6 +298,10 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "RECIST", display: "RECIST 1.1" },
       { code: "iRECIST", display: "iRECIST" },
       { code: "mRECIST", display: "mRECIST" },
+      { code: "DAS28CRP", display: "DAS28CRP 疾病活動度" },
+      { code: "CDAI", display: "CDAI 克隆氏症疾病活動度" },
+      { code: "BASDAI", display: "BASDAI 僵直性脊椎炎疾病活動度" },
+      { code: "EASI", display: "EASI 濕疹面積嚴重度指數" },
     ]
   },
   applyReason: {
@@ -294,6 +313,21 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "C34P2", display: "肺癌 Gefitinib 適應症", cancerDrugType: [
         { code: "KC02234567", display: "KC02234567 - Gefitinib 250mg" },
         { code: "KC02345678", display: "KC02345678 - Erlotinib 150mg" },
+      ]},
+      { code: "L40P1", display: "乾癬性關節炎-生物製劑適應症", cancerDrugType: [
+        { code: "IMM001", display: "IMM001 - Adalimumab 40mg 注射筆" },
+      ]},
+      { code: "M05P1", display: "類風濕性關節炎-生物製劑適應症", cancerDrugType: [
+        { code: "IMM002", display: "IMM002 - Tocilizumab 注射劑" },
+      ]},
+      { code: "K50P1", display: "克隆氏症-生物製劑適應症", cancerDrugType: [
+        { code: "IMM003", display: "IMM003 - Infliximab 注射劑" },
+      ]},
+      { code: "M45P1", display: "僵直性脊椎炎-生物製劑適應症", cancerDrugType: [
+        { code: "IMM004", display: "IMM004 - Etanercept 50mg 注射劑" },
+      ]},
+      { code: "L20P1", display: "異位性皮膚炎-生物製劑適應症", cancerDrugType: [
+        { code: "IMM005", display: "IMM005 - Dupilumab 300mg 注射劑" },
       ]},
       { code: "other", display: "其他" },
     ]
@@ -331,6 +365,10 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "Q8H", display: "Q8H - 每8小時" },
       { code: "AC1H", display: "AC1H - 飯前一小時" },
       { code: "PRN", display: "PRN - 需要時" },
+      { code: "QW", display: "QW - 每週一次" },
+      { code: "Q2W", display: "Q2W - 每兩週一次" },
+      { code: "Q4W", display: "Q4W - 每四週一次" },
+      { code: "Q8W", display: "Q8W - 每八週一次" },
     ]
   },
   applDrugRoute: {
@@ -349,6 +387,9 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "vial", display: "vial" },
       { code: "tab", display: "tab" },
       { code: "cap", display: "cap" },
+      { code: "syringe", display: "syringe - 注射筆" },
+      { code: "MG/KG", display: "MG/KG" },
+      { code: "IU", display: "IU" },
     ]
   },
   orderType: {
@@ -363,6 +404,11 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "KC01123243", display: "KC01123243 - Paclitaxel" },
       { code: "KC00987654", display: "KC00987654 - Docetaxel" },
       { code: "KC02234567", display: "KC02234567 - Gefitinib" },
+      { code: "IMM001", display: "IMM001 - Adalimumab 40mg 注射筆" },
+      { code: "IMM002", display: "IMM002 - Tocilizumab 注射劑" },
+      { code: "IMM003", display: "IMM003 - Infliximab 注射劑" },
+      { code: "IMM004", display: "IMM004 - Etanercept 50mg 注射劑" },
+      { code: "IMM005", display: "IMM005 - Dupilumab 300mg 注射劑" },
     ]
   },
 };

@@ -29,6 +29,9 @@ export interface TwpasForm {
     gene:Gene[],
     result:Result[],
     apply:Apply,
+    _id?:string; // ES 文件 ID
+    _patChartNo?:string; // 院方資料 key
+    igType?:"pas" | "imm"; // TWPAS IG 類型：pas=癌藥事前審查、imm=免疫製劑事前審查
 }
 
 interface AllergyIntolerance {
@@ -270,11 +273,23 @@ export interface CarePlan {
   carePlanDocPdfUUID?:string;
 }
 
+// 照光治療 (V1.2.0 新增)
+export interface Phototherapy {
+  ptCode: string;       // 照光治療種類
+  ptSdate: string;      // 起始日期
+  ptEdate: string;      // 終止日期
+  ptNumber: number | null; // 總次數
+  ptDocPdf?: string;
+  ptDocTitle?: string;
+  ptDocPdfUUID?: string;
+}
+
 export interface Treat {
   medicationRequest: MedicationRequest[];
   radiotherapy: Radiotherapy[];
   operation: Operation[];
   careplan: CarePlan[];
+  phototherapy?: Phototherapy[];
 }
 
 export interface GenePdf {
@@ -616,4 +631,181 @@ export const defaultTwpasValues = {
   treat: [],
   gene: [],
   opd: [],
+};
+
+// ===== 免疫製劑事前審查 (TWPAS-IMM) 範例資料 =====
+// igType="imm" 時：隱藏 gene 頁籤，改以 opd 門診病例佐證；治療以照光治療(phototherapy)為主要輔助
+export const exampleTwpasImmValues = {
+  hosp: {
+    hospId: "1555455555",
+    applType: "2",
+    funcType: "408459003", // 免疫風濕科
+    applPrsnId: "D112233445",
+    applDate: "2026-03-20",
+    immediateDate: "",
+    tmhbType: "3",
+    oldAcptNo: "IMM2026030001",
+  },
+  patient: {
+    name: "張美玉",
+    idCard: "F223344556",
+    patId: "20260301",
+    birthday: "1982-06-15",
+    gender: "female",
+    weight: 58,
+    height: 162,
+    pregnant: "false",
+    blood: "112144000",
+    allergyIntolerance: [
+      {
+        allergy: { code: "91936005", description: "對 Penicillin 過敏" },
+        clinicalStatus: "active",
+        verificationStatus: "confirmed",
+        recordedDate: "2024-05-10",
+        recorder: "D112233445",
+      },
+    ],
+  },
+  opd: [
+    {
+      hospId: "1555455555",
+      funcDate: "2026-03-10",
+      funcType: "408459003",
+      prsnId: "D112233445",
+      diagnosis: [{ icd10cmCode: "L40.50" }],
+      subjective: "多處關節腫痛、晨僵超過 1 小時，合併銀屑病皮膚病灶。",
+      objective: "雙手 PIP/MCP 關節腫脹、壓痛；指甲點狀凹陷；CRP 上升。",
+      assessment: "Psoriatic arthritis，activity moderate-to-high。",
+      plan: "評估申請生物製劑 (TNF-α inhibitor)。",
+    },
+  ],
+  diagnosis: {
+    diagDate: "2026-03-15",
+    diagData: [
+      {
+        icd10cmCode: "L40.50",
+        diagCurrentStatus: "Psoriatic arthritis with multiple joint involvement, DAS28CRP 5.3, failed MTX 20mg/wk for 3 months.",
+        diagnosisSequence: 1,
+      },
+    ],
+    medrecPath: [
+      { medrec: "file://ImmMedicalRecord01.pdf", medrecTitle: "ImmMedicalRecord01" },
+    ],
+    imageStudy: [],
+    cancerStage: [],
+    examinationReport: [],
+  },
+  evaluate: [
+    {
+      tests: [
+        {
+          inspect: "1988-5", // CRP
+          inspectResultTxt: "High",
+          inspectResultCode: "",
+          inspectResult: "28.6",
+          caseTime: "2026-03-12",
+          inspectItem: [
+            { inspectPdf: "file://CRPReport.pdf", inspectPdfTitle: "CRPReport" },
+          ],
+          inspectPerformer: "D112233445",
+        },
+        {
+          inspect: "30341-2", // ESR
+          inspectResultTxt: "High",
+          inspectResult: "52",
+          caseTime: "2026-03-12",
+          inspectItem: [],
+          inspectPerformer: "D112233445",
+        },
+      ],
+      patientAssessment: [
+        {
+          patAst: "DAS28CRP",
+          patAstResult: "5.3",
+          patAstDate: "2026-03-12",
+          patAstPerformer: "D112233445",
+        },
+      ],
+    },
+  ],
+  treat: [
+    {
+      medicationRequest: [
+        {
+          drugCode: "BC27821100", // MTX 範例代碼
+          drugStatus: "stopped",
+          drugType: "N",
+          eReason: "療效不足",
+          drugItem: [
+            {
+              drugFreArray: ["QW"],
+              drugRoute: "PO",
+              dose: "20",
+              doseUnit: "MG",
+              sDate: "2025-12-01",
+              eDate: "2026-03-01",
+            },
+          ],
+        },
+      ],
+      radiotherapy: [],
+      operation: [],
+      careplan: [
+        {
+          carePlanDocPdf: "file://ImmCarePlan.pdf",
+          carePlanDocTitle: "ImmCarePlan",
+        },
+      ],
+      phototherapy: [
+        {
+          ptCode: "NBUVB",
+          ptSdate: "2026-01-10",
+          ptEdate: "2026-03-10",
+          ptNumber: 12,
+          ptDocPdf: "file://PhototherapyReport.pdf",
+          ptDocTitle: "PhototherapyReport",
+        },
+      ],
+    },
+  ],
+  gene: [],
+  result: [
+    {
+      txAst: "DAS28CRP",
+      txAstResult: "PR",
+      txAstDate: "2026-03-15",
+    },
+  ],
+  apply: {
+    applyData: [
+      {
+        orderType: "2",
+        cancerDrugType: "IMM001",
+        applyReason: "L40P1",
+        continuation: "1",
+        lot: "1",
+        medicationUsage: [
+          {
+            applySide: "",
+            applQty: 2,
+            applQtyUnit: "syringe",
+            applDrugCycle: 6,
+            applDosage: 40,
+            applDosageUnit: "MG",
+            useSdate: "2026-03-25",
+            useEdate: "2026-09-25",
+            applDrugFre: ["Q2W"],
+            applDrugRoute: ["SC"],
+          },
+        ],
+      },
+    ],
+    approve: [],
+  },
+  igType: "imm" as const,
+};
+
+export const defaultTwpasImmValues = {
+  ...defaultTwpasValues,
+  igType: "imm" as const,
 };

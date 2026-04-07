@@ -64,6 +64,7 @@ const router = createHashRouter([
       // FHIR專區
       { path: 'fhir/case-tracking', element: <CaseTracking /> },
       { path: 'fhir/twpas', element: <FhirTwpas /> },
+      { path: 'fhir/twpas-imm', element: <FhirTwpas igType="imm" /> },
       { path: 'fhir/twci', element: <FhirTwci /> },
       { path: 'fhir/twngs', element: <PlaceholderPage funcName="次世代基因定序檢測TWNGS" /> },
       { path: 'fhir/twiam', element: <PlaceholderPage funcName="流感抗病毒藥劑使用報告TWIAM" /> },

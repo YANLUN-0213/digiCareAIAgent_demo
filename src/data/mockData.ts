@@ -323,7 +323,7 @@ export const WEBHOOK_EVENT_OPTIONS = [
 // ===== TWPAS 暫存清單假資料 =====
 
 import type { TwpasForm } from '@/components/Twpas/type/twpasform'
-import { exampleTwpasValues } from '@/components/Twpas/type/twpasform'
+import { exampleTwpasValues, exampleTwpasImmValues } from '@/components/Twpas/type/twpasform'
 
 export interface TwpasSavedRecord {
   id: string
@@ -331,6 +331,7 @@ export interface TwpasSavedRecord {
   createdBy: string
   updatedAt: string
   updatedBy: string
+  igType?: 'pas' | 'imm'
   data: TwpasForm
 }
 
@@ -341,6 +342,7 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
     createdBy: '王大明',
     updatedAt: '2026-03-08 10:15:00',
     updatedBy: '王大明',
+    igType: 'pas',
     data: {
       ...exampleTwpasValues,
       hosp: { ...exampleTwpasValues.hosp, hospId: '1555455555' },
@@ -353,6 +355,7 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
     createdBy: '李小華',
     updatedAt: '2026-03-07 15:00:00',
     updatedBy: '李小華',
+    igType: 'pas',
     data: {
       ...exampleTwpasValues,
       hosp: { ...exampleTwpasValues.hosp, hospId: '1234567890', applDate: '2025-07-15' },
@@ -370,6 +373,7 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
     createdBy: '張美玲',
     updatedAt: '2026-03-06 08:30:00',
     updatedBy: '張美玲',
+    igType: 'pas',
     data: {
       ...exampleTwpasValues,
       hosp: { ...exampleTwpasValues.hosp, hospId: '9876543210', applDate: '2025-09-01' },
@@ -380,6 +384,164 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
         diagData: [{ icd10cmCode: 'C50.9', diagCurrentStatus: 'Breast cancer, HER2 positive, Stage II', diagnosisSequence: 1 }],
       },
     } as TwpasForm,
+  },
+]
+
+// ===== TWPAS-IMM 免疫製劑事前審查 暫存清單假資料 (igType="imm") =====
+
+export const MOCK_TWPAS_IMM_SAVED_RECORDS: TwpasSavedRecord[] = [
+  {
+    id: 'imm-1',
+    createdAt: '2026-03-20 09:00:00',
+    createdBy: '王醫師',
+    updatedAt: '2026-03-20 10:30:00',
+    updatedBy: '王醫師',
+    igType: 'imm',
+    data: {
+      ...exampleTwpasImmValues,
+    } as unknown as TwpasForm,
+  },
+  {
+    id: 'imm-2',
+    createdAt: '2026-03-18 14:00:00',
+    createdBy: '陳醫師',
+    updatedAt: '2026-03-18 14:45:00',
+    updatedBy: '陳醫師',
+    igType: 'imm',
+    data: {
+      ...exampleTwpasImmValues,
+      hosp: { ...exampleTwpasImmValues.hosp, hospId: '1122334455', applDate: '2026-03-18', oldAcptNo: 'IMM2026030002' },
+      patient: { ...exampleTwpasImmValues.patient, name: '林建宏', idCard: 'A123456789', gender: 'male', weight: 72, height: 175, blood: '58460004' },
+      diagnosis: {
+        ...exampleTwpasImmValues.diagnosis,
+        diagDate: '2026-03-10',
+        diagData: [{ icd10cmCode: 'M05.79', diagCurrentStatus: 'Rheumatoid arthritis, seropositive, RF(+), anti-CCP(+), DAS28 6.1, failed conventional DMARDs.', diagnosisSequence: 1 }],
+      },
+      apply: {
+        ...exampleTwpasImmValues.apply,
+        applyData: [{
+          ...exampleTwpasImmValues.apply.applyData[0],
+          cancerDrugType: 'IMM002',
+          applyReason: 'M05P1',
+          medicationUsage: [{
+            ...exampleTwpasImmValues.apply.applyData[0].medicationUsage[0],
+            applQty: 1,
+            applQtyUnit: 'vial',
+            applDosage: 8,
+            applDosageUnit: 'MG/KG',
+            applDrugFre: ['Q4W'],
+            applDrugRoute: ['IV'],
+          }],
+        }],
+      },
+    } as unknown as TwpasForm,
+  },
+  {
+    id: 'imm-3',
+    createdAt: '2026-03-15 11:15:00',
+    createdBy: '李醫師',
+    updatedAt: '2026-03-15 11:50:00',
+    updatedBy: '李醫師',
+    igType: 'imm',
+    data: {
+      ...exampleTwpasImmValues,
+      hosp: { ...exampleTwpasImmValues.hosp, hospId: '2233445566', applDate: '2026-03-15', oldAcptNo: 'IMM2026030003' },
+      patient: { ...exampleTwpasImmValues.patient, name: '黃雅婷', idCard: 'F234567890', gender: 'female', weight: 52, height: 158 },
+      diagnosis: {
+        ...exampleTwpasImmValues.diagnosis,
+        diagDate: '2026-03-05',
+        diagData: [{ icd10cmCode: 'K50.90', diagCurrentStatus: 'Crohn disease, moderate-to-severe, steroid-dependent, CDAI 320.', diagnosisSequence: 1 }],
+      },
+      apply: {
+        ...exampleTwpasImmValues.apply,
+        applyData: [{
+          ...exampleTwpasImmValues.apply.applyData[0],
+          cancerDrugType: 'IMM003',
+          applyReason: 'K50P1',
+          medicationUsage: [{
+            ...exampleTwpasImmValues.apply.applyData[0].medicationUsage[0],
+            applQty: 1,
+            applQtyUnit: 'vial',
+            applDosage: 5,
+            applDosageUnit: 'MG/KG',
+            useSdate: '2026-03-20',
+            useEdate: '2026-09-20',
+            applDrugFre: ['Q8W'],
+            applDrugRoute: ['IV'],
+          }],
+        }],
+      },
+    } as unknown as TwpasForm,
+  },
+  {
+    id: 'imm-4',
+    createdAt: '2026-03-12 08:40:00',
+    createdBy: '吳醫師',
+    updatedAt: '2026-03-12 09:10:00',
+    updatedBy: '吳醫師',
+    igType: 'imm',
+    data: {
+      ...exampleTwpasImmValues,
+      hosp: { ...exampleTwpasImmValues.hosp, hospId: '3344556677', applDate: '2026-03-12', oldAcptNo: 'IMM2026030004' },
+      patient: { ...exampleTwpasImmValues.patient, name: '鄭宗翰', idCard: 'B234567891', gender: 'male', weight: 80, height: 178, blood: '112149005' },
+      diagnosis: {
+        ...exampleTwpasImmValues.diagnosis,
+        diagDate: '2026-03-01',
+        diagData: [{ icd10cmCode: 'M45.9', diagCurrentStatus: 'Ankylosing spondylitis, BASDAI 7.2, inadequate response to NSAIDs.', diagnosisSequence: 1 }],
+      },
+      apply: {
+        ...exampleTwpasImmValues.apply,
+        applyData: [{
+          ...exampleTwpasImmValues.apply.applyData[0],
+          cancerDrugType: 'IMM004',
+          applyReason: 'M45P1',
+          medicationUsage: [{
+            ...exampleTwpasImmValues.apply.applyData[0].medicationUsage[0],
+            applQty: 2,
+            applQtyUnit: 'syringe',
+            applDosage: 50,
+            applDosageUnit: 'MG',
+            applDrugFre: ['QW'],
+            applDrugRoute: ['SC'],
+          }],
+        }],
+      },
+    } as unknown as TwpasForm,
+  },
+  {
+    id: 'imm-5',
+    createdAt: '2026-03-10 16:20:00',
+    createdBy: '蔡醫師',
+    updatedAt: '2026-03-10 17:00:00',
+    updatedBy: '蔡醫師',
+    igType: 'imm',
+    data: {
+      ...exampleTwpasImmValues,
+      hosp: { ...exampleTwpasImmValues.hosp, hospId: '4455667788', applDate: '2026-03-10', oldAcptNo: 'IMM2026030005' },
+      patient: { ...exampleTwpasImmValues.patient, name: '周宜臻', idCard: 'F345678901', gender: 'female', weight: 48, height: 155 },
+      diagnosis: {
+        ...exampleTwpasImmValues.diagnosis,
+        diagDate: '2026-02-28',
+        diagData: [{ icd10cmCode: 'L20.9', diagCurrentStatus: 'Severe atopic dermatitis, EASI 32, failed topical and systemic therapy.', diagnosisSequence: 1 }],
+      },
+      apply: {
+        ...exampleTwpasImmValues.apply,
+        applyData: [{
+          ...exampleTwpasImmValues.apply.applyData[0],
+          cancerDrugType: 'IMM005',
+          applyReason: 'L20P1',
+          medicationUsage: [{
+            ...exampleTwpasImmValues.apply.applyData[0].medicationUsage[0],
+            applQty: 2,
+            applQtyUnit: 'syringe',
+            applDosage: 300,
+            applDosageUnit: 'MG',
+            applDrugFre: ['Q2W'],
+            applDrugRoute: ['SC'],
+          }],
+        }],
+      },
+    } as unknown as TwpasForm,
   },
 ]
 
@@ -716,6 +878,7 @@ export const MENU_ITEMS: MenuItem[] = [
     children: [
       { id: 'case-tracking', title: '案件追蹤', icon: 'pi pi-sitemap', path: '/fhir/case-tracking' },
       { id: 'twpas', title: '癌藥事審TWPAS IG', icon: 'pi pi-file-edit', path: '/fhir/twpas' },
+      { id: 'twpas-imm', title: '免疫製劑事前審查TWPAS-IMM IG', icon: 'pi pi-file-edit', path: '/fhir/twpas-imm' },
       { id: 'twci', title: '重大傷病TWCI', icon: 'pi pi-file-edit', path: '/fhir/twci' },
       { id: 'twngs', title: '次世代基因定序檢測TWNGS', icon: 'pi pi-file-edit', path: '/fhir/twngs' },
       { id: 'twiam', title: '流感抗病毒藥劑使用報告TWIAM', icon: 'pi pi-file-edit', path: '/fhir/twiam' },
