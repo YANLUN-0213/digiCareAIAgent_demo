@@ -13,6 +13,7 @@ const WorkflowStepsIndicator = ({ steps, onStepClick }: Props) => {
       case 'success': return '\u2713'
       case 'failed': return '\u2717'
       case 'in_progress': return '\u25CF'
+      case 'skipped': return '\u2298'
       default: return ''
     }
   }
@@ -20,6 +21,7 @@ const WorkflowStepsIndicator = ({ steps, onStepClick }: Props) => {
   const getLineClass = (idx: number): string => {
     const cur = steps[idx].status
     const next = steps[idx + 1]?.status
+    if (cur === 'skipped') return 'line-skipped'
     if (cur === 'success' && next && next !== 'pending') return 'line-done'
     if (cur === 'failed') return 'line-fail'
     return 'line-pending'

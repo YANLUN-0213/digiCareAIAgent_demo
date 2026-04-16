@@ -1,4 +1,4 @@
-export type StepStatus = 'pending' | 'in_progress' | 'success' | 'failed'
+export type StepStatus = 'pending' | 'in_progress' | 'success' | 'failed' | 'skipped'
 
 export interface VerificationResultItem {
   resourceType: string
