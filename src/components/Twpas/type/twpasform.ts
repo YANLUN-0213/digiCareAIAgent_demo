@@ -363,8 +363,8 @@ export const exampleTwpasValues = {
     applType: "2",
     funcType: "394589003",
     applPrsnId: "E224111111",
-    applDate: "2025-08-06",
-    immediateDate: "2025-08-27T10:12:41",
+    applDate: "2026-04-08",
+    immediateDate: "2026-04-08T10:12:41",
     tmhbType: "3",
     oldAcptNo: "123456789001",
   },
@@ -500,7 +500,7 @@ export const exampleTwpasValues = {
         inspect: "48423-8",
         inspectResultTxt: null,
         inspectResultCode: "",
-        inspectResult: "4.5 ; 40.9",
+        inspectResult: "4.52 ; 40.95",
         caseTime: "2024-01-01",
         inspectItem:[
           {
@@ -641,10 +641,10 @@ export const exampleTwpasImmValues = {
     applType: "2",
     funcType: "408459003", // 免疫風濕科
     applPrsnId: "D112233445",
-    applDate: "2026-03-20",
+    applDate: "2026-04-15",
     immediateDate: "",
     tmhbType: "3",
-    oldAcptNo: "IMM2026030001",
+    oldAcptNo: "IMM2026040001",
   },
   patient: {
     name: "張美玉",
@@ -702,8 +702,8 @@ export const exampleTwpasImmValues = {
           inspect: "1988-5", // CRP
           inspectResultTxt: "High",
           inspectResultCode: "",
-          inspectResult: "28.6",
-          caseTime: "2026-03-12",
+          inspectResult: "28.65", // 1.2.1: 數值結果可填至小數點後兩位
+          caseTime: "2026-04-05",
           inspectItem: [
             { inspectPdf: "file://CRPReport.pdf", inspectPdfTitle: "CRPReport" },
           ],
@@ -712,8 +712,8 @@ export const exampleTwpasImmValues = {
         {
           inspect: "30341-2", // ESR
           inspectResultTxt: "High",
-          inspectResult: "52",
-          caseTime: "2026-03-12",
+          inspectResult: "52.30",
+          caseTime: "2026-04-05",
           inspectItem: [],
           inspectPerformer: "D112233445",
         },
@@ -721,8 +721,8 @@ export const exampleTwpasImmValues = {
       patientAssessment: [
         {
           patAst: "DAS28CRP",
-          patAstResult: "5.3",
-          patAstDate: "2026-03-12",
+          patAstResult: "5.32", // 1.2.1: pat-ast-value 可填至小數點後兩位
+          patAstDate: "2026-04-05",
           patAstPerformer: "D112233445",
         },
       ],

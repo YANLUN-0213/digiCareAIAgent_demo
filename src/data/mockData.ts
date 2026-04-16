@@ -338,9 +338,9 @@ export interface TwpasSavedRecord {
 export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
   {
     id: '1',
-    createdAt: '2026-03-08 09:30:00',
+    createdAt: '2026-04-08 09:30:00',
     createdBy: '王大明',
-    updatedAt: '2026-03-08 10:15:00',
+    updatedAt: '2026-04-08 10:15:00',
     updatedBy: '王大明',
     igType: 'pas',
     data: {
@@ -351,9 +351,9 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
   },
   {
     id: '2',
-    createdAt: '2026-03-07 14:20:00',
+    createdAt: '2026-04-05 14:20:00',
     createdBy: '李小華',
-    updatedAt: '2026-03-07 15:00:00',
+    updatedAt: '2026-04-05 15:00:00',
     updatedBy: '李小華',
     igType: 'pas',
     data: {
@@ -369,9 +369,9 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
   },
   {
     id: '3',
-    createdAt: '2026-03-05 11:00:00',
+    createdAt: '2026-04-02 11:00:00',
     createdBy: '張美玲',
-    updatedAt: '2026-03-06 08:30:00',
+    updatedAt: '2026-04-03 08:30:00',
     updatedBy: '張美玲',
     igType: 'pas',
     data: {
@@ -392,9 +392,9 @@ export const MOCK_TWPAS_SAVED_RECORDS: TwpasSavedRecord[] = [
 export const MOCK_TWPAS_IMM_SAVED_RECORDS: TwpasSavedRecord[] = [
   {
     id: 'imm-1',
-    createdAt: '2026-03-20 09:00:00',
+    createdAt: '2026-04-12 09:00:00',
     createdBy: '王醫師',
-    updatedAt: '2026-03-20 10:30:00',
+    updatedAt: '2026-04-12 10:30:00',
     updatedBy: '王醫師',
     igType: 'imm',
     data: {
@@ -403,9 +403,9 @@ export const MOCK_TWPAS_IMM_SAVED_RECORDS: TwpasSavedRecord[] = [
   },
   {
     id: 'imm-2',
-    createdAt: '2026-03-18 14:00:00',
+    createdAt: '2026-04-10 14:00:00',
     createdBy: '陳醫師',
-    updatedAt: '2026-03-18 14:45:00',
+    updatedAt: '2026-04-10 14:45:00',
     updatedBy: '陳醫師',
     igType: 'imm',
     data: {
@@ -438,9 +438,9 @@ export const MOCK_TWPAS_IMM_SAVED_RECORDS: TwpasSavedRecord[] = [
   },
   {
     id: 'imm-3',
-    createdAt: '2026-03-15 11:15:00',
+    createdAt: '2026-04-07 11:15:00',
     createdBy: '李醫師',
-    updatedAt: '2026-03-15 11:50:00',
+    updatedAt: '2026-04-07 11:50:00',
     updatedBy: '李醫師',
     igType: 'imm',
     data: {
@@ -475,9 +475,9 @@ export const MOCK_TWPAS_IMM_SAVED_RECORDS: TwpasSavedRecord[] = [
   },
   {
     id: 'imm-4',
-    createdAt: '2026-03-12 08:40:00',
+    createdAt: '2026-04-04 08:40:00',
     createdBy: '吳醫師',
-    updatedAt: '2026-03-12 09:10:00',
+    updatedAt: '2026-04-04 09:10:00',
     updatedBy: '吳醫師',
     igType: 'imm',
     data: {
@@ -510,9 +510,9 @@ export const MOCK_TWPAS_IMM_SAVED_RECORDS: TwpasSavedRecord[] = [
   },
   {
     id: 'imm-5',
-    createdAt: '2026-03-10 16:20:00',
+    createdAt: '2026-04-01 16:20:00',
     createdBy: '蔡醫師',
-    updatedAt: '2026-03-10 17:00:00',
+    updatedAt: '2026-04-01 17:00:00',
     updatedBy: '蔡醫師',
     igType: 'imm',
     data: {
@@ -605,10 +605,10 @@ export const MOCK_FHIR_BUNDLE_SNIPPET = {
   resourceType: 'Bundle',
   id: 'twpas-bundle-example',
   meta: {
-    profile: ['https://twcore.mohw.gov.tw/ig/twpas/StructureDefinition/Bundle-twpas'],
+    profile: ['https://nhicore.nhi.gov.tw/pas/StructureDefinition/Bundle-twpas|1.2.1'],
   },
   type: 'document',
-  timestamp: '2026-03-10T10:00:00+08:00',
+  timestamp: '2026-04-10T10:00:00+08:00',
   entry: [
     {
       fullUrl: 'urn:uuid:composition-twpas-001',
@@ -617,7 +617,7 @@ export const MOCK_FHIR_BUNDLE_SNIPPET = {
         status: 'final',
         type: { coding: [{ system: 'http://loinc.org', code: '11503-0', display: 'Medical records' }] },
         subject: { reference: 'urn:uuid:patient-001' },
-        date: '2026-03-10',
+        date: '2026-04-10',
         title: 'TWPAS 癌藥事前審查申請書',
       },
     },
@@ -635,9 +635,9 @@ export const MOCK_FHIR_BUNDLE_SNIPPET = {
       fullUrl: 'urn:uuid:condition-001',
       resource: {
         resourceType: 'Condition',
-        code: { coding: [{ system: 'http://hl7.org/fhir/sid/icd-10-cm', code: 'C34.1', display: '惡性腫瘤-右上肺葉' }] },
+        code: { coding: [{ system: 'http://hl7.org/fhir/sid/icd-10-cm', code: 'C91.00', display: '急性淋巴芽細胞性白血病, 未達緩解' }] },
         subject: { reference: 'urn:uuid:patient-001' },
-        onsetDateTime: '2026-02-20',
+        onsetDateTime: '2026-03-20',
       },
     },
     {
@@ -646,13 +646,79 @@ export const MOCK_FHIR_BUNDLE_SNIPPET = {
         resourceType: 'MedicationRequest',
         status: 'active',
         intent: 'order',
-        medicationCodeableConcept: { coding: [{ system: 'https://www.nhi.gov.tw/', code: 'KC00935209', display: 'Osimertinib (Tagrisso) 80mg' }] },
+        medicationCodeableConcept: { coding: [{ system: 'https://nhicore.nhi.gov.tw/pas/CodeSystem/twpas-drug-cs', code: 'KC00935209', display: 'Osimertinib (Tagrisso) 80mg' }] },
         subject: { reference: 'urn:uuid:patient-001' },
         dosageInstruction: [{ text: '80mg QD PO' }],
+        dispenseRequest: {
+          quantity: { value: 1, unit: 'vial', system: 'https://nhicore.nhi.gov.tw/pas/CodeSystem/twpas-pkg-unit-cs', code: 'vial' },
+        },
+      },
+    },
+    {
+      fullUrl: 'urn:uuid:observation-pat-ast-001',
+      resource: {
+        resourceType: 'Observation',
+        meta: { profile: ['https://nhicore.nhi.gov.tw/pas/StructureDefinition/Observation-pat-assessment-twpas|1.2.1'] },
+        status: 'final',
+        code: { coding: [{ system: 'http://loinc.org', code: '14682-9', display: 'Creatinine [Moles/volume] in Serum or Plasma' }] },
+        subject: { reference: 'urn:uuid:patient-001' },
+        effectiveDateTime: '2026-04-08',
+        valueQuantity: { value: 28.65, unit: 'mg/dL', system: 'http://unitsofmeasure.org', code: 'mg/dL' },
+      },
+    },
+    {
+      fullUrl: 'urn:uuid:claim-twpas-001',
+      resource: {
+        resourceType: 'Claim',
+        meta: { profile: ['https://nhicore.nhi.gov.tw/pas/StructureDefinition/Claim-twpas|1.2.1'] },
+        status: 'active',
+        type: { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/claim-type', code: 'pharmacy' }] },
+        use: 'preauthorization',
+        patient: { reference: 'urn:uuid:patient-001' },
+        created: '2026-04-10',
+        priority: { coding: [{ code: 'normal', display: '一般事前審查申請' }] },
+        diagnosis: [
+          { sequence: 1, diagnosisCodeableConcept: { coding: [{ system: 'http://hl7.org/fhir/sid/icd-10-cm', code: 'C91.00' }] } },
+        ],
+        // 1.2.1 新 constraint supportingInfo-c90-c91-c92：C90/C91/C92 須提供檢驗、影像、基因或檢查至少一項
+        supportingInfo: [
+          { sequence: 1, category: { coding: [{ code: 'laboratory', display: '檢驗' }] }, valueReference: { reference: 'urn:uuid:observation-pat-ast-001' } },
+        ],
       },
     },
   ],
 }
+
+// ===== TWPAS IG 1.2.1 更新說明 =====
+
+export const MOCK_TWPAS_CHANGELOG_121 = `## TWPAS FHIR IG **STU 1.2.1**（2026-03-27 發布）
+
+> 官方頁面：[https://nhicore.nhi.gov.tw/pas/](https://nhicore.nhi.gov.tw/pas/)
+> 基礎標準：FHIR R4.0.1 / TW Core IG V0.3.2
+
+### 主要變更摘要
+
+| # | 項目 | 變更內容 |
+|---|------|----------|
+| 1 | CodeSystem | **NHI-健保事前審查-用藥品項** 代碼更新 |
+| 2 | CodeSystem | **NHI-健保事前審查-特約醫事機構** 代碼更新 |
+| 3 | 影像欄位 | 取消 **DICOM 或非 DICOM 影像擇一必填** 限制 |
+| 4 | Claim Profile | 修改 **HTWT Expression** 與 **supportingInfo** Constraint |
+| 5 | 新 Constraint | **supportingInfo-c90-c91-c92**：C90/C91/C92 國際疾病分類需提供檢驗、影像、基因或檢查資訊 |
+| 6 | 新 ValueSet | **NHI-健保事前審查-事前審查申請數量單位及包裝類型**（vial / syringe / bottle / amp / tablet / capsule / patch …） |
+| 7 | Observation Profile | **pat-ast-value** 數值結果可填至**小數點後兩位** |
+| 8 | ClaimResponse | 新增 \`requestor.identifier\` 查詢參數 |
+
+### 本 Demo 對應的呈現
+
+- 標頭顯示版本 **1.2.1（2026-03-27 發布）**
+- FHIR Bundle profile canonical 已加上 \`|1.2.1\` 版本標示
+- 範例 Bundle 新增 \`Observation-pat-assessment-twpas\` (含 \`valueQuantity = 28.65\`) 與 \`Claim-twpas\` (含 ICD \`C91.00\` + \`supportingInfo\` 檢驗 reference)
+- 「疾病資訊」頁籤：輸入 ICD 開頭為 **C90 / C91 / C92** 時，顯示 supportingInfo 提示
+- 「影像資訊」頁籤：說明 DICOM / 非 DICOM 已取消擇一必填
+- 「評估資訊」頁籤：評估數值欄位提示可填至小數點後兩位
+- 「申請項目」頁籤：劑量單位下拉新增 vial / syringe / bottle / amp / tablet / capsule / patch
+`
 
 // ===== TWPAS 欄位級 AI 小幫手 mock 資料 =====
 

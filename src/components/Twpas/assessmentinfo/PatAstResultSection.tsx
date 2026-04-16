@@ -30,7 +30,13 @@ const PatAstResultSection: React.FC<Props> = ({ index, nestIndex, methods, patAs
   }
 
   return (
-    <RHFTextarea register={register} errors={errors} name={`evaluate.${nestIndex}.patientAssessment.${index}.patAstResult`} label="評估結果(patAstResult)" rules={formValidationRules?.evaluate?.patAstResult} maxLength={1000} showCharCount className="w-full" rows={2} control={control} />
+    <>
+      <RHFTextarea register={register} errors={errors} name={`evaluate.${nestIndex}.patientAssessment.${index}.patAstResult`} label="評估結果(patAstResult)" rules={formValidationRules?.evaluate?.patAstResult} maxLength={1000} showCharCount className="w-full" rows={2} control={control} />
+      <small className="text-color-secondary block mt-1">
+        <i className="pi pi-info-circle mr-1" />
+        IG 1.2.1：pat-ast-value 數值結果可填至小數點後兩位（例：5.32、28.65）
+      </small>
+    </>
   );
 };
 

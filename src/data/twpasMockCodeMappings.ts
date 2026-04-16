@@ -379,17 +379,28 @@ const mockMappings: Record<string, SelOptionType<any>> = {
       { code: "SC", display: "SC - 皮下注射" },
     ]
   },
+  // 依 NHI IG 1.2.1 新 ValueSet「NHI-健保事前審查-事前審查申請數量單位及包裝類型」
   applDosageUnit: {
     select: [
+      // 劑量單位
       { code: "MG", display: "MG" },
       { code: "ML", display: "ML" },
       { code: "MCG", display: "MCG" },
-      { code: "vial", display: "vial" },
-      { code: "tab", display: "tab" },
-      { code: "cap", display: "cap" },
-      { code: "syringe", display: "syringe - 注射筆" },
       { code: "MG/KG", display: "MG/KG" },
       { code: "IU", display: "IU" },
+      // 包裝類型 (1.2.1 ValueSet)
+      { code: "vial", display: "vial - 小瓶劑" },
+      { code: "syringe", display: "syringe - 預充式針筒" },
+      { code: "pen", display: "pen - 筆型注射器" },
+      { code: "amp", display: "amp - 安瓿" },
+      { code: "bottle", display: "bottle - 瓶/罐" },
+      { code: "bag", display: "bag - 袋" },
+      { code: "tablet", display: "tablet - 錠" },
+      { code: "tab", display: "tab - 錠 (簡寫)" },
+      { code: "capsule", display: "capsule - 膠囊" },
+      { code: "cap", display: "cap - 膠囊 (簡寫)" },
+      { code: "patch", display: "patch - 貼片" },
+      { code: "supp", display: "supp - 栓劑" },
     ]
   },
   orderType: {

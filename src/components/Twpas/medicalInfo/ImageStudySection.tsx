@@ -7,6 +7,7 @@ import { formValidationRules } from "../valid/medicalValid";
 import { SelOptionType, TwpasForm } from "../type/twpasform";
 import { Badge } from "primereact/badge";
 import { Button } from "primereact/button";
+import { Message } from "primereact/message";
 import { SelectButton } from "primereact/selectbutton";
 import { CusCodeDisplayTemplate, CusFuncTypeTemplate } from "../itemValueOption/CusItemValueTemplate";
 import { getMockCodeMapping } from "@/data/twpasMockCodeMappings";
@@ -47,6 +48,16 @@ const ImageStudySection: React.FC<ImageStudySectionProps> = ({ methods, onAiHelp
       <h4 className="text-lg font-semibold mb-1 text-surface-700">
         <i className="pi pi-image mr-2"></i>影像資料(imageStudy)
       </h4>
+      <Message
+        severity="info"
+        className="w-full mb-2"
+        content={
+          <span className="text-sm">
+            <i className="pi pi-info-circle mr-2" />
+            <b>IG 1.2.1：</b>已取消 DICOM 與非 DICOM 影像之 <b>擇一必填</b> 限制；可單獨提供任一類影像或同時提供。
+          </span>
+        }
+      />
       {fields.map((field, index) => (
         <div key={field.id} className="card border-1 surface-100 p-3 mb-2">
           <div className="flex justify-content-between align-items-center mb-2">

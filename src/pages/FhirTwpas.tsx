@@ -28,6 +28,7 @@ import {
   MOCK_TWPAS_SAVED_RECORDS,
   MOCK_TWPAS_IMM_SAVED_RECORDS,
   TWPAS_AI_FIELD_PROMPTS,
+  MOCK_TWPAS_CHANGELOG_121,
   generateTwpasAiResponse,
   generateMockWorkflowRun,
 } from '@/data/mockData'
@@ -65,8 +66,12 @@ interface FhirTwpasProps {
 }
 
 const IG_VERSION_MAP: Record<'pas' | 'imm', string> = {
-  pas: '1.2.0',
-  imm: '1.2.0',
+  pas: '1.2.1',
+  imm: '1.2.1',
+}
+const IG_RELEASE_DATE_MAP: Record<'pas' | 'imm', string> = {
+  pas: '2026-03-27',
+  imm: '2026-03-27',
 }
 const IG_TITLE_MAP: Record<'pas' | 'imm', string> = {
   pas: '癌藥事前審查',
@@ -77,6 +82,7 @@ const FhirTwpas = ({ igType = 'pas' }: FhirTwpasProps) => {
   const { showSuccess, showError, showInfo } = useToast()
   const igTitle = IG_TITLE_MAP[igType]
   const igVersion = IG_VERSION_MAP[igType]
+  const igReleaseDate = IG_RELEASE_DATE_MAP[igType]
   const savedRecords = igType === 'imm' ? MOCK_TWPAS_IMM_SAVED_RECORDS : MOCK_TWPAS_SAVED_RECORDS
   const initialValues = igType === 'imm' ? exampleTwpasImmValues : exampleTwpasValues
 
@@ -109,6 +115,9 @@ const FhirTwpas = ({ igType = 'pas' }: FhirTwpasProps) => {
   // 案件流程追蹤
   const [workflowDialogVisible, setWorkflowDialogVisible] = useState(false)
   const [workflowRuns, setWorkflowRuns] = useState<WorkflowRun[]>([])
+
+  // 1.2.1 更新說明
+  const [changelogDialogVisible, setChangelogDialogVisible] = useState(false)
 
 
   /* ---------- streaming helpers ---------- */
@@ -254,7 +263,17 @@ const FhirTwpas = ({ igType = 'pas' }: FhirTwpasProps) => {
       {/* 主要內容 */}
       <FormProvider {...methods}>
         <Card className="card mt-3">
-          <h3 className="mt-0 mb-3">TWPAS IG ({igTitle}) 版本 {igVersion}</h3>
+          <div className="flex align-items-center flex-wrap gap-2 mt-0 mb-3">
+            <h3 className="m-0">TWPAS IG ({igTitle}) 版本 {igVersion}</h3>
+            <span className="text-color-secondary text-sm">（{igReleaseDate} 發布）</span>
+            <Button
+              type="button"
+              label="查看 1.2.1 更新說明"
+              icon="pi pi-info-circle"
+              className="p-button-sm p-button-text"
+              onClick={() => setChangelogDialogVisible(true)}
+            />
+          </div>
           <form onSubmit={(e) => e.preventDefault()}>
             {/* TabView (9 Tabs) */}
             <TabView
@@ -437,6 +456,21 @@ const FhirTwpas = ({ igType = 'pas' }: FhirTwpasProps) => {
           </TabPanel>
         </TabView>
       </Sidebar>
+
+      {/* 1.2.1 更新說明 Dialog */}
+      <Dialog
+        header={`TWPAS IG ${igVersion} 更新說明（${igReleaseDate} 發布）`}
+        visible={changelogDialogVisible}
+        onHide={() => setChangelogDialogVisible(false)}
+        style={{ width: '720px' }}
+      >
+        <div
+          className="markdown-preview"
+          style={{ maxHeight: '60vh', overflow: 'auto', padding: '0 4px', lineHeight: 1.7, fontSize: 14 }}
+        >
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{MOCK_TWPAS_CHANGELOG_121}</ReactMarkdown>
+        </div>
+      </Dialog>
 
       {/* FHIR Dialog */}
       <Dialog
