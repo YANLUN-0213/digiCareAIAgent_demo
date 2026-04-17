@@ -94,8 +94,9 @@ const MedicalWriting = () => {
       }
       const ex = getManualWritingExample(selectedManualExample)
       if (!ex) return
+      const typeKey = (['admission', 'discharge', 'weekly'].includes(selectedType) ? selectedType : 'admission') as 'admission' | 'discharge' | 'weekly'
       const formatKey = (selectedFormat === 'soap' ? 'soap' : 'standard') as 'standard' | 'soap'
-      const content = ex.drafts[formatKey] ?? ex.drafts.standard
+      const content = ex.drafts[typeKey]?.[formatKey] ?? ex.drafts[ex.defaultType].standard
       startStreaming(content, setManualDraft, setManualStatus)
     }
   }
@@ -116,8 +117,8 @@ const MedicalWriting = () => {
     if (!ex) return
     setSelectedManualExample(id)
     setManualJson(ex.hisJson)
-    // 切換類型以對應範例
-    setSelectedType(ex.type)
+    // 切換至範例預設類型（使用者仍可再切換）
+    setSelectedType(ex.defaultType)
     if (manualStatus !== 'generating') {
       setManualStatus('idle')
       setManualDraft('')
