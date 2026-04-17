@@ -1968,6 +1968,619 @@ export function getHisSourceData(patientId: string): HisSourceData | undefined {
   return MOCK_HIS_SOURCE_DATA.find(d => d.patientId === patientId)
 }
 
+// --- 手動輸入範例資料（病歷寫作 Demo）---
+
+export interface ManualWritingExample {
+  id: string
+  label: string
+  type: 'admission' | 'discharge' | 'weekly'
+  description: string
+  hisJson: string
+  drafts: {
+    standard: string
+    soap: string
+  }
+}
+
+export const MOCK_MANUAL_WRITING_EXAMPLES: ManualWritingExample[] = [
+  {
+    id: 'mex1',
+    label: '急性闌尾炎',
+    type: 'admission',
+    description: '28 歲男性 / 右下腹痛 12 小時',
+    hisJson: `{
+  "patient": { "name": "陳俊宏", "chartNo": "M2026-001", "age": 28, "gender": "男", "bed": "8A-05" },
+  "chiefComplaint": "右下腹疼痛 12 小時，伴隨噁心與食慾不振",
+  "presentIllness": "12 小時前自肚臍周圍疼痛逐漸轉移至右下腹，McBurney 點壓痛明顯，走動時疼痛加劇",
+  "vitals": { "BP": "128/82 mmHg", "HR": "96 bpm", "RR": "18 /min", "BT": "38.2°C" },
+  "exam": {
+    "abdomen": "Soft, RLQ tenderness with rebound; Rovsing sign (+), Psoas sign (+)",
+    "bowelSounds": "Hypoactive"
+  },
+  "labs": { "WBC": "14,200 /μL ↑", "Neutrophil": "82% ↑", "CRP": "5.8 mg/dL ↑" },
+  "imaging": "Abdominal CT: Appendix 12mm dilated with periappendiceal fat stranding, no abscess",
+  "pastHistory": "Denies DM/HTN, NKDA, no prior abdominal surgery",
+  "plan": "Emergent laparoscopic appendectomy, NPO, IV antibiotics"
+}`,
+    drafts: {
+      standard: `Admission Note
+
+Patient: 陳俊宏 (M2026-001)    Date: 2026-04-17
+Ward: 8A-05    Age/Sex: 28 y/o Male
+
+Chief Complaint:
+Right lower quadrant abdominal pain for 12 hours.
+
+Present Illness:
+This 28 year-old male previously healthy presented with progressive abdominal pain starting 12 hours ago. The pain initially localized around the periumbilical region and gradually migrated to the right lower quadrant. The pain is constant, sharp, rated 7/10, worsened by movement and coughing. Associated symptoms include anorexia, nausea, and one episode of non-bilious vomiting. Denied diarrhea, hematochezia, dysuria, or fever prior to onset.
+
+Past Medical History:
+1. No known chronic illness
+2. No prior surgical history
+3. NKDA
+
+Physical Examination:
+- General: Acute distress due to pain, appears well-hydrated
+- Vital Signs: BP 128/82, HR 96, RR 18, BT 38.2°C
+- Abdomen: Soft, marked tenderness at McBurney's point with rebound; Rovsing sign positive, Psoas sign positive
+- Bowel sounds hypoactive
+- No flank tenderness
+
+Investigations:
+- CBC: WBC 14,200 with 82% neutrophils
+- CRP: 5.8 mg/dL (elevated)
+- Abdominal CT: Appendix measuring 12mm in diameter with surrounding fat stranding, no abscess formation or free air
+
+Assessment:
+1. Acute appendicitis, uncomplicated
+
+Plan:
+1. Emergent laparoscopic appendectomy — Dr. 林 (General Surgery) consulted
+2. NPO
+3. IV Normal Saline 100 mL/hr
+4. Ceftriaxone 1g IV + Metronidazole 500mg IV preoperatively
+5. Morphine 2mg IV PRN for pain
+6. Post-op care per standard protocol`,
+      soap: `SOAP Note
+
+Patient: 陳俊宏 (M2026-001)    Date: 2026-04-17
+
+S: 28 y/o male with 12-hour history of progressive abdominal pain. Pain started periumbilical, migrated to RLQ, now sharp and constant, rated 7/10, worsened by movement. Associated with anorexia, nausea, one episode of non-bilious vomiting. Denies diarrhea, dysuria, or fever before onset.
+
+O:
+- Vital Signs: BP 128/82, HR 96, RR 18, BT 38.2°C
+- General: Acute distress due to pain
+- Abdomen: Soft, marked tenderness at McBurney's point with rebound; Rovsing sign (+), Psoas sign (+); hypoactive bowel sounds
+- Labs: WBC 14,200 with 82% neutrophils; CRP 5.8 mg/dL (elevated)
+- Imaging: Abdominal CT — appendix 12 mm dilated with periappendiceal fat stranding, no abscess
+
+A:
+1. Acute appendicitis, uncomplicated
+
+P:
+1. Emergent laparoscopic appendectomy — General Surgery consulted
+2. NPO; IV NS 100 mL/hr
+3. Ceftriaxone 1g IV + Metronidazole 500mg IV preoperatively
+4. Morphine 2mg IV PRN for pain
+5. Post-op standard care protocol`,
+    },
+  },
+  {
+    id: 'mex2',
+    label: '急性缺血性腦中風',
+    type: 'admission',
+    description: '72 歲女性 / 突發左側無力 2 小時',
+    hisJson: `{
+  "patient": { "name": "周慧芳", "chartNo": "M2026-002", "age": 72, "gender": "女", "bed": "NCU-03" },
+  "chiefComplaint": "突發左側無力、言語不清 2 小時",
+  "vitals": { "BP": "178/102 mmHg", "HR": "88 bpm (irregular)", "RR": "18 /min", "SpO2": "97%" },
+  "neuroExam": "NIHSS 14 — 左側偏癱 2/5、構音障礙、左側面部下垂、左側忽略",
+  "imaging": {
+    "CT": "無急性出血，ASPECTS 8",
+    "CTA": "右側 MCA M1 段閉塞"
+  },
+  "history": "Atrial fibrillation on Warfarin (INR 1.8 — subtherapeutic), HTN, DM",
+  "medications": "Warfarin 3mg QD, Amlodipine 10mg QD, Metformin 1000mg BID",
+  "symptomOnset": "2026-04-17 05:30 (last known well 04:30)",
+  "plan": "IV rt-PA eligible，neurointervention 會診評估 thrombectomy"
+}`,
+    drafts: {
+      standard: `Admission Note
+
+Patient: 周慧芳 (M2026-002)    Date: 2026-04-17
+Ward: NCU-03    Age/Sex: 72 y/o Female
+
+Chief Complaint:
+Sudden onset left-sided weakness and slurred speech for 2 hours.
+
+Present Illness:
+This 72 year-old female with known atrial fibrillation on Warfarin (last INR 1.8, subtherapeutic) was last known well at 04:30 this morning. At 05:30, family noticed acute onset of left facial drooping, left arm and leg weakness, and slurred speech. EMS was activated and patient arrived at ER at 06:20. No seizure activity, no headache, no trauma.
+
+Past Medical History:
+1. Atrial fibrillation × 5 years, on Warfarin (non-therapeutic INR)
+2. Hypertension on Amlodipine 10mg QD
+3. Type 2 DM on Metformin 1000mg BID
+4. NKDA
+
+Neurological Examination (NIHSS 14):
+- LOC: Alert, dysarthric speech
+- Facial: Left central facial droop
+- Motor: Left upper extremity 2/5, left lower extremity 2/5, right side full strength
+- Sensory: Decreased sensation left side
+- Extinction/inattention: Left-sided neglect
+- Ataxia: Unable to assess due to weakness
+
+Vital Signs:
+BP 178/102, HR 88 (irregular), RR 18, SpO2 97% RA
+
+Investigations:
+- Non-contrast Brain CT: No acute hemorrhage, ASPECTS 8
+- CTA Head/Neck: Right MCA M1 segment occlusion
+- CBC, BMP, Coagulation: Within acceptable ranges for tPA (INR 1.8 subtherapeutic)
+- EKG: Atrial fibrillation with controlled rate
+
+Assessment:
+1. Acute ischemic stroke, right MCA territory (NIHSS 14)
+2. Large vessel occlusion (right MCA M1) — thrombectomy candidate
+3. Atrial fibrillation with inadequate anticoagulation
+
+Plan:
+1. IV Alteplase (rt-PA) 0.9 mg/kg — loading 10% bolus then infusion over 60 min (onset within window, no contraindications)
+2. Emergent neurointervention consultation for mechanical thrombectomy
+3. BP goal <185/110 during tPA, maintain <180/105 × 24h post-tPA
+4. Hold anticoagulation × 24h post-tPA
+5. NPO, dysphagia screen before oral intake
+6. Transfer to Neuro ICU for close monitoring
+7. Serial NIHSS q15min × 2h → q30min × 6h → q1h × 16h
+8. Follow-up CT 24h post-tPA`,
+      soap: `SOAP Note
+
+Patient: 周慧芳 (M2026-002)    Date: 2026-04-17
+
+S: 72 y/o female with AFib on Warfarin (subtherapeutic INR 1.8), HTN, DM. Last known well 04:30; at 05:30 family noticed acute left-sided weakness, left facial droop, and slurred speech. No seizure, headache, or trauma.
+
+O:
+- Vital Signs: BP 178/102, HR 88 (irregular), RR 18, SpO2 97%
+- Neuro (NIHSS 14): Alert, dysarthric; left central facial droop; left UE 2/5, left LE 2/5; left sensory loss; left neglect
+- Imaging: Non-contrast CT — no acute bleed, ASPECTS 8; CTA — right MCA M1 occlusion
+- Labs: INR 1.8 (within tPA window), CBC/BMP within acceptable ranges
+- EKG: Atrial fibrillation, controlled rate
+
+A:
+1. Acute ischemic stroke, right MCA territory, NIHSS 14
+2. Large vessel occlusion (right MCA M1) — thrombectomy candidate
+3. Atrial fibrillation with inadequate anticoagulation
+
+P:
+1. IV Alteplase 0.9 mg/kg — 10% loading bolus + 60-min infusion
+2. Neurointervention consult for mechanical thrombectomy
+3. BP goal <185/110 during tPA, <180/105 × 24h post-tPA
+4. Hold anticoagulation × 24h post-tPA
+5. NPO, dysphagia screen before oral intake
+6. Transfer to Neuro ICU; serial NIHSS q15min × 2h → q30min × 6h → q1h × 16h
+7. Follow-up CT 24h post-tPA`,
+    },
+  },
+  {
+    id: 'mex3',
+    label: '社區型肺炎（出院）',
+    type: 'discharge',
+    description: '65 歲男性 / CAP 住院 7 天',
+    hisJson: `{
+  "patient": { "name": "劉文昌", "chartNo": "M2026-003", "age": 65, "gender": "男", "bed": "12C-07" },
+  "admission": "2026-04-05",
+  "discharge": "2026-04-12",
+  "diagnosis": "Community-acquired pneumonia (right lower lobe), resolved",
+  "hospitalCourse": "入院時 CURB-65 score 2，抗生素治療後發燒於 48 小時內退，SpO2 由 90% 回升至 96% RA",
+  "labs": {
+    "WBCTrend": "15,200 → 11,800 → 8,100 /μL",
+    "CRPTrend": "12.4 → 6.8 → 1.2 mg/dL",
+    "ProcalcitoninAdmission": "1.8 ng/mL"
+  },
+  "culture": "Sputum culture: Streptococcus pneumoniae (penicillin susceptible)",
+  "imaging": "CXR 入院：右下肺實變；出院前：明顯吸收",
+  "treatment": "IV Ceftriaxone 2g QD × 5 days → PO Amoxicillin 500mg TID × 5 days",
+  "dischargeMeds": "Amoxicillin 500mg TID × 5 more days，原有慢病用藥持續",
+  "followUp": "胸腔科 2 週後門診追蹤 CXR，未來流感/肺炎鏈球菌疫苗"
+}`,
+    drafts: {
+      standard: `Discharge Summary
+
+Patient: 劉文昌 (M2026-003)
+Admission: 2026-04-05 → Discharge: 2026-04-12
+Length of Stay: 7 days    Ward: 12C-07
+
+Discharge Diagnosis:
+1. Community-acquired pneumonia, right lower lobe — resolved
+   Pathogen: Streptococcus pneumoniae (penicillin susceptible)
+2. Hypertension — controlled
+3. Type 2 DM — controlled
+
+Hospital Course:
+Mr. 劉 was admitted via ER with 3-day history of productive cough, fever (38.9°C), and progressive dyspnea. Initial CURB-65 score was 2 (age ≥65, RR ≥30 on admission). Chest X-ray demonstrated right lower lobe consolidation, and laboratory findings showed leukocytosis with elevated CRP and procalcitonin consistent with bacterial pneumonia. Sputum culture subsequently grew Streptococcus pneumoniae, penicillin susceptible.
+
+Empirical antibiotic therapy with IV Ceftriaxone 2g daily was initiated on admission. Fever defervesced within 48 hours, and inflammatory markers trended downward (WBC 15,200 → 8,100; CRP 12.4 → 1.2). Oxygen saturation improved from 90% on 2L NC at admission to 96% on room air by day 5. Follow-up CXR prior to discharge demonstrated significant resolution of the right lower lobe consolidation. On day 6, therapy was transitioned to oral Amoxicillin 500mg TID with continued clinical improvement.
+
+Blood glucose remained well-controlled throughout admission on home regimen. No hospital-acquired complications.
+
+Discharge Medications:
+1. Amoxicillin 500mg PO TID × 5 more days (to complete 10-day course)
+2. Amlodipine 5mg PO QD (home medication continued)
+3. Metformin 500mg PO BID (home medication continued)
+4. Paracetamol 500mg PO PRN fever/pain
+
+Follow-up Plan:
+1. Pulmonology clinic in 2 weeks (Dr. 王) with repeat CXR
+2. Annual influenza vaccination — scheduled Q4
+3. Pneumococcal vaccine (PPSV23) — administered prior to discharge
+4. Return to ER if recurrent fever, worsening dyspnea, or hemoptysis
+
+Discharge Condition:
+Stable, afebrile × 72 hours, ambulating independently, SpO2 96% RA, tolerating PO diet.`,
+      soap: `SOAP Discharge Note
+
+Patient: 劉文昌 (M2026-003)
+Admission: 2026-04-05 → Discharge: 2026-04-12
+
+S: 65 y/o male admitted with 3-day productive cough, fever (38.9°C), and progressive dyspnea diagnosed as right lower lobe community-acquired pneumonia. Symptoms fully resolved; afebrile >72 hours, tolerating PO diet, ambulating independently without dyspnea.
+
+O:
+- Discharge vitals: BP 128/78, HR 76, RR 18, BT 36.6°C, SpO2 96% RA
+- Labs trend: WBC 15,200 → 8,100; CRP 12.4 → 1.2
+- Sputum culture: Streptococcus pneumoniae (penicillin susceptible)
+- CXR: Significant resolution of right lower lobe consolidation
+- Weaned off supplemental oxygen on day 5
+
+A:
+1. Community-acquired pneumonia, right lower lobe — resolved
+2. Hypertension — controlled
+3. Type 2 DM — controlled
+
+P:
+1. Amoxicillin 500mg PO TID × 5 more days (to complete 10-day course)
+2. Continue home meds: Amlodipine 5mg QD, Metformin 500mg BID
+3. Pulmonology clinic in 2 weeks with repeat CXR (Dr. 王)
+4. PPSV23 administered; annual influenza vaccination scheduled Q4
+5. Return to ER if recurrent fever, worsening dyspnea, or hemoptysis`,
+    },
+  },
+  {
+    id: 'mex4',
+    label: '股骨骨折術後（週摘）',
+    type: 'weekly',
+    description: '78 歲女性 / PFNA 術後第 2 週',
+    hisJson: `{
+  "patient": { "name": "吳秀英", "chartNo": "M2026-004", "age": 78, "gender": "女", "bed": "10D-02" },
+  "diagnosis": "Left intertrochanteric fracture s/p PFNA fixation",
+  "opDate": "2026-04-02",
+  "weekRange": "Week 2 post-op (2026-04-09 ~ 2026-04-15)",
+  "wound": "Clean, dry, intact; suture removal on 04/13",
+  "pain": "VAS 3/10 on ambulation, 1/10 at rest",
+  "mobility": "Walker-assisted ambulation 10 m × 3 per day (提升自上週 5 m)",
+  "physiotherapy": "BID，加入 hip abduction 與 quadriceps strengthening",
+  "labs": { "Hb": "10.2 g/dL (stable)", "CRP": "2.1 mg/dL ↓", "Cr": "0.9 mg/dL" },
+  "dvtProphylaxis": "Enoxaparin 40mg SC QD",
+  "complications": "無傷口感染、無 DVT 徵象、無壓瘡",
+  "nutritionalStatus": "Albumin 3.4，食慾進步，補充 Ensure BID"
+}`,
+    drafts: {
+      standard: `Weekly Summary (2026-04-09 ~ 2026-04-15)
+
+Patient: 吳秀英 (M2026-004)   Ward: 10D-02
+Age/Sex: 78 y/o Female
+Diagnosis: Left intertrochanteric fracture, s/p PFNA fixation (2026-04-02)
+
+本週病程概要：
+本週為術後第 2 週，病患持續穩定復健中。傷口癒合良好，行動能力較上週顯著進步，疼痛控制穩定，未見術後併發症。
+
+病程變化：
+• Day 8 (04/09)：傷口換藥乾淨、無紅腫熱痛；助行器輔助行走 5 m
+• Day 9 (04/10)：開始增加 hip abduction 運動，無疼痛加劇
+• Day 10 (04/11)：下肢循環良好，無 DVT 徵象，雙下腿 Homan sign (−)
+• Day 12 (04/13)：拆線，傷口癒合良好；助行器行走距離增至 8 m
+• Day 13 (04/14)：物理治療師評估可獨立轉位上下床
+• Day 14 (04/15)：助行器行走 10 m × 3 次/日，平衡訓練進行中
+
+檢驗趨勢：
+• Hb: 10.2 g/dL (穩定，無進一步下降)
+• CRP: 4.5 → 2.1 mg/dL (持續下降，無感染徵象)
+• Cr: 0.9 mg/dL (腎功能正常)
+• Albumin: 3.2 → 3.4 g/dL (營養狀態改善)
+
+目前用藥：
+1. Enoxaparin 40mg SC QD (DVT prophylaxis，持續至術後 4 週)
+2. Acetaminophen 500mg PO QID
+3. Tramadol 50mg PO q6h PRN severe pain
+4. Calcium carbonate + Vitamin D3 QD
+5. 原有慢性病用藥持續
+
+照護重點：
+• 營養補充：Ensure BID，監測蛋白質攝取
+• 跌倒預防：床欄拉起、夜間照明、呼叫鈴常備
+• 皮膚照護：Q2h 翻身、骨突處減壓
+• 家屬衛教：出院後居家環境安全評估、助行器使用技巧
+
+下週計畫：
+1. 繼續漸進式負重訓練，目標 25 m 連續行走
+2. 骨科門診追蹤 X-ray (預計 04/18)
+3. 出院準備：社工介入居家照護資源連結
+4. 預計 2026-04-22 出院，轉介亞急性復健病房`,
+      soap: `SOAP Weekly Note (2026-04-09 ~ 2026-04-15)
+
+Patient: 吳秀英 (M2026-004)   Ward: 10D-02
+Diagnosis: Left intertrochanteric fracture, s/p PFNA fixation (2026-04-02)
+
+S: 術後第 2 週，病患疼痛控制穩定（行走時 VAS 3/10、休息時 1/10），無新發主訴，食慾改善，配合物理治療意願佳。
+
+O:
+- 傷口：乾淨、無滲液、無紅腫；04/13 已拆線
+- 活動能力：助行器輔助行走由 5 m 進步至 10 m × 3 次/日
+- 檢驗趨勢：Hb 10.2 (穩定)、CRP 4.5 → 2.1 ↓、Cr 0.9、Albumin 3.2 → 3.4
+- 下肢 Homan sign 雙側 (−)，無 DVT 徵象
+- 皮膚完整，無壓瘡
+
+A:
+1. Left intertrochanteric fracture s/p PFNA — 術後第 2 週，癒合順利
+2. 營養狀態改善中
+3. 無感染、DVT、壓瘡等術後併發症
+
+P:
+1. 繼續漸進式負重訓練，目標 25 m 連續行走
+2. Enoxaparin 40mg SC QD 續用至術後 4 週
+3. Ca + VitD3 QD、Ensure BID 補充營養
+4. 骨科門診追蹤 X-ray (04/18)
+5. 社工介入居家照護資源連結
+6. 預計 2026-04-22 出院，轉介亞急性復健病房`,
+    },
+  },
+  {
+    id: 'mex5',
+    label: '急性心衰竭',
+    type: 'admission',
+    description: '69 歲男性 / HFrEF 急性惡化',
+    hisJson: `{
+  "patient": { "name": "黃志明", "chartNo": "M2026-005", "age": 69, "gender": "男", "bed": "CCU-05" },
+  "chiefComplaint": "漸進性呼吸困難、下肢水腫 1 週",
+  "presentIllness": "一週來活動性呼吸困難加劇，近 3 日出現端坐呼吸及夜間陣發性呼吸困難；下肢水腫從腳踝蔓延至膝蓋",
+  "vitals": { "BP": "148/92 mmHg", "HR": "108 bpm", "RR": "26 /min", "SpO2": "91% (RA)", "BT": "36.4°C" },
+  "weight": "入院 82 kg（基準 76 kg，增加 6 kg）",
+  "exam": {
+    "neck": "JVD elevated 12 cm",
+    "lungs": "Bilateral basilar crackles up to mid-zones",
+    "heart": "S3 gallop, PMI displaced, MR grade 2/6",
+    "extremities": "+2 pitting edema bilateral lower legs to knees"
+  },
+  "labs": { "NT-proBNP": "8,450 pg/mL ↑↑", "Troponin-I": "0.05 ng/mL (mildly elevated)", "Cr": "1.4 mg/dL", "Na": "132 mEq/L ↓", "K": "4.1" },
+  "imaging": {
+    "Echo": "LVEF 30%, global hypokinesis, LA enlargement, moderate MR",
+    "CXR": "Cardiomegaly, bilateral pulmonary edema, Kerley B lines"
+  },
+  "history": "HFrEF diagnosed 2022, prior inferior MI 2020 s/p PCI to RCA, T2DM, CKD stage 3",
+  "medications": "Carvedilol 12.5mg BID, Lisinopril 10mg QD, Furosemide 40mg QD, Atorvastatin 40mg HS"
+}`,
+    drafts: {
+      standard: `Admission Note
+
+Patient: 黃志明 (M2026-005)    Date: 2026-04-17
+Ward: CCU-05    Age/Sex: 69 y/o Male
+
+Chief Complaint:
+Progressive dyspnea and bilateral lower extremity edema for 1 week.
+
+Present Illness:
+This 69 year-old male with known HFrEF (LVEF 30%, last echo 6 months ago) presented with worsening exertional dyspnea over the past week. Over the past 3 days, he developed orthopnea requiring 3 pillows to sleep and paroxysmal nocturnal dyspnea × 2 episodes per night. Bilateral lower extremity edema progressed from ankles to knees. Weight gain of 6 kg from baseline (82 kg from 76 kg). Denied chest pain, palpitations, or syncope. Admitted to recent high-sodium diet and occasional medication noncompliance.
+
+Past Medical History:
+1. Heart failure with reduced ejection fraction (HFrEF), NYHA III
+2. Inferior wall myocardial infarction 2020, s/p PCI with DES to RCA
+3. Type 2 diabetes mellitus
+4. Chronic kidney disease stage 3 (baseline Cr 1.3)
+5. NKDA
+
+Home Medications:
+1. Carvedilol 12.5mg PO BID
+2. Lisinopril 10mg PO QD
+3. Furosemide 40mg PO QD
+4. Atorvastatin 40mg PO HS
+5. Aspirin 100mg PO QD
+6. Metformin 500mg PO BID
+
+Physical Examination:
+- General: Mild respiratory distress, sitting upright
+- Vital Signs: BP 148/92, HR 108, RR 26, SpO2 91% RA, BT 36.4°C
+- Neck: JVD elevated to 12 cm
+- Heart: S3 gallop present, PMI displaced laterally, grade 2/6 holosystolic murmur at apex
+- Lungs: Bilateral basilar crackles extending to mid-lung zones
+- Abdomen: Soft, hepatojugular reflux positive
+- Extremities: +2 pitting edema bilateral lower extremities to knees, cool peripheries
+
+Investigations:
+- NT-proBNP: 8,450 pg/mL (markedly elevated)
+- Troponin-I: 0.05 ng/mL (mildly elevated, likely demand)
+- BMP: Cr 1.4, Na 132 (hyponatremia), K 4.1
+- CBC: Hb 12.1, WBC 8,200
+- EKG: Sinus tachycardia, old inferior Q waves, no acute ischemic changes
+- CXR: Cardiomegaly, bilateral pulmonary edema, Kerley B lines
+- Bedside Echo: LVEF 30%, global hypokinesis, LA enlargement, moderate MR
+
+Assessment:
+1. Acute decompensated heart failure (ADHF), NYHA IV on presentation
+   — Volume overload from dietary indiscretion and medication non-adherence
+2. HFrEF (LVEF 30%), chronic
+3. Hyponatremia (likely dilutional)
+4. CKD stage 3 — baseline
+
+Plan:
+1. IV Furosemide 80mg bolus, then 10 mg/hr infusion; target diuresis 2-3 L/day
+2. Strict I/O monitoring, daily weights, fluid restriction 1.5 L/day
+3. Low sodium diet (<2g/day)
+4. Continue Carvedilol (if hemodynamically stable)
+5. Hold Lisinopril transiently; consider transition to Sacubitril/Valsartan once stable
+6. Add Spironolactone 25mg QD (check K daily)
+7. Initiate Dapagliflozin 10mg QD
+8. Serial BMP q12h, monitor for hypokalemia
+9. Repeat NT-proBNP on day 3 to trend
+10. Cardiology consult for GDMT optimization
+11. Heart failure nurse education prior to discharge`,
+      soap: `SOAP Note
+
+Patient: 黃志明 (M2026-005)    Date: 2026-04-17
+
+S: 69 y/o male with HFrEF (LVEF 30%), prior inferior MI 2020 s/p PCI to RCA, T2DM, CKD stage 3, presents with progressive exertional dyspnea × 1 week, orthopnea (3-pillow) and PND × 3 days, bilateral lower extremity edema, and 6 kg weight gain. Recent high-sodium diet and medication non-adherence. Denies chest pain, palpitations, syncope.
+
+O:
+- Vital Signs: BP 148/92, HR 108, RR 26, SpO2 91% RA; Weight 82 kg (+6 kg)
+- Neck: JVD 12 cm
+- Lungs: Bilateral basilar crackles extending to mid-zones
+- Heart: S3 gallop, displaced PMI, grade 2/6 holosystolic murmur at apex
+- Abdomen: Hepatojugular reflux (+)
+- Extremities: +2 pitting edema to knees, cool peripheries
+- Labs: NT-proBNP 8,450 ↑↑, Troponin-I 0.05 (mild), Cr 1.4, Na 132 (↓), K 4.1
+- EKG: Sinus tachycardia, old inferior Q waves
+- CXR: Cardiomegaly, bilateral pulmonary edema, Kerley B lines
+- Bedside Echo: LVEF 30%, global hypokinesis, moderate MR
+
+A:
+1. Acute decompensated heart failure, NYHA IV on presentation
+2. HFrEF (LVEF 30%), chronic
+3. Hyponatremia, likely dilutional
+4. CKD stage 3 — baseline
+
+P:
+1. IV Furosemide 80mg bolus, then 10 mg/hr infusion; target 2-3 L/day diuresis
+2. Strict I/O, daily weights; fluid restriction 1.5 L/day; low-Na diet (<2g/day)
+3. Continue Carvedilol 12.5mg BID if hemodynamically stable
+4. Hold Lisinopril; transition to Sacubitril/Valsartan when stable
+5. Add Spironolactone 25mg QD (monitor K)
+6. Initiate Dapagliflozin 10mg QD
+7. Serial BMP q12h; repeat NT-proBNP on day 3
+8. Cardiology consult for GDMT optimization; HF nurse education pre-discharge`,
+    },
+  },
+  {
+    id: 'mex6',
+    label: '上消化道出血',
+    type: 'admission',
+    description: '58 歲女性 / 黑便、低血壓',
+    hisJson: `{
+  "patient": { "name": "蔡美玉", "chartNo": "M2026-006", "age": 58, "gender": "女", "bed": "GI-04" },
+  "chiefComplaint": "解黑便 2 天、頭暈虛弱 1 天",
+  "presentIllness": "48 小時前開始解 3 次柏油樣黑便，今晨站立時頭暈幾近昏倒。否認嘔血、腹痛、體重減輕",
+  "vitals": { "BP": "88/56 mmHg ↓ (supine) / 72/48 (standing)", "HR": "118 bpm ↑", "RR": "20 /min", "BT": "36.2°C", "SpO2": "98%" },
+  "exam": {
+    "general": "面色蒼白、肢端冰冷、結膜蒼白",
+    "abdomen": "Epigastric mild tenderness, no rebound, no masses",
+    "dre": "Melena stool on glove"
+  },
+  "labs": {
+    "Hb": "7.2 g/dL ↓↓ (baseline 13.5, 2 months ago)",
+    "Plt": "232,000 /μL",
+    "BUN/Cr": "42 / 1.1 mg/dL (↑ ratio 38:1)",
+    "PT/INR": "12.8 sec / 1.1",
+    "TypeAndScreen": "O+, crossmatched 4 units"
+  },
+  "history": "Osteoarthritis on chronic NSAIDs (Ibuprofen 400mg TID × 6 months)，否認肝硬化、酒精史",
+  "medications": "Ibuprofen 400mg TID (自行購買)，無其他慢病用藥",
+  "plan": "復甦、輸血、IV PPI、急性上消化道內視鏡"
+}`,
+    drafts: {
+      standard: `Admission Note
+
+Patient: 蔡美玉 (M2026-006)    Date: 2026-04-17
+Ward: GI-04    Age/Sex: 58 y/o Female
+
+Chief Complaint:
+Melena for 2 days with dizziness and weakness for 1 day.
+
+Present Illness:
+This 58 year-old female presented with 2-day history of passing black tarry stools, approximately 3 episodes. One day prior to admission, she developed dizziness and near-syncope on standing, prompting ER visit. She denied hematemesis, coffee-ground emesis, abdominal pain, or weight loss. She admitted to long-term use of over-the-counter Ibuprofen 400mg TID for 6 months due to osteoarthritis knee pain, without gastroprotection. Denied alcohol use, known liver disease, or prior GI bleeding.
+
+Past Medical History:
+1. Bilateral knee osteoarthritis, on chronic NSAIDs
+2. No known chronic illness
+3. NKDA
+
+Home Medications:
+1. Ibuprofen 400mg PO TID (self-medicated × 6 months)
+2. Glucosamine supplement
+
+Physical Examination:
+- General: Pale, appears fatigued
+- Vital Signs: Supine BP 88/56, standing BP 72/48 (orthostatic), HR 118, RR 20, BT 36.2°C, SpO2 98% RA
+- HEENT: Pale conjunctivae, dry mucous membranes
+- Heart: Regular tachycardia, no murmur
+- Lungs: Clear bilaterally
+- Abdomen: Soft, mild epigastric tenderness without rebound or guarding, no masses, no hepatosplenomegaly
+- DRE: Melena stool on gloved finger, no palpable mass
+- Extremities: Cool, capillary refill 3 seconds, no edema
+
+Investigations:
+- CBC: Hb 7.2 g/dL (baseline 13.5, 2 months ago), Plt 232,000, WBC 9,800
+- BMP: BUN 42, Cr 1.1 (BUN:Cr ratio 38 — consistent with upper GI bleed)
+- LFTs: Within normal limits
+- Coagulation: PT 12.8 sec, INR 1.1
+- Type and crossmatch: O+, 4 units PRBC reserved
+- EKG: Sinus tachycardia, no ischemic changes
+
+Risk Stratification:
+- Glasgow-Blatchford Score: 12 (high risk)
+- Orthostatic changes indicate >15% blood loss
+
+Assessment:
+1. Acute upper gastrointestinal bleeding, suspected NSAID-induced peptic ulcer
+2. Hypovolemic shock, class II-III
+3. Acute anemia (Hb 7.2, baseline 13.5) — transfusion threshold met
+
+Plan:
+1. Two large-bore IV access, NS 1L bolus × 2, then reassess hemodynamics
+2. Transfuse 2 units PRBC now, target Hb ≥8 g/dL (consider 9 if symptomatic)
+3. IV Pantoprazole 80mg bolus, then 8 mg/hr continuous infusion × 72 hours
+4. NPO, strict intake/output monitoring
+5. Urgent upper GI endoscopy (EGD) within 12 hours — GI team notified
+6. Hold all NSAIDs indefinitely
+7. Serial Hb q4-6h until stable
+8. Test for H. pylori during EGD (biopsy)
+9. Consider IV Octreotide if variceal source suspected (low suspicion)
+10. Transfer to GI step-down unit for continuous monitoring`,
+      soap: `SOAP Note
+
+Patient: 蔡美玉 (M2026-006)    Date: 2026-04-17
+
+S: 58 y/o female with 2-day history of melena (3 episodes of black tarry stools) and 1-day dizziness with near-syncope on standing. Chronic NSAID use (Ibuprofen 400mg TID × 6 months) for bilateral knee osteoarthritis without gastroprotection. Denies hematemesis, abdominal pain, weight loss, alcohol use, or known liver disease.
+
+O:
+- Vital Signs: Supine BP 88/56, standing 72/48 (orthostatic), HR 118, RR 20, SpO2 98%
+- General: Pale, fatigued; pale conjunctivae, dry mucous membranes
+- Abdomen: Soft, mild epigastric tenderness, no rebound, no masses
+- DRE: Melena stool on gloved finger
+- Extremities: Cool, capillary refill 3 sec
+- Labs: Hb 7.2 g/dL (baseline 13.5), BUN/Cr 42/1.1 (ratio 38:1), INR 1.1
+- Type & screen: O+, 4 units PRBC crossmatched
+- EKG: Sinus tachycardia, no ischemic changes
+- Glasgow-Blatchford Score: 12 (high risk)
+
+A:
+1. Acute upper gastrointestinal bleeding, suspected NSAID-induced peptic ulcer
+2. Hypovolemic shock, class II-III (orthostatic changes, BUN:Cr >30)
+3. Acute anemia (Hb 7.2 from baseline 13.5) — meets transfusion threshold
+
+P:
+1. Two large-bore IV access; NS 1L bolus × 2, reassess hemodynamics
+2. Transfuse 2 units PRBC, target Hb ≥8 g/dL
+3. IV Pantoprazole 80mg bolus, then 8 mg/hr continuous × 72h
+4. NPO, strict I/O monitoring
+5. Urgent EGD within 12h — GI team notified; biopsy for H. pylori
+6. Hold all NSAIDs indefinitely
+7. Serial Hb q4-6h until stable
+8. Transfer to GI step-down unit for continuous monitoring`,
+    },
+  },
+]
+
+export function getManualWritingExample(id: string): ManualWritingExample | undefined {
+  return MOCK_MANUAL_WRITING_EXAMPLES.find(e => e.id === id)
+}
+
 // ===== 生成式護理紀錄 AI — Mock 資料 =====
 
 export const NURSING_FORMAT_OPTIONS = [
